@@ -1,0 +1,23 @@
+.footer {
+    width: 100%;
+
+    &__body {
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px 5px;
+        padding: 10px 0;
+        opacity: 0.5;
+        @media (max-width: 576px), (max-height: 440px) {
+            font-size: 10px;
+        }
+    }
+
+    &__date {
+    }
+
+    &__copyright {
+    }
+}

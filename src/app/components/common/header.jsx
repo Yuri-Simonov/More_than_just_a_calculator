@@ -1,19 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import svgCalculator from "../../images/svg/calculator.svg";
+import svgSections from "../../images/svg/sections.svg";
+import svgFinance from "../../images/svg/finance.svg";
 
 const Header = () => {
     return (
-        <div>
-            <p>
-                <Link to="/">calc</Link>
-            </p>
-            <p>
-                <Link to="/sections">sections</Link>
-            </p>
-            <p>
-                <Link to="/finance">finance</Link>
-            </p>
-        </div>
+        <header className="header">
+            <div className="container-outer">
+                <nav className="header__nav">
+                    <ul className="header__list">
+                        <li>
+                            <Link to="/" className="header__link">
+                                <img
+                                    src={svgCalculator}
+                                    alt="calculator icon"
+                                />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/sections" className="header__link">
+                                <img src={svgSections} alt="sections icon" />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/finance" className="header__link">
+                                <img src={svgFinance} alt="finance icon" />
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
     );
 };
 

@@ -1,0 +1,37 @@
+@import "_vars.scss";
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    background: $black;
+    color: $white;
+}
+
+.container-outer {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 110%;
+    min-width: 319.8px;
+    min-height: 319.8px;
+}
+main {
+    flex: 1 1 auto;
+}
+
+#root {
+    height: 100%;
+}
