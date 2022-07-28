@@ -11,14 +11,12 @@ function App() {
         <div className="wrapper">
             <Header />
             <main>
-                <div className="container-outer">
-                    <Switch>
-                        <Route path="/sections" exact component={Sections} />
-                        <Route path="/finance" exact component={Finance} />
-                        <Route path="/" exact component={Calculator} />
-                        <Redirect to="/" />
-                    </Switch>
-                </div>
+                <Switch>
+                    <Route path="/sections" exact component={Sections} />
+                    <Route path="/finance" exact component={Finance} />
+                    <Route path="/" exact component={Calculator} />
+                    <Redirect to="/" />
+                </Switch>
             </main>
             <Footer />
         </div>

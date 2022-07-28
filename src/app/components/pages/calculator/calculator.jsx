@@ -1,32 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Calculator = () => {
     const calculatorPanel = [
         ["2nd", "deg", "sin", "cos", "tan"],
-        ["x**(1/2)", "lg", "ln", "(", ")"]
+        ["x**y", "lg", "ln", "(", ")"],
+        ["x**(1/2)", "C", "del", "%", "/"],
+        ["x!", "7", "8", "9", "*"],
+        ["1/x", "4", "5", "6", "-"],
+        ["п", "1", "2", "3", "+"],
+        ["arrows", "e", "0", ",", "="]
     ];
-    const createCalculaterPanel = (arr) => {
-        return arr.map((arrElem, i) => {
-            return (
-                <div key={i} className="panel__row">
-                    {arrElem.map((arrSubElem, i) => {
-                        return (
-                            <div key={i} className="panel__col">
-                                <p className="panel__cell">{arrSubElem}</p>
-                            </div>
-                        );
-                    })}
-                </div>
-            );
-        });
+
+    const [value, setValue] = useState(0);
+    const changeValue = (e) => {
+        if (value === 0) {
+            return setValue(e.target.textContent);
+        }
+        setValue((prevState) => prevState + e.target.textContent);
     };
 
     return (
         <section className="calculator">
-            <div className="container-outer">
+            <div className="container-inner">
                 <div className="calculator__body">
                     <div className="calculator__panel panel">
-                        {createCalculaterPanel(calculatorPanel)}
+                        {calculatorPanel.map((arrElem, i) => {
+                            return (
+                                <div key={i} className="panel__row">
+                                    {arrElem.map((arrSubElem, i) => {
+                                        return (
+                                            <div key={i} className="panel__col">
+                                                <p
+                                                    className="panel__cell"
+                                                    onClick={(e) =>
+                                                        changeValue(e)
+                                                    }
+                                                >
+                                                    {arrSubElem}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        })}
                     </div>
                     <div className="calculator__field">
                         <section className="calculator__history">
@@ -35,8 +52,8 @@ const Calculator = () => {
                                 <p>= 232321</p>
                             </div>
                         </section>
-                        <section className="calculator__value">
-                            <p>111</p>
+                        <section className="calculator__value big-size">
+                            <p>{value}</p>
                         </section>
                         <section className="calculator__result">
                             <p>= 111</p>

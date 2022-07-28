@@ -3,15 +3,16 @@
 .wrapper {
     position: relative;
     width: 100%;
-    min-height: 100%;
     overflow: hidden;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     height: 100%;
     background: $black;
     color: $white;
+    overflow: auto;
+    @media (max-height: 440px) {
+        height: auto;
+    }
 }
 
 .container-outer {
@@ -19,6 +20,18 @@
     margin: 0 auto;
     padding: 0 15px;
     height: 100%;
+    @media (max-width: 1169.8px) {
+        width: 100%;
+    }
+}
+.container-inner {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: 100%;
+    @media (max-width: 767.8px) {
+        width: 100%;
+    }
 }
 
 body {
@@ -29,9 +42,29 @@ body {
     min-height: 319.8px;
 }
 main {
-    flex: 1 1 auto;
+    flex-grow: 1;
+    width: 100%;
 }
 
 #root {
     height: 100%;
+}
+
+* {
+    // стилизация скролла для Firefox
+    scrollbar-color: $gray $white; /* «цвет ползунка» «цвет полосы скроллбара» */
+    scrollbar-width: thin;
+    // стилизация скролла для Chrome
+    &::-webkit-scrollbar {
+        // это фон самого скроллбара
+        background-color: $white;
+        border-radius: 5px;
+        width: 5px;
+        height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        // индикатор прокрутки, перетаскиваемый элемент.
+        background-color: $gray;
+        border-radius: 5px;
+    }
 }
