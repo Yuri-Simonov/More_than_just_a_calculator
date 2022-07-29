@@ -1,23 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import calculatorPanel from "../../../consts/calculatorPanel.jsx";
+import { useCalculator } from "../../../hooks/useCalculator.jsx";
 
 const Calculator = () => {
-    const calculatorPanel = [
-        ["2nd", "deg", "sin", "cos", "tan"],
-        ["x**y", "lg", "ln", "(", ")"],
-        ["x**(1/2)", "C", "del", "%", "/"],
-        ["x!", "7", "8", "9", "*"],
-        ["1/x", "4", "5", "6", "-"],
-        ["п", "1", "2", "3", "+"],
-        ["arrows", "e", "0", ",", "="]
-    ];
-
-    const [value, setValue] = useState(0);
-    const changeValue = (e) => {
-        if (value === 0) {
-            return setValue(e.target.textContent);
-        }
-        setValue((prevState) => prevState + e.target.textContent);
-    };
+    const { value, changeValue, finalValue } = useCalculator();
 
     return (
         <section className="calculator">
@@ -56,7 +42,7 @@ const Calculator = () => {
                             <p>{value}</p>
                         </section>
                         <section className="calculator__result">
-                            <p>= 111</p>
+                            <p>= {finalValue}</p>
                         </section>
                     </div>
                 </div>

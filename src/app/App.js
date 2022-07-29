@@ -5,6 +5,7 @@ import Header from "./components/common/header";
 import Calculator from "./components/pages/calculator/calculator";
 import Finance from "./components/pages/finance/finance";
 import Sections from "./components/pages/sections/sections";
+import CalculatorProvider from "./hooks/useCalculator";
 
 function App() {
     return (
@@ -14,7 +15,9 @@ function App() {
                 <Switch>
                     <Route path="/sections" exact component={Sections} />
                     <Route path="/finance" exact component={Finance} />
-                    <Route path="/" exact component={Calculator} />
+                    <CalculatorProvider>
+                        <Route path="/" exact component={Calculator} />
+                    </CalculatorProvider>
                     <Redirect to="/" />
                 </Switch>
             </main>
