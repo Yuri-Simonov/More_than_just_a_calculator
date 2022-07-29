@@ -1,35 +1,16 @@
 import React from "react";
-import calculatorPanel from "../../../consts/calculatorPanel.jsx";
 import { useCalculator } from "../../../hooks/useCalculator.jsx";
+import CalculatorPanel from "./calculatorPanel.jsx";
 
 const Calculator = () => {
-    const { value, changeValue, finalValue } = useCalculator();
+    const { value, resultValue, preliminaryResult } = useCalculator();
 
     return (
         <section className="calculator">
             <div className="container-inner">
                 <div className="calculator__body">
-                    <div className="calculator__panel panel">
-                        {calculatorPanel.map((arrElem, i) => {
-                            return (
-                                <div key={i} className="panel__row">
-                                    {arrElem.map((arrSubElem, i) => {
-                                        return (
-                                            <div key={i} className="panel__col">
-                                                <p
-                                                    className="panel__cell"
-                                                    onClick={(e) =>
-                                                        changeValue(e)
-                                                    }
-                                                >
-                                                    {arrSubElem}
-                                                </p>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            );
-                        })}
+                    <div className="calculator__panel">
+                        <CalculatorPanel />
                     </div>
                     <div className="calculator__field">
                         <section className="calculator__history">
@@ -42,7 +23,7 @@ const Calculator = () => {
                             <p>{value}</p>
                         </section>
                         <section className="calculator__result">
-                            <p>= {finalValue}</p>
+                            {preliminaryResult && <p>= {resultValue}</p>}
                         </section>
                     </div>
                 </div>

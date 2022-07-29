@@ -69,18 +69,25 @@
     &__col {
         flex: 1 0 18%;
         height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         border: 1px solid $orange-2;
         cursor: pointer;
     }
 
     &__cell {
+        height: 100%;
         font-size: 20px;
         @media (max-width: 576px), (max-height: 440px) {
             font-size: 14px;
         }
+        p,
+        span {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         img {
             width: 25px;
             height: 25px;
