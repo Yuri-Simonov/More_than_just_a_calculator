@@ -17,6 +17,7 @@
     &__panel {
         flex: 1 1 50%;
         border: 1px solid $orange;
+        max-height: 312px;
     }
 
     &__field {
@@ -95,6 +96,9 @@
                 width: 20px;
                 height: 20px;
             }
+        }
+        sup {
+            margin-bottom: 10px;
         }
     }
 }

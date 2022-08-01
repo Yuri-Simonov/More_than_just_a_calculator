@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { evaluate, pi } from "mathjs";
+import { evaluate, round } from "mathjs";
+import { converting } from "../utils/converting";
 
 const CalculatorContext = React.createContext();
 
@@ -11,42 +12,52 @@ export const useCalculator = () => {
 const CalculatorProvider = ({ children }) => {
     // Значение в поле ввода калькулятора
     const [value, setValue] = useState("0");
-
     // Значение результата вычислений калькулятора
     const [resultValue, setResultValue] = useState("");
-
     // флаг для отображения предварительного результата
     const [preliminaryResult, setPreliminaryResult] = useState(false);
+    // флаг для переключения большого шрифта между предварительным резульатом и итоговым
+    const [bigOrLittleValue, setBigOrLittleValue] = useState(false);
+    // флаг для переключения операторов первой строки в развернутом режиме калькулятора, кнопка "2nd".
+    const [firstLineOperators, setFirstLineOperators] = useState(true);
+    // флаг для переключения градусы/радианы
+    const [degOrRad, setDegOrRad] = useState(true);
 
-    // Переключение флага для отображения предварительного результата
-    const togglePreliminaryResult = () => {
-        setPreliminaryResult(true);
+    // Переключатель операторов на первой строке в развернутом режиме калькулятора
+    const toggleFirstLineOperators = () => {
+        setFirstLineOperators((prevState) => !prevState);
+    };
+    // Переключатель операторов градусы/радианы в развернутом режиме калькулятора
+    const toggleDegOrRad = () => {
+        setDegOrRad((prevState) => !prevState);
     };
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
-        if (value === "0" && btnValue !== ".") {
+        // console.log("btn", btnValue);
+        if (
+            value === "0" &&
+            btnValue !== "." &&
+            btnValue !== "^" &&
+            btnValue !== "!"
+        ) {
             return setValue(btnValue);
         }
+        setBigOrLittleValue(false);
         setValue((prevState) => prevState + btnValue);
     };
 
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
-        togglePreliminaryResult();
-        if (value.indexOf("π") !== -1 || value.indexOf("&pi;") !== -1) {
-            const timeValue = value.replace(/[&pi; | π]/g, ` ${pi} `);
-            try {
-                setResultValue(evaluate(timeValue));
-            } catch (error) {
-                setResultValue("Ошибка!");
-            }
-        } else {
-            try {
-                setResultValue(evaluate(value));
-            } catch (error) {
-                setResultValue("Ошибка!");
-            }
+        const valueBeforeConverting = converting(value);
+        try {
+            setPreliminaryResult(true);
+            // Округление результата, если нет конечной точки деления
+            const roundingValue = round(evaluate(valueBeforeConverting), 5);
+            setResultValue(roundingValue);
+            setBigOrLittleValue(true);
+        } catch (error) {
+            setResultValue("Ошибка!");
         }
     };
 
@@ -78,7 +89,12 @@ const CalculatorProvider = ({ children }) => {
                 changeResultValue,
                 deleteLastSymbol,
                 deleteAllSymbols,
-                preliminaryResult
+                preliminaryResult,
+                bigOrLittleValue,
+                firstLineOperators,
+                toggleFirstLineOperators,
+                degOrRad,
+                toggleDegOrRad
             }}
         >
             {children}

@@ -3,8 +3,8 @@ import { useCalculator } from "../../../hooks/useCalculator.jsx";
 import CalculatorPanel from "./calculatorPanel.jsx";
 
 const Calculator = () => {
-    const { value, resultValue, preliminaryResult } = useCalculator();
-
+    const { value, resultValue, preliminaryResult, bigOrLittleValue } =
+        useCalculator();
     return (
         <section className="calculator">
             <div className="container-inner">
@@ -19,10 +19,22 @@ const Calculator = () => {
                                 <p>= 232321</p>
                             </div>
                         </section>
-                        <section className="calculator__value big-size">
+                        <section
+                            className={
+                                bigOrLittleValue
+                                    ? "calculator__value"
+                                    : "calculator__value big-size"
+                            }
+                        >
                             <p>{value}</p>
                         </section>
-                        <section className="calculator__result">
+                        <section
+                            className={
+                                bigOrLittleValue
+                                    ? "calculator__result big-size"
+                                    : "calculator__result"
+                            }
+                        >
                             {preliminaryResult && <p>= {resultValue}</p>}
                         </section>
                     </div>

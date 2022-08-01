@@ -9,40 +9,43 @@ const CalculatorPanel = () => {
         changeValue,
         changeResultValue,
         deleteLastSymbol,
-        deleteAllSymbols
+        deleteAllSymbols,
+        firstLineOperators,
+        toggleFirstLineOperators,
+        degOrRad,
+        toggleDegOrRad
     } = useCalculator();
 
     // Панель калькулятора
     const calculatorPanel = [
         [
-            <span
-                key={"2nd"}
-                onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
-            >
+            <span key={"2nd"} onClick={toggleFirstLineOperators}>
                 2nd
             </span>, // переключатель между sin/arcsin и тд.
-            <span key={"deg"}>deg</span>, // градусы
+            <span key={"deg"} onClick={toggleDegOrRad}>
+                {degOrRad ? " deg" : "rad"}
+            </span>, // градусы
             <span
                 key={"sin"}
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
-                sin
+                {firstLineOperators ? "sin" : "arcsin"}
             </span>, // синус/аркосинус
             <span
                 key={"cos"}
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
-                cos
+                {firstLineOperators ? "cos" : "arccos"}
             </span>, // косинус/аркосинус
             <span
                 key={"tan"}
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
-                tan
+                {firstLineOperators ? "tan" : "arctan"}
             </span> // тангенс/арктангенс
         ],
         [
-            <span key={"x**y"}>
+            <span key={"x**y"} onClick={(e) => changeValue("^")}>
                 x<sup>y</sup>
             </span>, // "x" в степени "y"
             <span
@@ -65,7 +68,12 @@ const CalculatorPanel = () => {
             </span> // закрывающая скобка
         ],
         [
-            <span key={"&#8730;"}>&#8730;</span>, // знак корня
+            <span
+                key={"&#8730;"}
+                onClick={(e) => changeValue(e.target.textContent)}
+            >
+                &#8730;
+            </span>, // знак корня
             <span key={"C"} className="orange" onClick={deleteAllSymbols}>
                 C
             </span>, // удаление математической операции (С) и полное удаление всех математических операций вместе с историей
@@ -109,7 +117,9 @@ const CalculatorPanel = () => {
             </span> // знак умножения
         ],
         [
-            <span key={"1/x"}>1/x</span>, // обратное к числу/выражению
+            <span key={"1/x"} onClick={(e) => changeValue("^(-1)")}>
+                1/x
+            </span>, // обратное к числу/выражению
             <span key={"4"} onClick={(e) => changeValue(e.target.textContent)}>
                 4
             </span>, // 4
