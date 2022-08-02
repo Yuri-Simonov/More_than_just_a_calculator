@@ -20,16 +20,16 @@ const CalculatorProvider = ({ children }) => {
     const [bigOrLittleValue, setBigOrLittleValue] = useState(false);
     // флаг для переключения операторов первой строки в развернутом режиме калькулятора, кнопка "2nd".
     const [firstLineOperators, setFirstLineOperators] = useState(true);
-    // флаг для переключения градусы/радианы
-    const [degOrRad, setDegOrRad] = useState(true);
+    // флаг для переключения режима отображения калькулятора (расширенный функционал и минимальный)
+    const [extendedCalc, setExtendedCalc] = useState(true);
 
     // Переключатель операторов на первой строке в развернутом режиме калькулятора
     const toggleFirstLineOperators = () => {
         setFirstLineOperators((prevState) => !prevState);
     };
-    // Переключатель операторов градусы/радианы в развернутом режиме калькулятора
-    const toggleDegOrRad = () => {
-        setDegOrRad((prevState) => !prevState);
+    // Переключатель режима отображения калькулятора
+    const toggleExtendedCalc = () => {
+        setExtendedCalc((prevState) => !prevState);
     };
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
@@ -39,7 +39,8 @@ const CalculatorProvider = ({ children }) => {
             value === "0" &&
             btnValue !== "." &&
             btnValue !== "^" &&
-            btnValue !== "!"
+            btnValue !== "!" &&
+            Boolean(btnValue)
         ) {
             return setValue(btnValue);
         }
@@ -50,6 +51,7 @@ const CalculatorProvider = ({ children }) => {
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
         const valueBeforeConverting = converting(value);
+        // console.log("valueBeforeConverting", valueBeforeConverting);
         try {
             setPreliminaryResult(true);
             // Округление результата, если нет конечной точки деления
@@ -78,6 +80,7 @@ const CalculatorProvider = ({ children }) => {
         setValue("0");
         setResultValue("0");
         setPreliminaryResult(false);
+        setBigOrLittleValue(false);
     };
 
     return (
@@ -93,8 +96,8 @@ const CalculatorProvider = ({ children }) => {
                 bigOrLittleValue,
                 firstLineOperators,
                 toggleFirstLineOperators,
-                degOrRad,
-                toggleDegOrRad
+                extendedCalc,
+                toggleExtendedCalc
             }}
         >
             {children}

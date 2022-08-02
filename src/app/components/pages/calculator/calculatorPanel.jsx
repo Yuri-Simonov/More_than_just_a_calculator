@@ -12,33 +12,44 @@ const CalculatorPanel = () => {
         deleteAllSymbols,
         firstLineOperators,
         toggleFirstLineOperators,
-        degOrRad,
-        toggleDegOrRad
+        extendedCalc,
+        toggleExtendedCalc
     } = useCalculator();
 
     // Панель калькулятора
     const calculatorPanel = [
         [
-            <span key={"2nd"} onClick={toggleFirstLineOperators}>
+            <span
+                key={"2nd"}
+                className="extended-child"
+                onClick={toggleFirstLineOperators}
+            >
                 2nd
             </span>, // переключатель между sin/arcsin и тд.
-            <span key={"deg"} onClick={toggleDegOrRad}>
-                {degOrRad ? " deg" : "rad"}
+            <span
+                key={"deg"}
+                className="extended-child"
+                onClick={(e) => changeValue(`${e.target.textContent}`)}
+            >
+                deg
             </span>, // градусы
             <span
                 key={"sin"}
+                className="extended-child"
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
                 {firstLineOperators ? "sin" : "arcsin"}
             </span>, // синус/аркосинус
             <span
                 key={"cos"}
+                className="extended-child"
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
                 {firstLineOperators ? "cos" : "arccos"}
             </span>, // косинус/аркосинус
             <span
                 key={"tan"}
+                className="extended-child"
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
                 {firstLineOperators ? "tan" : "arctan"}
@@ -162,11 +173,19 @@ const CalculatorPanel = () => {
             </span> // сложение
         ],
         [
-            <span key={"arrowsToggle"}>
+            <span key={"arrowsToggle"} onClick={toggleExtendedCalc}>
                 <img src={arrowsToggle} alt="" />
             </span>, // переключение между режимами
             <span key={"e"} onClick={(e) => changeValue(e.target.textContent)}>
-                e
+                {extendedCalc ? (
+                    "e"
+                ) : (
+                    <img
+                        src={arrowsToggle}
+                        alt=""
+                        onClick={toggleExtendedCalc}
+                    />
+                )}
             </span>, // знак экспоненты
             <span key={"0"} onClick={(e) => changeValue(e.target.textContent)}>
                 0
@@ -186,11 +205,30 @@ const CalculatorPanel = () => {
                 return (
                     <div key={i} className="panel__row">
                         {arrElem.map((arrSubElem, i) => {
-                            return (
-                                <div key={i} className="panel__col">
-                                    <p className="panel__cell">{arrSubElem}</p>
-                                </div>
-                            );
+                            const findExtendedOperators =
+                                arrSubElem.props.className?.includes(
+                                    "extended-child"
+                                );
+                            if (findExtendedOperators) {
+                                return (
+                                    <div
+                                        key={i}
+                                        className="panel__col extended-parent"
+                                    >
+                                        <p className="panel__cell">
+                                            {arrSubElem}
+                                        </p>
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div key={i} className="panel__col">
+                                        <p className="panel__cell">
+                                            {arrSubElem}
+                                        </p>
+                                    </div>
+                                );
+                            }
                         })}
                     </div>
                 );

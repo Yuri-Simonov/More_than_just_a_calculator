@@ -109,3 +109,11 @@
     font-weight: 700;
     opacity: 1;
 }
+.extended-child {
+}
+.extended-parent {
+    transition: 0.3s;
+    max-height: 0;
+    border: none;
+    overflow: hidden;
+}
