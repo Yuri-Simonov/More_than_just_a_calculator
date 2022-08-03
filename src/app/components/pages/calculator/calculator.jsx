@@ -3,8 +3,13 @@ import { useCalculator } from "../../../hooks/useCalculator.jsx";
 import CalculatorPanel from "./calculatorPanel.jsx";
 
 const Calculator = () => {
-    const { value, resultValue, preliminaryResult, bigOrLittleValue } =
-        useCalculator();
+    const {
+        value,
+        resultValue,
+        preliminaryResult,
+        bigOrLittleValue,
+        historyOfCalculation
+    } = useCalculator();
     return (
         <section className="calculator">
             <div className="container-inner">
@@ -14,10 +19,17 @@ const Calculator = () => {
                     </div>
                     <div className="calculator__field">
                         <section className="calculator__history">
-                            <div className="calculator__history-item">
-                                <p>2002232 - 32323</p>
-                                <p>= 232321</p>
-                            </div>
+                            {historyOfCalculation.map((elem, i) => {
+                                return (
+                                    <div
+                                        key={i}
+                                        className="calculator__history-item"
+                                    >
+                                        <p>{elem.value}</p>
+                                        <p>= {elem.resultValue}</p>
+                                    </div>
+                                );
+                            })}
                         </section>
                         <section
                             className={

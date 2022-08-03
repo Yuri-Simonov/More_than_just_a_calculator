@@ -56,31 +56,46 @@ const CalculatorPanel = () => {
             </span> // тангенс/арктангенс
         ],
         [
-            <span key={"x**y"} onClick={(e) => changeValue("^")}>
+            <span
+                key={"x**y"}
+                className="extended-child"
+                onClick={(e) => changeValue("^")}
+            >
                 x<sup>y</sup>
             </span>, // "x" в степени "y"
             <span
                 key={"lg"}
+                className="extended-child"
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
                 lg
             </span>, // десятичный логарифм
             <span
                 key={"ln"}
+                className="extended-child"
                 onClick={(e) => changeValue(`${e.target.textContent + "("}`)}
             >
                 ln
             </span>, // натуральный логарифм
-            <span key={"("} onClick={(e) => changeValue(e.target.textContent)}>
+            <span
+                key={"("}
+                className="extended-child"
+                onClick={(e) => changeValue(e.target.textContent)}
+            >
                 (
             </span>, // открывающая скобка
-            <span key={")"} onClick={(e) => changeValue(e.target.textContent)}>
+            <span
+                key={")"}
+                className="extended-child"
+                onClick={(e) => changeValue(e.target.textContent)}
+            >
                 )
             </span> // закрывающая скобка
         ],
         [
             <span
                 key={"&#8730;"}
+                className="extended-child"
                 onClick={(e) => changeValue(e.target.textContent)}
             >
                 &#8730;
@@ -107,7 +122,11 @@ const CalculatorPanel = () => {
             </span> // знак деления
         ],
         [
-            <span key={"x!"} onClick={() => changeValue("!")}>
+            <span
+                key={"x!"}
+                className="extended-child"
+                onClick={() => changeValue("!")}
+            >
                 x!
             </span>, // факториал от "х"
             <span key={"7"} onClick={(e) => changeValue(e.target.textContent)}>
@@ -128,7 +147,11 @@ const CalculatorPanel = () => {
             </span> // знак умножения
         ],
         [
-            <span key={"1/x"} onClick={(e) => changeValue("^(-1)")}>
+            <span
+                key={"1/x"}
+                className="extended-child"
+                onClick={(e) => changeValue("^(-1)")}
+            >
                 1/x
             </span>, // обратное к числу/выражению
             <span key={"4"} onClick={(e) => changeValue(e.target.textContent)}>
@@ -151,6 +174,7 @@ const CalculatorPanel = () => {
         [
             <span
                 key={"&pi;"}
+                className="extended-child"
                 onClick={(e) => changeValue(e.target.textContent)}
             >
                 &pi;
@@ -173,17 +197,22 @@ const CalculatorPanel = () => {
             </span> // сложение
         ],
         [
-            <span key={"arrowsToggle"} onClick={toggleExtendedCalc}>
-                <img src={arrowsToggle} alt="" />
+            <span
+                key={"arrowsToggle"}
+                className="extended-child"
+                onClick={(e) => toggleExtendedCalc(e)}
+            >
+                <img src={arrowsToggle} alt="" className="animation-arrows" />
             </span>, // переключение между режимами
             <span key={"e"} onClick={(e) => changeValue(e.target.textContent)}>
-                {extendedCalc ? (
+                {!extendedCalc ? (
                     "e"
                 ) : (
                     <img
                         src={arrowsToggle}
                         alt=""
-                        onClick={toggleExtendedCalc}
+                        onClick={(e) => toggleExtendedCalc(e)}
+                        className="animation-arrows"
                     />
                 )}
             </span>, // знак экспоненты
@@ -203,13 +232,20 @@ const CalculatorPanel = () => {
         <div className="panel">
             {calculatorPanel.map((arrElem, i) => {
                 return (
-                    <div key={i} className="panel__row">
+                    <div
+                        key={i}
+                        className={
+                            i <= 1 && extendedCalc
+                                ? "panel__row extended-panel"
+                                : "panel__row"
+                        }
+                    >
                         {arrElem.map((arrSubElem, i) => {
                             const findExtendedOperators =
                                 arrSubElem.props.className?.includes(
                                     "extended-child"
                                 );
-                            if (findExtendedOperators) {
+                            if (findExtendedOperators && extendedCalc) {
                                 return (
                                     <div
                                         key={i}

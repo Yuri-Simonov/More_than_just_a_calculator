@@ -15,9 +15,14 @@
     }
 
     &__panel {
-        flex: 1 1 50%;
         border: 1px solid $orange;
         max-height: 312px;
+        word-break: break-word;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     &__field {
@@ -77,6 +82,12 @@
     &__cell {
         height: 100%;
         font-size: 20px;
+        transition: all 0.3s ease;
+        @media (min-width: 993px) {
+            &:hover {
+                background: lighten($color: $orange, $amount: 40);
+            }
+        }
         @media (max-width: 576px), (max-height: 440px) {
             font-size: 14px;
         }
@@ -111,9 +122,20 @@
 }
 .extended-child {
 }
-.extended-parent {
-    transition: 0.3s;
-    max-height: 0;
-    border: none;
-    overflow: hidden;
+.extended-parent,
+.extended-panel {
+    display: none;
+}
+
+@keyframes arrows {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.animation-arrows {
+    animation-duration: 1s;
+    animation-name: arrows;
 }

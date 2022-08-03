@@ -22,13 +22,18 @@ const CalculatorProvider = ({ children }) => {
     const [firstLineOperators, setFirstLineOperators] = useState(true);
     // флаг для переключения режима отображения калькулятора (расширенный функционал и минимальный)
     const [extendedCalc, setExtendedCalc] = useState(true);
+    // флаг для определения было ли нажато "="
+    const [touchEqual, setTouchEqual] = useState(false);
+    // История вычислений в localStorage
+    const [historyOfCalculation, setHistoryOfCalculation] = useState([]);
 
     // Переключатель операторов на первой строке в развернутом режиме калькулятора
     const toggleFirstLineOperators = () => {
         setFirstLineOperators((prevState) => !prevState);
     };
     // Переключатель режима отображения калькулятора
-    const toggleExtendedCalc = () => {
+    const toggleExtendedCalc = (e) => {
+        e.target.className = "animation-arrows";
         setExtendedCalc((prevState) => !prevState);
     };
 
@@ -44,6 +49,9 @@ const CalculatorProvider = ({ children }) => {
         ) {
             return setValue(btnValue);
         }
+        if (touchEqual) {
+            checkTouchEqual();
+        }
         setBigOrLittleValue(false);
         setValue((prevState) => prevState + btnValue);
     };
@@ -58,6 +66,7 @@ const CalculatorProvider = ({ children }) => {
             const roundingValue = round(evaluate(valueBeforeConverting), 5);
             setResultValue(roundingValue);
             setBigOrLittleValue(true);
+            setTouchEqual(true);
         } catch (error) {
             setResultValue("Ошибка!");
         }
@@ -83,6 +92,26 @@ const CalculatorProvider = ({ children }) => {
         setBigOrLittleValue(false);
     };
 
+    // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
+    const checkTouchEqual = () => {
+        if (!localStorage.getItem("calculation history")) {
+            localStorage.setItem("calculation history", historyOfCalculation);
+        } else {
+            setHistoryOfCalculation(
+                JSON.parse(localStorage.getItem("calculation history"))
+            );
+        }
+        setHistoryOfCalculation([
+            ...historyOfCalculation,
+            { value, resultValue }
+        ]);
+        localStorage.setItem(
+            "calculation history",
+            JSON.stringify(historyOfCalculation)
+        );
+        setTouchEqual(false);
+    };
+
     return (
         <CalculatorContext.Provider
             value={{
@@ -97,7 +126,8 @@ const CalculatorProvider = ({ children }) => {
                 firstLineOperators,
                 toggleFirstLineOperators,
                 extendedCalc,
-                toggleExtendedCalc
+                toggleExtendedCalc,
+                historyOfCalculation
             }}
         >
             {children}
