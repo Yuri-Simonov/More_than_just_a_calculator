@@ -49,18 +49,21 @@ const CalculatorProvider = ({ children }) => {
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
-        // console.log("btn", btnValue);
         if (
             value === "0" &&
             btnValue !== "." &&
             btnValue !== "^" &&
             btnValue !== "!" &&
+            btnValue !== "+" &&
+            btnValue !== "-" &&
+            btnValue !== "/" &&
+            btnValue !== "*" &&
             Boolean(btnValue)
         ) {
             return setValue(btnValue);
         }
         if (touchEqual) {
-            checkTouchEqual();
+            checkTouchEqual(btnValue);
         }
         setBigOrLittleValue(false);
         setValue((prevState) => prevState + btnValue);
@@ -74,7 +77,6 @@ const CalculatorProvider = ({ children }) => {
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
         const valueBeforeConverting = converting(value);
-        // console.log("valueBeforeConverting", valueBeforeConverting);
         try {
             setPreliminaryResult(true);
             // Округление результата, если нет конечной точки деления
@@ -138,11 +140,18 @@ const CalculatorProvider = ({ children }) => {
     }, [CorAC]);
 
     // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
-    const checkTouchEqual = () => {
+    const checkTouchEqual = (btnValue) => {
         checkLocalStorage();
         setTouchEqual(false);
-        setValue("");
         setPreliminaryResult(false);
+        let checkBtnValue = false;
+        for (let i = 0; i < 10; i++) {
+            if (i === Number(btnValue)) {
+                checkBtnValue = true;
+                break;
+            }
+        }
+        checkBtnValue ? setValue("") : setValue(resultValue);
     };
 
     return (
