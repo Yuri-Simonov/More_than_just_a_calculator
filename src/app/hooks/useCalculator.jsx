@@ -49,17 +49,11 @@ const CalculatorProvider = ({ children }) => {
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
-        if (
-            value === "0" &&
-            btnValue !== "." &&
-            btnValue !== "^" &&
-            btnValue !== "!" &&
-            btnValue !== "+" &&
-            btnValue !== "-" &&
-            btnValue !== "/" &&
-            btnValue !== "*" &&
-            Boolean(btnValue)
-        ) {
+        const valueOfButtons = [".", "^", "!", "+", "-", "/", "*", "%"];
+        const booleanResultValueOfButtons = valueOfButtons.some((btn) => {
+            return btn === btnValue;
+        });
+        if (value === "0" && booleanResultValueOfButtons && Boolean(btnValue)) {
             return setValue(btnValue);
         }
         if (touchEqual) {
@@ -93,11 +87,7 @@ const CalculatorProvider = ({ children }) => {
     const deleteLastSymbol = () => {
         if (value.length !== 0 && value !== "0") {
             const slicedValue = value.slice(0, -1);
-            if (slicedValue.length === 0) {
-                setValue("0");
-            } else {
-                setValue(slicedValue);
-            }
+            slicedValue.length === 0 ? setValue("0") : setValue(slicedValue);
         }
     };
 
@@ -127,14 +117,14 @@ const CalculatorProvider = ({ children }) => {
 
     // Проверка localStorage при загрузке
     useEffect(() => {
-        if (!localStorage.getItem("calculation history")) {
+        if (localStorage.getItem("calculation history")) {
+            setHistoryOfCalculation(
+                JSON.parse(localStorage.getItem("calculation history"))
+            );
+        } else {
             localStorage.setItem(
                 "calculation history",
                 JSON.stringify(historyOfCalculation)
-            );
-        } else {
-            setHistoryOfCalculation(
-                JSON.parse(localStorage.getItem("calculation history"))
             );
         }
     }, [CorAC]);
