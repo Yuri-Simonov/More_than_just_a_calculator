@@ -78,7 +78,8 @@ h6 {
 // свои нароботки =========================================================
 
 * {
-    -webkit-tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: transparent;
+    word-break: break-word;
 }
 
 // input {

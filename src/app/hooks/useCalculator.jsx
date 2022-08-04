@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { evaluate, round } from "mathjs";
 import { converting } from "../utils/converting";
@@ -92,24 +92,34 @@ const CalculatorProvider = ({ children }) => {
         setBigOrLittleValue(false);
     };
 
-    // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
-    const checkTouchEqual = () => {
+    // Функция для проверка наличия истории вычислений в localStorage
+    const checkLocalStorage = () => {
+        // промежуточная перменная timeValue, чтобы обойти задержку обновления стейта
+        const timeValue = [...historyOfCalculation, { value, resultValue }];
+        setHistoryOfCalculation(timeValue);
+        localStorage.setItem("calculation history", JSON.stringify(timeValue));
+    };
+
+    // Проверка localStorage при загрузке
+    useEffect(() => {
         if (!localStorage.getItem("calculation history")) {
-            localStorage.setItem("calculation history", historyOfCalculation);
+            localStorage.setItem(
+                "calculation history",
+                JSON.stringify(historyOfCalculation)
+            );
         } else {
             setHistoryOfCalculation(
                 JSON.parse(localStorage.getItem("calculation history"))
             );
         }
-        setHistoryOfCalculation([
-            ...historyOfCalculation,
-            { value, resultValue }
-        ]);
-        localStorage.setItem(
-            "calculation history",
-            JSON.stringify(historyOfCalculation)
-        );
+    }, []);
+
+    // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
+    const checkTouchEqual = () => {
+        checkLocalStorage();
         setTouchEqual(false);
+        setValue("");
+        setPreliminaryResult(false);
     };
 
     return (
