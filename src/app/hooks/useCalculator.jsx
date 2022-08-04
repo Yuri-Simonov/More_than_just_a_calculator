@@ -40,7 +40,7 @@ const CalculatorProvider = ({ children }) => {
     };
     // Переключатель операторов на первой строке в развернутом режиме калькулятора
     const toggleCorAC = () => {
-        if (historyOfCalculation.length !== 0) {
+        if (historyOfCalculation.length !== 0 || value !== "0") {
             setCorAc(true);
         } else {
             setCorAc(false);
