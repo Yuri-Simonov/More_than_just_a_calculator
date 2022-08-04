@@ -6,6 +6,7 @@ import { useCalculator } from "../../../hooks/useCalculator";
 
 const CalculatorPanel = () => {
     const {
+        value,
         changeValue,
         changeResultValue,
         deleteLastSymbol,
@@ -13,7 +14,9 @@ const CalculatorPanel = () => {
         firstLineOperators,
         toggleFirstLineOperators,
         extendedCalc,
-        toggleExtendedCalc
+        toggleExtendedCalc,
+        CorAC,
+        deleteAllHistory
     } = useCalculator();
 
     // Панель калькулятора
@@ -59,7 +62,7 @@ const CalculatorPanel = () => {
             <span
                 key={"x**y"}
                 className="extended-child"
-                onClick={(e) => changeValue("^")}
+                onClick={() => changeValue("^")}
             >
                 x<sup>y</sup>
             </span>, // "x" в степени "y"
@@ -100,8 +103,14 @@ const CalculatorPanel = () => {
             >
                 &#8730;
             </span>, // знак корня
-            <span key={"C"} className="orange" onClick={deleteAllSymbols}>
-                C
+            <span
+                key={"C"}
+                className="orange"
+                onClick={
+                    CorAC && value !== "0" ? deleteAllSymbols : deleteAllHistory
+                }
+            >
+                {CorAC && value !== "0" ? "C" : "AC"}
             </span>, // удаление математической операции (С) и полное удаление всех математических операций вместе с историей
             <span key={"del"} className="orange" onClick={deleteLastSymbol}>
                 <img src={deleteSymbol} alt="" />

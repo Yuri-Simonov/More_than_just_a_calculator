@@ -26,6 +26,8 @@ const CalculatorProvider = ({ children }) => {
     const [touchEqual, setTouchEqual] = useState(false);
     // История вычислений в localStorage
     const [historyOfCalculation, setHistoryOfCalculation] = useState([]);
+    // флаг для переключения режима очистки "С"/"АС"
+    const [CorAC, setCorAc] = useState(true);
 
     // Переключатель операторов на первой строке в развернутом режиме калькулятора
     const toggleFirstLineOperators = () => {
@@ -35,6 +37,14 @@ const CalculatorProvider = ({ children }) => {
     const toggleExtendedCalc = (e) => {
         e.target.className = "animation-arrows";
         setExtendedCalc((prevState) => !prevState);
+    };
+    // Переключатель операторов на первой строке в развернутом режиме калькулятора
+    const toggleCorAC = () => {
+        if (historyOfCalculation.length !== 0) {
+            setCorAc(true);
+        } else {
+            setCorAc(false);
+        }
     };
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
@@ -55,6 +65,11 @@ const CalculatorProvider = ({ children }) => {
         setBigOrLittleValue(false);
         setValue((prevState) => prevState + btnValue);
     };
+
+    // Фикс задержки корректного отображения изменения "А"/"АС"
+    useEffect(() => {
+        toggleCorAC();
+    }, [value, historyOfCalculation]);
 
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
@@ -84,12 +99,20 @@ const CalculatorProvider = ({ children }) => {
         }
     };
 
-    // Удаление всех символов
+    // Удаление всех символов из поля ввода и результата
     const deleteAllSymbols = () => {
         setValue("0");
         setResultValue("0");
         setPreliminaryResult(false);
         setBigOrLittleValue(false);
+        toggleCorAC();
+    };
+
+    // Удаление всех символов из истории вычислений
+    const deleteAllHistory = () => {
+        setHistoryOfCalculation([]);
+        localStorage.setItem("calculation history", JSON.stringify([]));
+        toggleCorAC();
     };
 
     // Функция для проверка наличия истории вычислений в localStorage
@@ -112,7 +135,7 @@ const CalculatorProvider = ({ children }) => {
                 JSON.parse(localStorage.getItem("calculation history"))
             );
         }
-    }, []);
+    }, [CorAC]);
 
     // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
     const checkTouchEqual = () => {
@@ -131,13 +154,15 @@ const CalculatorProvider = ({ children }) => {
                 changeResultValue,
                 deleteLastSymbol,
                 deleteAllSymbols,
+                deleteAllHistory,
                 preliminaryResult,
                 bigOrLittleValue,
                 firstLineOperators,
                 toggleFirstLineOperators,
                 extendedCalc,
                 toggleExtendedCalc,
-                historyOfCalculation
+                historyOfCalculation,
+                CorAC
             }}
         >
             {children}
