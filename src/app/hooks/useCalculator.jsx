@@ -75,12 +75,16 @@ const CalculatorProvider = ({ children }) => {
 
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
-        const valueBeforeConverting = converting(value);
         try {
+            const valueBeforeConverting = converting(value);
+            if (valueBeforeConverting.indexOf("i") !== -1) {
+                setResultValue("Ошибка!");
+            } else {
+                const roundingValue = round(evaluate(valueBeforeConverting), 5);
+                // Округление результата, если нет конечной точки деления
+                setResultValue(roundingValue);
+            }
             setPreliminaryResult(true);
-            // Округление результата, если нет конечной точки деления
-            const roundingValue = round(evaluate(valueBeforeConverting), 5);
-            setResultValue(roundingValue);
             setBigOrLittleValue(true);
             setTouchEqual(true);
         } catch (error) {

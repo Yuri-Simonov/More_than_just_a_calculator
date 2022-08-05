@@ -39,7 +39,6 @@ const findLogarifm = (str) => {
 // Преобразование нестандартных операторов в понятные операторы для JS
 export const converting = (str) => {
     const strAfterLogarifms = findLogarifm(str);
-    console.log("str after logs,", strAfterLogarifms);
     const timeValue = strAfterLogarifms
         .replace(/π/g, `${pi}`)
         .replace(/^e/g, `${e}`)
