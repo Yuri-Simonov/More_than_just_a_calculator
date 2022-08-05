@@ -1,4 +1,4 @@
-import { e, pi, log } from "mathjs";
+import { e, pi, log, round, evaluate } from "mathjs";
 
 // Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
 const changeLogarifmValue = (str, i, kind, base) => {
@@ -15,9 +15,14 @@ const changeLogarifmValue = (str, i, kind, base) => {
                 startLogarifmIndex + 1,
                 endLogarifmIndex
             );
+            const strAfterOtherConverting =
+                otherOperatorConverting(findedLogarifmValue);
             const strAfterReplace = str
-                .replace(kind, `${log(findedLogarifmValue, base)}`)
-                .slice(0, -4);
+                .replace(
+                    kind,
+                    `${log(round(evaluate(strAfterOtherConverting), 5), base)}`
+                )
+                .slice(0, -newStrValue.length);
             return strAfterReplace;
         }
     }
@@ -36,15 +41,21 @@ const findLogarifm = (str) => {
     return str;
 };
 
-// Преобразование нестандартных операторов в понятные операторы для JS
-export const converting = (str) => {
-    const strAfterLogarifms = findLogarifm(str);
-    const timeValue = strAfterLogarifms
+// Преобразование операторов, не трубующих дополнительные параметры
+function otherOperatorConverting(str) {
+    const result = str
         .replace(/π/g, `${pi}`)
         .replace(/^e/g, `${e}`)
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
-    // console.log("timeValue", timeValue);
+    console.log("result", result);
+    return result;
+}
+
+// Преобразование нестандартных операторов в понятные операторы для JS
+export const converting = (str) => {
+    const strAfterLogarifms = findLogarifm(str);
+    const timeValue = otherOperatorConverting(strAfterLogarifms);
     return timeValue;
 };
