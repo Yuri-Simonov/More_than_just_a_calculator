@@ -2,7 +2,7 @@
     height: 100%;
     &__body {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         flex-direction: column-reverse;
         height: 100%;
         padding: 40px 0;
@@ -34,6 +34,7 @@
         border: 1px solid $orange;
         padding: 10px;
         text-align: right;
+        max-height: 38vh;
         overflow: hidden;
     }
 

@@ -49,11 +49,16 @@ const CalculatorProvider = ({ children }) => {
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
+        setTouchEqual(false);
         const valueOfButtons = [".", "^", "!", "+", "-", "/", "*", "%"];
         const booleanResultValueOfButtons = valueOfButtons.some((btn) => {
             return btn === btnValue;
         });
-        if (value === "0" && booleanResultValueOfButtons && Boolean(btnValue)) {
+        if (
+            value === "0" &&
+            !booleanResultValueOfButtons &&
+            Boolean(btnValue)
+        ) {
             return setValue(btnValue);
         }
         if (touchEqual) {

@@ -99,7 +99,7 @@ const CalculatorPanel = () => {
             <span
                 key={"&#8730;"}
                 className="extended-child"
-                onClick={(e) => changeValue(e.target.textContent)}
+                onClick={(e) => changeValue(e.target.textContent + "(")}
             >
                 &#8730;
             </span>, // знак корня
