@@ -2,24 +2,27 @@ import { e, pi, log, round, evaluate } from "mathjs";
 
 // Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
 const changeLogarifmValue = (str, i, kind, base) => {
-    const newStrValue = str.slice(i);
+    console.log("str", str);
+    console.log("i", i);
     let openBracketAmount = 0;
     let closeBracketAmount = 0;
-    for (let i = 0; i < newStrValue.length; i++) {
-        if (newStrValue[i] === "(") openBracketAmount++;
-        if (newStrValue[i] === ")") closeBracketAmount++;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === "(") openBracketAmount++;
+        if (str[i] === ")") closeBracketAmount++;
         if (openBracketAmount === closeBracketAmount) {
-            const startLogarifmIndex = newStrValue.indexOf("(");
-            const endLogarifmIndex = newStrValue.lastIndexOf(")");
-            const findedLogarifmValue = newStrValue.slice(
+            const startLogarifmIndex = str.indexOf("(");
+            const endLogarifmIndex = str.lastIndexOf(")");
+            const findedLogarifmValue = str.slice(
                 startLogarifmIndex + 1,
                 endLogarifmIndex
             ); // Поиск содержимого внутри логарифма
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
+            // Проверка есть ли еще логарифмы внутри логарифма
+            const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
             const strAfterReplace = str.replace(
                 kind,
-                `${log(round(evaluate(strAfterOtherConverting), 5), base)}`
+                `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
             ); // Результат логарифма # log(someValue, base)
 
             const findBaseInTheEndOfValue = strAfterReplace.indexOf("("); // Поиск base в функции log
@@ -27,7 +30,6 @@ const changeLogarifmValue = (str, i, kind, base) => {
                 0,
                 findBaseInTheEndOfValue
             ); // Удаление мешающей для корректного вычисления части base
-            findLogarifm(sliceTimeConst);
             return sliceTimeConst;
         }
     }
