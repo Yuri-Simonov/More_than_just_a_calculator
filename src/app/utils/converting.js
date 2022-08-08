@@ -21,11 +21,13 @@ const changeLogarifmValue = (str, i, kind, base) => {
                 kind,
                 `${log(round(evaluate(strAfterOtherConverting), 5), base)}`
             ); // Результат логарифма # log(someValue, base)
-            const findBaseInTheEndOfValue = strAfterReplace.lastIndexOf("("); // Поиск base в функции log
+
+            const findBaseInTheEndOfValue = strAfterReplace.indexOf("("); // Поиск base в функции log
             const sliceTimeConst = strAfterReplace.slice(
                 0,
                 findBaseInTheEndOfValue
             ); // Удаление мешающей для корректного вычисления части base
+            findLogarifm(sliceTimeConst);
             return sliceTimeConst;
         }
     }

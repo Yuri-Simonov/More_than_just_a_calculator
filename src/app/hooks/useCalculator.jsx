@@ -82,7 +82,7 @@ const CalculatorProvider = ({ children }) => {
             const valueBeforeConverting = converting(checkBrackets);
 
             if (
-                valueBeforeConverting.indexOf("i") !== -1 ||
+                valueBeforeConverting.endsWith("i") ||
                 valueBeforeConverting.indexOf("()") !== -1
             ) {
                 setResultValue("Ошибка!");
