@@ -14,16 +14,19 @@ const changeLogarifmValue = (str, i, kind, base) => {
             const findedLogarifmValue = newStrValue.slice(
                 startLogarifmIndex + 1,
                 endLogarifmIndex
-            );
+            ); // Поиск содержимого внутри логарифма
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
-            const strAfterReplace = str
-                .replace(
-                    kind,
-                    `${log(round(evaluate(strAfterOtherConverting), 5), base)}`
-                )
-                .slice(0, -newStrValue.length);
-            return strAfterReplace;
+            const strAfterReplace = str.replace(
+                kind,
+                `${log(round(evaluate(strAfterOtherConverting), 5), base)}`
+            ); // Результат логарифма # log(someValue, base)
+            const findBaseInTheEndOfValue = strAfterReplace.lastIndexOf("("); // Поиск base в функции log
+            const sliceTimeConst = strAfterReplace.slice(
+                0,
+                findBaseInTheEndOfValue
+            ); // Удаление мешающей для корректного вычисления части base
+            return sliceTimeConst;
         }
     }
 };
