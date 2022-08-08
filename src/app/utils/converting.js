@@ -52,7 +52,6 @@ function otherOperatorConverting(str) {
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
-    console.log("result", result);
     return result;
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { evaluate, round } from "mathjs";
 import { converting } from "../utils/converting";
+import { closeBracket } from "../utils/closeBracket";
 
 const CalculatorContext = React.createContext();
 
@@ -76,14 +77,21 @@ const CalculatorProvider = ({ children }) => {
     // Получение результата вычислений при клике на "="
     const changeResultValue = () => {
         try {
-            const valueBeforeConverting = converting(value);
-            if (valueBeforeConverting.indexOf("i") !== -1) {
+            const checkBrackets = closeBracket(value);
+            setValue(checkBrackets); // замена содержимого в калькуляторе. Актуально, когда добавляются недостающие закрывающие скобки
+            const valueBeforeConverting = converting(checkBrackets);
+
+            if (
+                valueBeforeConverting.indexOf("i") !== -1 ||
+                valueBeforeConverting.indexOf("()") !== -1
+            ) {
                 setResultValue("Ошибка!");
             } else {
                 const roundingValue = round(evaluate(valueBeforeConverting), 5);
                 // Округление результата, если нет конечной точки деления
                 setResultValue(roundingValue);
             }
+
             setPreliminaryResult(true);
             setBigOrLittleValue(true);
             setTouchEqual(true);
@@ -153,6 +161,11 @@ const CalculatorProvider = ({ children }) => {
         checkBtnValue ? setValue("") : setValue(resultValue);
     };
 
+    // Функция, добавляющаяя скобки в конец, когда это необходимо
+    const addCloseBracket = (strWithBracket) => {
+        setValue(strWithBracket);
+    };
+
     return (
         <CalculatorContext.Provider
             value={{
@@ -170,7 +183,8 @@ const CalculatorProvider = ({ children }) => {
                 extendedCalc,
                 toggleExtendedCalc,
                 historyOfCalculation,
-                CorAC
+                CorAC,
+                addCloseBracket
             }}
         >
             {children}
