@@ -11,28 +11,28 @@ const changeLogarifmValue = (str, i, kind, base) => {
         if (openBracketAmount === closeBracketAmount) {
             const startLogarifmIndex = str.indexOf("(");
             const endLogarifmIndex = str.lastIndexOf(")");
+            // Поиск содержимого внутри логарифма
             const findedLogarifmValue = str.slice(
                 startLogarifmIndex + 1,
                 endLogarifmIndex
-            ); // Поиск содержимого внутри логарифма
+            );
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
 
-            // console.log("findedLogarifmValue", findedLogarifmValue);
-            // console.log("strAfterOtherConverting", strAfterOtherConverting);
-
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
+            // Результат логарифма # log(someValue, base)
             const strAfterReplace = str.replace(
                 kind,
                 `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
-            ); // Результат логарифма # log(someValue, base)
-
-            const findBaseInTheEndOfValue = strAfterReplace.indexOf("("); // Поиск base в функции log
+            );
+            // Поиск base в функции log
+            const findBaseInTheEndOfValue = strAfterReplace.indexOf("(");
+            // Удаление мешающей для корректного вычисления части base
             const sliceTimeConst = strAfterReplace.slice(
                 0,
                 findBaseInTheEndOfValue
-            ); // Удаление мешающей для корректного вычисления части base
+            );
             console.log("strAfterReplace", strAfterReplace);
             return sliceTimeConst;
         }
