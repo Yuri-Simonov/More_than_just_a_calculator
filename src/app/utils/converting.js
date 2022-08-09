@@ -3,7 +3,6 @@ import { e, pi, log, round, evaluate } from "mathjs";
 // Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
 const changeLogarifmValue = (str, i, kind, base) => {
     console.log("str", str);
-    console.log("i", i);
     let openBracketAmount = 0;
     let closeBracketAmount = 0;
     for (let i = 0; i < str.length; i++) {
@@ -18,6 +17,10 @@ const changeLogarifmValue = (str, i, kind, base) => {
             ); // Поиск содержимого внутри логарифма
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
+
+            // console.log("findedLogarifmValue", findedLogarifmValue);
+            // console.log("strAfterOtherConverting", strAfterOtherConverting);
+
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
             const strAfterReplace = str.replace(
@@ -30,6 +33,7 @@ const changeLogarifmValue = (str, i, kind, base) => {
                 0,
                 findBaseInTheEndOfValue
             ); // Удаление мешающей для корректного вычисления части base
+            console.log("strAfterReplace", strAfterReplace);
             return sliceTimeConst;
         }
     }
@@ -52,7 +56,7 @@ const findLogarifm = (str) => {
 function otherOperatorConverting(str) {
     const result = str
         .replace(/π/g, `${pi}`)
-        .replace(/^e/g, `${e}`)
+        .replace(/eg{0}/g, `${e}`)
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
