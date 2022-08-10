@@ -3,7 +3,6 @@ import { e, pi, log, round, evaluate } from "mathjs";
 // Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
 const changeLogarifmValue = (str, i, kind, base) => {
     console.log("str", str);
-    console.log("i", i);
     let openBracketAmount = 0;
     let closeBracketAmount = 0;
     for (let i = 0; i < str.length; i++) {
@@ -12,24 +11,29 @@ const changeLogarifmValue = (str, i, kind, base) => {
         if (openBracketAmount === closeBracketAmount) {
             const startLogarifmIndex = str.indexOf("(");
             const endLogarifmIndex = str.lastIndexOf(")");
+            // Поиск содержимого внутри логарифма
             const findedLogarifmValue = str.slice(
                 startLogarifmIndex + 1,
                 endLogarifmIndex
-            ); // Поиск содержимого внутри логарифма
+            );
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
+
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
+            // Результат логарифма # log(someValue, base)
             const strAfterReplace = str.replace(
                 kind,
                 `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
-            ); // Результат логарифма # log(someValue, base)
-
-            const findBaseInTheEndOfValue = strAfterReplace.indexOf("("); // Поиск base в функции log
+            );
+            // Поиск base в функции log
+            const findBaseInTheEndOfValue = strAfterReplace.indexOf("(");
+            // Удаление мешающей для корректного вычисления части base
             const sliceTimeConst = strAfterReplace.slice(
                 0,
                 findBaseInTheEndOfValue
-            ); // Удаление мешающей для корректного вычисления части base
+            );
+            console.log("strAfterReplace", strAfterReplace);
             return sliceTimeConst;
         }
     }
@@ -52,7 +56,7 @@ const findLogarifm = (str) => {
 function otherOperatorConverting(str) {
     const result = str
         .replace(/π/g, `${pi}`)
-        .replace(/^e/g, `${e}`)
+        .replace(/eg{0}/g, `${e}`)
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
