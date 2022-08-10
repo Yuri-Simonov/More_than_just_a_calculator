@@ -1,55 +1,66 @@
-import { e, pi, log, round, evaluate } from "mathjs";
-
-// Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
-const changeLogarifmValue = (str, i, kind, base) => {
-    console.log("str", str);
-    let openBracketAmount = 0;
-    let closeBracketAmount = 0;
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] === "(") openBracketAmount++;
-        if (str[i] === ")") closeBracketAmount++;
-        if (openBracketAmount === closeBracketAmount) {
-            const startLogarifmIndex = str.indexOf("(");
-            const endLogarifmIndex = str.lastIndexOf(")");
-            // Поиск содержимого внутри логарифма
-            const findedLogarifmValue = str.slice(
-                startLogarifmIndex + 1,
-                endLogarifmIndex
-            );
-            const strAfterOtherConverting =
-                otherOperatorConverting(findedLogarifmValue);
-
-            // Проверка есть ли еще логарифмы внутри логарифма
-            const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
-            // Результат логарифма # log(someValue, base)
-            const strAfterReplace = str.replace(
-                kind,
-                `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
-            );
-            // Поиск base в функции log
-            const findBaseInTheEndOfValue = strAfterReplace.indexOf("(");
-            // Удаление мешающей для корректного вычисления части base
-            const sliceTimeConst = strAfterReplace.slice(
-                0,
-                findBaseInTheEndOfValue
-            );
-            console.log("strAfterReplace", strAfterReplace);
-            return sliceTimeConst;
-        }
-    }
-};
-
+import { e, pi, round, evaluate } from "mathjs";
+//  log,
 // Поиск логарифмов в поле ввода
 const findLogarifm = (str) => {
+    let result;
     const strIndexLn = str.indexOf("ln");
     const strIndexLg = str.indexOf("lg");
+    let startIndex;
     if (strIndexLn !== -1) {
-        return changeLogarifmValue(str, strIndexLn, "ln", e);
+        if (strIndexLg === -1) {
+            startIndex = strIndexLn;
+        } else if (strIndexLg > strIndexLn) {
+            startIndex = strIndexLn;
+        } else {
+            startIndex = strIndexLg;
+        }
+    } else if (strIndexLg !== -1) {
+        if (strIndexLn === -1) {
+            startIndex = strIndexLg;
+        } else if (strIndexLn > strIndexLg) {
+            startIndex = strIndexLg;
+        } else {
+            startIndex = strIndexLn;
+        }
+    } else {
+        startIndex = -1;
     }
-    if (strIndexLg !== -1) {
-        return changeLogarifmValue(str, strIndexLg, "lg", 10);
+    if (startIndex !== -1) {
+        let openBrackets = 0;
+        let closeBrackets = 0;
+        const strWithoutFirstLogarifm = str.slice(startIndex + 2);
+        console.log("strWithoutFirstLogarifm", strWithoutFirstLogarifm);
+        let strResult;
+        for (let i = 0; i < strWithoutFirstLogarifm.length; i++) {
+            if (strWithoutFirstLogarifm[i] === "(") {
+                openBrackets++;
+            }
+            if (strWithoutFirstLogarifm[i] === ")") {
+                closeBrackets++;
+            }
+            if (openBrackets === closeBrackets) {
+                strResult = strWithoutFirstLogarifm.slice(0, i + 2);
+                // console.log("strResult", strResult);
+                const strResultLength = strResult.length;
+                // console.log("strResultLength", strResultLength);
+                const strAfterReplace = str
+                    .replace("ln", `log(${strResult}, ${10})`)
+                    .slice(0, -strResultLength);
+                // console.log("strAfterReplace", strAfterReplace);
+                str = strAfterReplace;
+                break;
+            }
+        }
     }
-    return str;
+    // console.log("str", str);
+    if (str.indexOf("ln") !== -1) {
+        // console.log("here");
+        findLogarifm(str);
+    } else {
+        result = round(evaluate(str), 5);
+    }
+    // console.log("result", result);
+    return result;
 };
 
 // Преобразование операторов, не трубующих дополнительные параметры
