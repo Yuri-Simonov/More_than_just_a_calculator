@@ -50,7 +50,9 @@ const CalculatorProvider = ({ children }) => {
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
-        setTouchEqual(false);
+        if (btnValue !== "") {
+            setTouchEqual(false);
+        }
         const valueOfButtons = [".", "^", "!", "+", "-", "/", "*", "%"];
         const booleanResultValueOfButtons = valueOfButtons.some((btn) => {
             return btn === btnValue;
@@ -67,6 +69,15 @@ const CalculatorProvider = ({ children }) => {
         }
         if (btnValue !== "") {
             setBigOrLittleValue(false);
+        }
+        if (booleanResultValueOfButtons) {
+            const checkPastLastSymbol = value.slice(-1);
+            const booleanPastLastSymbol = valueOfButtons.some((btn) => {
+                return btn === checkPastLastSymbol;
+            });
+            if (booleanPastLastSymbol && checkPastLastSymbol !== "!") {
+                setValue(value.slice(0, -1));
+            }
         }
         setValue((prevState) => prevState + btnValue);
     };
