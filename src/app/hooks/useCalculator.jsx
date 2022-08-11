@@ -65,7 +65,9 @@ const CalculatorProvider = ({ children }) => {
         if (touchEqual) {
             checkTouchEqual(btnValue);
         }
-        setBigOrLittleValue(false);
+        if (btnValue !== "") {
+            setBigOrLittleValue(false);
+        }
         setValue((prevState) => prevState + btnValue);
     };
 
@@ -148,17 +150,19 @@ const CalculatorProvider = ({ children }) => {
 
     // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
     const checkTouchEqual = (btnValue) => {
-        checkLocalStorage();
-        setTouchEqual(false);
-        setPreliminaryResult(false);
-        let checkBtnValue = false;
-        for (let i = 0; i < 10; i++) {
-            if (i === Number(btnValue)) {
-                checkBtnValue = true;
-                break;
+        if (btnValue) {
+            checkLocalStorage();
+            setTouchEqual(false);
+            setPreliminaryResult(false);
+            let checkBtnValue = false;
+            for (let i = 0; i < 10; i++) {
+                if (i === Number(btnValue)) {
+                    checkBtnValue = true;
+                    break;
+                }
             }
+            checkBtnValue ? setValue("") : setValue(resultValue);
         }
-        checkBtnValue ? setValue("") : setValue(resultValue);
     };
 
     // Функция, добавляющаяя скобки в конец, когда это необходимо
