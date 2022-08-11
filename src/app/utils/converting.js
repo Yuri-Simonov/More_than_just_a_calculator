@@ -56,7 +56,8 @@ const findLogarifm = (str) => {
 function otherOperatorConverting(str) {
     const result = str
         .replace(/π/g, `${pi}`)
-        .replace(/eg{0}/g, `${e}`)
+        .replace(/e^\W/g, `${e}`)
+        .replace(/√/g, `sqrt`)
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
