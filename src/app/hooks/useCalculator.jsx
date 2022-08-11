@@ -53,12 +53,13 @@ const CalculatorProvider = ({ children }) => {
         if (btnValue !== "") {
             setTouchEqual(false);
         }
-        const valueOfButtons = [".", "^", "!", "+", "-", "/", "*", "%"];
+        const valueOfButtons = [".", "^", "!", "+", "-", "/", "*"];
         const booleanResultValueOfButtons = valueOfButtons.some((btn) => {
             return btn === btnValue;
         });
         if (
             value === "0" &&
+            !preliminaryResult &&
             !booleanResultValueOfButtons &&
             Boolean(btnValue)
         ) {
@@ -115,7 +116,7 @@ const CalculatorProvider = ({ children }) => {
 
     // Удаление последнего символа в поле калькулятора
     const deleteLastSymbol = () => {
-        if (value.length !== 0 && value !== "0") {
+        if (value.length !== 0 && value !== "0" && !touchEqual) {
             const slicedValue = value.slice(0, -1);
             slicedValue.length === 0 ? setValue("0") : setValue(slicedValue);
         }
