@@ -4,6 +4,9 @@ import equalSymbol from "../../../images/svg/equal.svg";
 import dataLogo from "../../../images/svg/data.svg";
 import bodyWeightMeterLogo from "../../../images/svg/body_weight_meter.svg";
 import ageLogo from "../../../images/svg/age.svg";
+import dateLogo from "../../../images/svg/date.svg";
+import discountLogo from "../../../images/svg/discount.svg";
+import lengthLogo from "../../../images/svg/length.svg";
 
 const Sections = () => {
     return (
@@ -49,7 +52,7 @@ const Sections = () => {
                         <Link to={"/sections/discount"}>
                             <article className="sections__item-wrapper">
                                 <div className="sections__item-logo">
-                                    <img src={equalSymbol} alt="discount" />
+                                    <img src={discountLogo} alt="discount" />
                                 </div>
                                 <h1 className="sections__item-title">Скидка</h1>
                             </article>
@@ -59,7 +62,7 @@ const Sections = () => {
                         <Link to={"/sections/date"}>
                             <article className="sections__item-wrapper">
                                 <div className="sections__item-logo">
-                                    <img src={equalSymbol} alt="date" />
+                                    <img src={dateLogo} alt="date" />
                                 </div>
                                 <h1 className="sections__item-title">Дата</h1>
                             </article>
@@ -69,7 +72,7 @@ const Sections = () => {
                         <Link to={"/sections/length"}>
                             <article className="sections__item-wrapper">
                                 <div className="sections__item-logo">
-                                    <img src={equalSymbol} alt="length" />
+                                    <img src={lengthLogo} alt="length" />
                                 </div>
                                 <h1 className="sections__item-title">Длина</h1>
                             </article>
