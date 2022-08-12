@@ -18,31 +18,20 @@ const changeLogarifmValue = (str, i, kind, base) => {
             );
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
-
+            console.log("strAfterOtherConverting", strAfterOtherConverting);
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
-            //============================================================================
-            //============================================================================
-            //============================================================================
 
             // Результат логарифма # log(someValue, base)
-            const strAfterReplace = str.replace(
-                kind,
-                `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
-            ); // Вот тут косяк, т.к. вид логарифма заменяется на "log(value), т.е. вид логарифма + его содержимое"
-
-            //============================================================================
-            //============================================================================
-            //============================================================================
-            // Поиск base в функции log
-            const findBaseInTheEndOfValue = strAfterReplace.indexOf("(");
-            // Удаление мешающей для корректного вычисления части base
-            const sliceTimeConst = strAfterReplace.slice(
-                0,
-                findBaseInTheEndOfValue
-            );
+            const strAfterReplace = str
+                .replace(strAfterOtherConverting, "")
+                .replace(
+                    kind,
+                    `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
+                )
+                .replace("()", "");
             console.log("strAfterReplace", strAfterReplace);
-            return sliceTimeConst;
+            return strAfterReplace;
         }
     }
 };
