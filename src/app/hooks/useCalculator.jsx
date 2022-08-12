@@ -50,13 +50,16 @@ const CalculatorProvider = ({ children }) => {
 
     // Добавление значений в поле калькулятора при клике на кнопки панели
     const changeValue = (btnValue) => {
-        setTouchEqual(false);
-        const valueOfButtons = [".", "^", "!", "+", "-", "/", "*", "%"];
+        if (btnValue !== "") {
+            setTouchEqual(false);
+        }
+        const valueOfButtons = [".", "^", "!", "+", "-", "/", "*"];
         const booleanResultValueOfButtons = valueOfButtons.some((btn) => {
             return btn === btnValue;
         });
         if (
             value === "0" &&
+            !preliminaryResult &&
             !booleanResultValueOfButtons &&
             Boolean(btnValue)
         ) {
@@ -65,7 +68,18 @@ const CalculatorProvider = ({ children }) => {
         if (touchEqual) {
             checkTouchEqual(btnValue);
         }
-        setBigOrLittleValue(false);
+        if (btnValue !== "") {
+            setBigOrLittleValue(false);
+        }
+        if (booleanResultValueOfButtons) {
+            const checkPastLastSymbol = value.slice(-1);
+            const booleanPastLastSymbol = valueOfButtons.some((btn) => {
+                return btn === checkPastLastSymbol;
+            });
+            if (booleanPastLastSymbol && checkPastLastSymbol !== "!") {
+                setValue(value.slice(0, -1));
+            }
+        }
         setValue((prevState) => prevState + btnValue);
     };
 
@@ -102,7 +116,7 @@ const CalculatorProvider = ({ children }) => {
 
     // Удаление последнего символа в поле калькулятора
     const deleteLastSymbol = () => {
-        if (value.length !== 0 && value !== "0") {
+        if (value.length !== 0 && value !== "0" && !touchEqual) {
             const slicedValue = value.slice(0, -1);
             slicedValue.length === 0 ? setValue("0") : setValue(slicedValue);
         }
@@ -148,17 +162,19 @@ const CalculatorProvider = ({ children }) => {
 
     // функция, проверяющая, что было нажато "=". Если да, то при наборе новых значений отправляет старое в историю и очищает поле ввода под новые данные
     const checkTouchEqual = (btnValue) => {
-        checkLocalStorage();
-        setTouchEqual(false);
-        setPreliminaryResult(false);
-        let checkBtnValue = false;
-        for (let i = 0; i < 10; i++) {
-            if (i === Number(btnValue)) {
-                checkBtnValue = true;
-                break;
+        if (btnValue) {
+            checkLocalStorage();
+            setTouchEqual(false);
+            setPreliminaryResult(false);
+            let checkBtnValue = false;
+            for (let i = 0; i < 10; i++) {
+                if (i === Number(btnValue)) {
+                    checkBtnValue = true;
+                    break;
+                }
             }
+            checkBtnValue ? setValue("") : setValue(resultValue);
         }
-        checkBtnValue ? setValue("") : setValue(resultValue);
     };
 
     // Функция, добавляющаяя скобки в конец, когда это необходимо

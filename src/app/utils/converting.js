@@ -18,23 +18,20 @@ const changeLogarifmValue = (str, i, kind, base) => {
             );
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
-
+            console.log("strAfterOtherConverting", strAfterOtherConverting);
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
+
             // Результат логарифма # log(someValue, base)
-            const strAfterReplace = str.replace(
-                kind,
-                `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
-            );
-            // Поиск base в функции log
-            const findBaseInTheEndOfValue = strAfterReplace.indexOf("(");
-            // Удаление мешающей для корректного вычисления части base
-            const sliceTimeConst = strAfterReplace.slice(
-                0,
-                findBaseInTheEndOfValue
-            );
+            const strAfterReplace = str
+                .replace(strAfterOtherConverting, "")
+                .replace(
+                    kind,
+                    `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
+                )
+                .replace("()", "");
             console.log("strAfterReplace", strAfterReplace);
-            return sliceTimeConst;
+            return strAfterReplace;
         }
     }
 };
@@ -56,7 +53,8 @@ const findLogarifm = (str) => {
 function otherOperatorConverting(str) {
     const result = str
         .replace(/π/g, `${pi}`)
-        .replace(/eg{0}/g, `${e}`)
+        .replace(/e^\W/g, `${e}`)
+        .replace(/√/g, `sqrt`)
         .replace(/arcsin/g, "asin")
         .replace(/arccos/g, "acos")
         .replace(/arctan/g, "atan");
