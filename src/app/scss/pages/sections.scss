@@ -31,6 +31,10 @@
                 transition: all 0.3s ease;
                 color: $orange;
             }
+            img {
+                transition: all 0.3s ease;
+                opacity: 1;
+            }
         }
     }
 
@@ -55,6 +59,8 @@
             margin-bottom: 6px;
         }
         img {
+            transition: all 0.3s ease;
+            opacity: 0.6;
             width: 100%;
             height: auto;
             max-width: 100%;
