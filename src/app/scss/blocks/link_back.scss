@@ -1,0 +1,20 @@
+.link-back {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    transition: all 0.3s ease;
+    &:hover {
+        svg path {
+            fill: $white;
+            stroke: $white;
+        }
+    }
+    svg {
+        width: 32px;
+        height: 24px;
+        path {
+            transition: all 0.3s ease;
+        }
+    }
+}

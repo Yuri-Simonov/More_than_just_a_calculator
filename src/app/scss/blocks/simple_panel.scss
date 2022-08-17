@@ -1,0 +1,88 @@
+.simple-panel {
+    &__body {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__prime {
+        flex: 0 1 85%;
+    }
+
+    &__operators {
+        flex: 0 1 15%;
+    }
+}
+
+.prime {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0 5px;
+    }
+    &__col {
+        flex: 1 0 18%;
+        height: 40px;
+        border: 1px solid $orange-2;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    &__cell {
+        cursor: pointer;
+        height: 100%;
+        font-size: 20px;
+
+        transition: all 0.3s ease;
+        @media (min-width: 993px) {
+            &:hover {
+                background: lighten($color: $orange, $amount: 10);
+            }
+        }
+        @media (max-width: 576px), (max-height: 440px) {
+            font-size: 14px;
+        }
+        p,
+        span {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.operators {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+
+    &__item {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 5px;
+        border-radius: 10px;
+        border: 1px solid $orange;
+        background-color: $gray-2;
+
+        img {
+            width: 25px;
+            height: 25px;
+            @media (max-width: 576px), (max-height: 440px) {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
