@@ -22,15 +22,10 @@ const DigitalData = () => {
     const [secondResult, setSecondResult] = useState(1024);
 
     const changeValue = (btnValue) => {
-        setFirstResult((prevState) => prevState + +btnValue);
+        setFirstResult((prevState) => Number(prevState + btnValue));
     };
 
     const calculation = (firstMeaseure, secondMeasure) => {
-        console.log(
-            "firstMeaseure, secondMeasure",
-            firstMeaseure,
-            secondMeasure
-        );
         const calculationResult =
             (firstResult * firstMeaseure.size) / secondMeasure.size;
 
@@ -39,7 +34,7 @@ const DigitalData = () => {
 
     useEffect(() => {
         calculation(firstSelect, secondSelect);
-    }, [firstSelect, secondSelect]);
+    }, [firstSelect, secondSelect, firstResult, secondResult]);
     const changeSelectValue = (id, value) => {
         if (id === "first") {
             digitalDataMeasures.forEach((elem) => {
