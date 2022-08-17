@@ -1,28 +1,13 @@
 import React from "react";
 import deleteSymbol from "../../images/svg/delete_symbol.svg";
+import PropTypes from "prop-types";
 
-const SimplePanel = () => {
+const SimplePanel = ({ changeValue }) => {
     const simplePanel = [
-        [
-            <span key={"7"}>7</span>, // 7
-            <span key={"8"}>8</span>, // 8
-            <span key={"9"}>9</span> // 9
-        ],
-        [
-            <span key={"4"}>4</span>, // 4
-            <span key={"5"}>5</span>, // 5
-            <span key={"6"}>6</span> // 6
-        ],
-        [
-            <span key={"1"}>1</span>, // 1
-            <span key={"2"}>2</span>, // 2
-            <span key={"3"}>3</span> // 3
-        ],
-        [
-            <span key={" "}></span>, // 0
-            <span key={"0"}>0</span>, // 0
-            <span key={"."}>.</span> // знак точки для разделения целого от дробного
-        ]
+        [7, 8, 9],
+        [4, 5, 6],
+        [1, 2, 3],
+        [" ", 0, "."]
     ];
 
     const operators = [
@@ -51,7 +36,15 @@ const SimplePanel = () => {
                                     return (
                                         <div key={i} className="prime__col">
                                             <p className="prime__cell">
-                                                {arrSubElem}
+                                                <span
+                                                    onClick={(e) =>
+                                                        changeValue(
+                                                            e.target.textContent
+                                                        )
+                                                    }
+                                                >
+                                                    {arrSubElem}
+                                                </span>
                                             </p>
                                         </div>
                                     );
@@ -72,6 +65,10 @@ const SimplePanel = () => {
             </div>
         </section>
     );
+};
+
+SimplePanel.propTypes = {
+    changeValue: PropTypes.func.isRequired
 };
 
 export default SimplePanel;

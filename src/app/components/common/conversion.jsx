@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
+const Conversion = ({
+    measures,
+    toggleSelect,
+    firstSelectValue,
+    secondSelectValue,
+    firstResultValue,
+    secondResultValue
+}) => {
     return (
         <section className="conversion">
             <div className="conversion__body">
@@ -10,7 +17,7 @@ const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
                         <select
                             name="first"
                             id="first"
-                            value={firstValue}
+                            value={firstSelectValue.shortName}
                             onChange={(e) =>
                                 toggleSelect(e.target.id, e.target.value)
                             }
@@ -26,9 +33,11 @@ const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
                     </div>
                     <div className="conversion__value">
                         <p className="conversion__result conversion__result_active">
-                            1
+                            {firstResultValue}
                         </p>
-                        <p className="conversion__measure">Мегабайт</p>
+                        <p className="conversion__measure">
+                            {firstSelectValue.fullName}
+                        </p>
                     </div>
                 </div>
                 <div className="conversion__item">
@@ -36,7 +45,7 @@ const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
                         <select
                             name="second"
                             id="second"
-                            value={secondValue}
+                            value={secondSelectValue.shortName}
                             onChange={(e) =>
                                 toggleSelect(e.target.id, e.target.value)
                             }
@@ -51,8 +60,12 @@ const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
                         </select>
                     </div>
                     <div className="conversion__value">
-                        <p className="conversion__result">1024</p>
-                        <p className="conversion__measure">Килобайт</p>
+                        <p className="conversion__result">
+                            {secondResultValue}
+                        </p>
+                        <p className="conversion__measure">
+                            {secondSelectValue.fullName}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -63,8 +76,10 @@ const Conversion = ({ measures, toggleSelect, firstValue, secondValue }) => {
 Conversion.propTypes = {
     measures: PropTypes.array.isRequired,
     toggleSelect: PropTypes.func.isRequired,
-    firstValue: PropTypes.string,
-    secondValue: PropTypes.string
+    firstSelectValue: PropTypes.object,
+    secondSelectValue: PropTypes.object,
+    firstResultValue: PropTypes.number,
+    secondResultValue: PropTypes.number
 };
 
 export default Conversion;
