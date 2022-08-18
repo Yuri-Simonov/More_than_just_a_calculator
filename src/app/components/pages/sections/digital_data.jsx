@@ -25,18 +25,33 @@ const DigitalData = () => {
     const [activeField, setActiveField] = useState(1);
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
-        if (firstResult === "0" && btnValue !== ".") {
-            setFirstResult(btnValue);
+        if (activeField === 1) {
+            if (firstResult === "0" && btnValue !== ".") {
+                setFirstResult(btnValue);
+            } else {
+                setFirstResult((prevState) => prevState + btnValue);
+            }
         } else {
-            setFirstResult((prevState) => prevState + btnValue);
+            if (secondResult === "0" && btnValue !== ".") {
+                setSecondResult(btnValue);
+            } else {
+                setSecondResult((prevState) => prevState + btnValue);
+            }
         }
     };
     // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
-        const calculationResult = evaluate(
-            String((firstResult * firstMeaseure.size) / secondMeasure.size)
-        );
-        setSecondResult(String(calculationResult));
+        if (activeField === 1) {
+            const calculationResult = evaluate(
+                String((firstResult * firstMeaseure.size) / secondMeasure.size)
+            );
+            setSecondResult(String(calculationResult));
+        } else {
+            const calculationResult = evaluate(
+                String((secondResult / firstMeaseure.size) * secondMeasure.size)
+            );
+            setFirstResult(String(calculationResult));
+        }
     };
     // Фикс задержки обновления стейта
     useEffect(() => {
@@ -65,11 +80,20 @@ const DigitalData = () => {
 
     // Удаление последнего символа в активном поле
     const deleteLastResultSymbol = () => {
-        if (firstResult.length !== 0 && firstResult !== "0") {
-            const slicedValue = String(firstResult).slice(0, -1);
-            slicedValue.length === 0
-                ? setFirstResult("0")
-                : setFirstResult(slicedValue);
+        if (activeField === 1) {
+            if (firstResult.length !== 0 && firstResult !== "0") {
+                const slicedValue = String(firstResult).slice(0, -1);
+                slicedValue.length === 0
+                    ? setFirstResult("0")
+                    : setFirstResult(slicedValue);
+            }
+        } else {
+            if (secondResult.length !== 0 && secondResult !== "0") {
+                const slicedValue = String(secondResult).slice(0, -1);
+                slicedValue.length === 0
+                    ? setSecondResult("0")
+                    : setSecondResult(slicedValue);
+            }
         }
     };
 
