@@ -19,6 +19,7 @@ import Volume from "./components/pages/sections/volume";
 import Weight from "./components/pages/sections/weight";
 import Sections from "./components/pages/sections/sections";
 import CalculatorProvider from "./hooks/useCalculator";
+import DigitalDataProvider from "./hooks/useDigitalData";
 
 function App() {
     return (
@@ -34,11 +35,13 @@ function App() {
                         component={BodyWeightMeter}
                     />
                     <Route path="/sections/date" exact component={Date} />
-                    <Route
-                        path="/sections/digital_data"
-                        exact
-                        component={DigitalData}
-                    />
+                    <DigitalDataProvider>
+                        <Route
+                            path="/sections/digital_data"
+                            exact
+                            component={DigitalData}
+                        />
+                    </DigitalDataProvider>
                     <Route
                         path="/sections/discount"
                         exact
