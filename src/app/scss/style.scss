@@ -23,4 +23,12 @@
 // Футер
 @import "blocks/footer";
 // Цветные элементы
-@import "blocks/colors-elements";
+@import "blocks/colors_elements";
+// Панель для секций
+@import "blocks/simple_panel";
+// Основной заголовок в секциях и тд
+@import "blocks/title";
+// Стрелка-ссылка назад
+@import "blocks/link_back";
+// Конвертер единиц
+@import "blocks/conversion";
