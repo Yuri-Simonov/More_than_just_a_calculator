@@ -1,6 +1,9 @@
 import React from "react";
-import deleteSymbol from "../../images/svg/delete_symbol.svg";
 import PropTypes from "prop-types";
+import DeleteAllSymbols from "./operators/delete_all_symbols";
+import DeleteLastSymbol from "./operators/delete_last_symbol";
+import OpenResultWindow from "./operators/open_result_window";
+import TogglePlusOrMinus from "./operators/toggle_plus_or_minus";
 
 const SimplePanel = ({
     changeValue,
@@ -16,31 +19,6 @@ const SimplePanel = ({
         [4, 5, 6],
         [1, 2, 3],
         [" ", 0, "."]
-    ];
-
-    const operators = [
-        <span key={"C"} className="orange" onClick={deleteAllSymbols} id="C">
-            C
-        </span>, // удаление математической операции (С)
-        <span
-            key={"del"}
-            className="orange"
-            onClick={deleteLastSymbol}
-            id="del"
-        >
-            <img src={deleteSymbol} alt="" />
-        </span>, // удаление одного символа из текущей записи в калькуляторе
-        <span key={"GO"} className="orange" onClick={openResultWindow} id="GO">
-            GO
-        </span>, // Запуск открытия модального окна с результатом
-        <span
-            key={"plusOrMinus"}
-            className="orange"
-            onClick={togglePlusOrMinus}
-            id="plusOrMinus"
-        >
-            +/-
-        </span> // Изменение с положительного на отрицательное значение и наоборот
     ];
 
     return (
@@ -71,15 +49,27 @@ const SimplePanel = ({
                         );
                     })}
                 </article>
-                {/* Возможно стоит сделать отдельную папочку для операторов и не усложнять себе жизнь. Просто добавить нужные компоненты операторов через условие. */}
                 <article className="simple-panel__operators operators">
-                    {operators.map((oper, i) => {
-                        return (
-                            <div key={i} className="operators__item">
-                                {oper}
-                            </div>
-                        );
-                    })}
+                    <div className="operators__item">
+                        <DeleteAllSymbols deleteAllSymbols={deleteAllSymbols} />
+                    </div>
+                    <div className="operators__item">
+                        <DeleteLastSymbol deleteLastSymbol={deleteLastSymbol} />
+                    </div>
+                    {goOperator && (
+                        <div className="operators__item">
+                            <OpenResultWindow
+                                openResultWindow={openResultWindow}
+                            />
+                        </div>
+                    )}
+                    {plusOrMinus && (
+                        <div className="operators__item">
+                            <TogglePlusOrMinus
+                                togglePlusOrMinus={togglePlusOrMinus}
+                            />
+                        </div>
+                    )}
                 </article>
             </div>
         </section>
