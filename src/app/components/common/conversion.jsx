@@ -7,7 +7,9 @@ const Conversion = ({
     firstSelectValue,
     secondSelectValue,
     firstResultValue,
-    secondResultValue
+    secondResultValue,
+    toggleActiveField,
+    activeField
 }) => {
     return (
         <section className="conversion">
@@ -32,7 +34,14 @@ const Conversion = ({
                         </select>
                     </div>
                     <div className="conversion__value">
-                        <p className="conversion__result conversion__result_active">
+                        <p
+                            className={
+                                activeField === 1
+                                    ? "conversion__result cr-1 conversion__result_active"
+                                    : "conversion__result cr-1"
+                            }
+                            onClick={(e) => toggleActiveField(e)}
+                        >
                             {firstResultValue}
                         </p>
                         <p className="conversion__measure">
@@ -60,7 +69,14 @@ const Conversion = ({
                         </select>
                     </div>
                     <div className="conversion__value">
-                        <p className="conversion__result">
+                        <p
+                            className={
+                                activeField === 2
+                                    ? "conversion__result cr-2 conversion__result_active"
+                                    : "conversion__result cr-2"
+                            }
+                            onClick={(e) => toggleActiveField(e)}
+                        >
                             {secondResultValue}
                         </p>
                         <p className="conversion__measure">
@@ -76,10 +92,12 @@ const Conversion = ({
 Conversion.propTypes = {
     measures: PropTypes.array.isRequired,
     toggleSelect: PropTypes.func.isRequired,
+    toggleActiveField: PropTypes.func,
     firstSelectValue: PropTypes.object,
     secondSelectValue: PropTypes.object,
     firstResultValue: PropTypes.string,
-    secondResultValue: PropTypes.string
+    secondResultValue: PropTypes.string,
+    activeField: PropTypes.number
 };
 
 export default Conversion;

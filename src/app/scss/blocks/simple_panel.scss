@@ -20,12 +20,12 @@
     gap: 5px;
     &__row {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         gap: 0 5px;
     }
     &__col {
-        flex: 1 0 18%;
+        flex: 0 0 32%;
         height: 40px;
         border: 1px solid $orange-2;
         cursor: pointer;

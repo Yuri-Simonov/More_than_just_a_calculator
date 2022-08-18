@@ -21,6 +21,8 @@ const DigitalData = () => {
     const [firstResult, setFirstResult] = useState("1");
     // Состояние второго результата
     const [secondResult, setSecondResult] = useState("1024");
+    // Состояние для переключения активного результата
+    const [activeField, setActiveField] = useState(1);
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
         if (firstResult === "0" && btnValue !== ".") {
@@ -71,6 +73,13 @@ const DigitalData = () => {
         }
     };
 
+    // Переключение активного поля
+    const changeActiveField = (elem) => {
+        elem.target.className.indexOf("cr-1") !== -1
+            ? setActiveField(1)
+            : setActiveField(2);
+    };
+
     return (
         <div className="container-inner">
             <Title title={"Данные"} />
@@ -81,6 +90,8 @@ const DigitalData = () => {
                 secondSelectValue={secondSelect}
                 firstResultValue={firstResult}
                 secondResultValue={secondResult}
+                toggleActiveField={changeActiveField}
+                activeField={activeField}
             />
             <SimplePanel
                 changeValue={changeValue}
