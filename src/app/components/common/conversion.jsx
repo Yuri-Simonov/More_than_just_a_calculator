@@ -78,8 +78,8 @@ Conversion.propTypes = {
     toggleSelect: PropTypes.func.isRequired,
     firstSelectValue: PropTypes.object,
     secondSelectValue: PropTypes.object,
-    firstResultValue: PropTypes.number,
-    secondResultValue: PropTypes.number
+    firstResultValue: PropTypes.string,
+    secondResultValue: PropTypes.string
 };
 
 export default Conversion;
