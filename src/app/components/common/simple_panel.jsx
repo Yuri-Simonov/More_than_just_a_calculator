@@ -4,6 +4,7 @@ import DeleteAllSymbols from "./operators/delete_all_symbols";
 import DeleteLastSymbol from "./operators/delete_last_symbol";
 import OpenResultWindow from "./operators/open_result_window";
 import TogglePlusOrMinus from "./operators/toggle_plus_or_minus";
+import { simplePanel } from "../../consts/simple_panel";
 
 const SimplePanel = ({
     changeValue,
@@ -14,13 +15,6 @@ const SimplePanel = ({
     openResultWindow,
     togglePlusOrMinus
 }) => {
-    const simplePanel = [
-        [7, 8, 9],
-        [4, 5, 6],
-        [1, 2, 3],
-        [0, "."]
-    ];
-
     return (
         <section className="simple-panel">
             <div className="simple-panel__body">

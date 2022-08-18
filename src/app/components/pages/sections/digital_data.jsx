@@ -3,16 +3,9 @@ import Conversion from "../../common/conversion";
 import SimplePanel from "../../common/simple_panel";
 import Title from "../../common/title";
 import { evaluate } from "mathjs";
+import { digitalDataMeasures } from "../../../consts/digital_data_measures";
 
 const DigitalData = () => {
-    const digitalDataMeasures = [
-        { shortName: "Б", fullName: "Байт", size: 1024 ** 1 },
-        { shortName: "КБ", fullName: "Килобайт", size: 1024 ** 2 },
-        { shortName: "МБ", fullName: "Мегабайт", size: 1024 ** 3 },
-        { shortName: "ГБ", fullName: "Гигабайт", size: 1024 ** 4 },
-        { shortName: "ТБ", fullName: "Терабайт", size: 1024 ** 5 },
-        { shortName: "ПБ", fullName: "Петабайт", size: 1024 ** 6 }
-    ];
     // Состояние первого селекта
     const [firstSelect, setFirstSelect] = useState(digitalDataMeasures[0]);
     // Состояние второго селекта
