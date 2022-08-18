@@ -10,9 +10,6 @@
     background: $black;
     color: $white;
     overflow: auto;
-    @media (max-height: 440px) {
-        height: auto;
-    }
 }
 
 .container-outer {

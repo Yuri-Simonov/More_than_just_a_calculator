@@ -1,5 +1,6 @@
 .header {
     width: 100%;
+    background: $gray-3;
     &__nav {
         padding: 40px 0;
         @media (max-width: 576px), (max-height: 440px) {

@@ -1,0 +1,49 @@
+.conversion {
+    &__body {
+        margin-bottom: 10vh;
+    }
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__item + &__item {
+        margin-top: 15px;
+    }
+
+    &__select {
+        select {
+            min-width: 200px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $orange;
+            @media (max-width: 576px) {
+                min-width: 100px;
+            }
+        }
+    }
+
+    &__value {
+        text-align: right;
+    }
+
+    &__result {
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 1.1;
+        @media (max-width: 320px) {
+            font-size: 16px;
+        }
+
+        &_active {
+            color: $orange;
+        }
+    }
+
+    &__measure {
+        font-size: 12px;
+        line-height: 1.1;
+        margin-top: 5px;
+    }
+}
