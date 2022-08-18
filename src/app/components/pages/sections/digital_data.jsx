@@ -20,21 +20,21 @@ const DigitalData = () => {
     const [firstResult, setFirstResult] = useState(1);
     // Состояние второго результата
     const [secondResult, setSecondResult] = useState(1024);
-
+    // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
         setFirstResult((prevState) => Number(prevState + btnValue));
     };
-
+    // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
         const calculationResult =
             (firstResult * firstMeaseure.size) / secondMeasure.size;
-
         setSecondResult(calculationResult);
     };
-
+    // Фикс задержки обновления стейта
     useEffect(() => {
         calculation(firstSelect, secondSelect);
     }, [firstSelect, secondSelect, firstResult, secondResult]);
+    // Определение какое из полей активно
     const changeSelectValue = (id, value) => {
         if (id === "first") {
             digitalDataMeasures.forEach((elem) => {
@@ -49,6 +49,23 @@ const DigitalData = () => {
         calculation(firstSelect, secondSelect);
     };
 
+    // Очистка полей от значений
+    const clearResultValues = () => {
+        setFirstResult(0);
+        setSecondResult(0);
+    };
+
+    // Удаление последнего символа в активном поле
+    const deleteLastResultSymbol = () => {
+        console.log(1);
+        if (firstResult.length !== 0 && firstResult !== "0") {
+            const slicedValue = String(firstResult).slice(0, -1);
+            slicedValue.length === 0
+                ? setFirstResult(0)
+                : setFirstResult(Number(slicedValue));
+        }
+    };
+
     return (
         <div className="container-inner">
             <Title title={"Данные"} />
@@ -60,7 +77,11 @@ const DigitalData = () => {
                 firstResultValue={firstResult}
                 secondResultValue={secondResult}
             />
-            <SimplePanel changeValue={changeValue} />
+            <SimplePanel
+                changeValue={changeValue}
+                deleteAllSymbols={clearResultValues}
+                deleteLastSymbol={deleteLastResultSymbol}
+            />
         </div>
     );
 };
