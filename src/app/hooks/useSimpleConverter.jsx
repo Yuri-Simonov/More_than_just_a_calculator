@@ -1,37 +1,47 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { evaluate } from "mathjs";
 
-export const SimpleConverter = () => {
-    const digitalDataMeasures = [
-        { shortName: "Б", fullName: "Байт", size: 1024 ** 1 },
-        { shortName: "КБ", fullName: "Килобайт", size: 1024 ** 2 },
-        { shortName: "МБ", fullName: "Мегабайт", size: 1024 ** 3 },
-        { shortName: "ГБ", fullName: "Гигабайт", size: 1024 ** 4 },
-        { shortName: "ТБ", fullName: "Терабайт", size: 1024 ** 5 },
-        { shortName: "ПБ", fullName: "Петабайт", size: 1024 ** 6 }
-    ];
-
+export const useSimpleConverter = (measures, initialState) => {
     // Состояние первого селекта
-    const [firstSelect, setFirstSelect] = useState(digitalDataMeasures[0]);
+    const [firstSelect, setFirstSelect] = useState(measures[0]);
     // Состояние второго селекта
-    const [secondSelect, setSecondSelect] = useState(digitalDataMeasures[1]);
+    const [secondSelect, setSecondSelect] = useState(measures[1]);
     // Состояние первого результата
-    const [firstResult, setFirstResult] = useState(1);
+    const [firstResult, setFirstResult] = useState(initialState[0]);
     // Состояние второго результата
-    const [secondResult, setSecondResult] = useState(1024);
+    const [secondResult, setSecondResult] = useState(initialState[1]);
+    // Состояние для переключения активного результата
+    const [activeField, setActiveField] = useState(1);
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
-        if (btnValue === ".") {
-            setFirstResult((prevState) => Number(prevState + btnValue) + ".");
+        if (activeField === 1) {
+            if (firstResult === "0" && btnValue !== ".") {
+                setFirstResult(btnValue);
+            } else {
+                setFirstResult((prevState) => prevState + btnValue);
+            }
         } else {
-            setFirstResult((prevState) => Number(prevState + btnValue));
+            if (secondResult === "0" && btnValue !== ".") {
+                setSecondResult(btnValue);
+            } else {
+                setSecondResult((prevState) => prevState + btnValue);
+            }
         }
     };
     // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
-        const calculationResult =
-            (firstResult * firstMeaseure.size) / secondMeasure.size;
-        setSecondResult(calculationResult);
+        if (activeField === 1) {
+            const calculationResult = evaluate(
+                String((firstResult * firstMeaseure.size) / secondMeasure.size)
+            );
+            setSecondResult(String(calculationResult));
+        } else {
+            const calculationResult = evaluate(
+                String((secondResult / firstMeaseure.size) * secondMeasure.size)
+            );
+            setFirstResult(String(calculationResult));
+        }
     };
     // Фикс задержки обновления стейта
     useEffect(() => {
@@ -40,12 +50,12 @@ export const SimpleConverter = () => {
     // Определение какое из полей активно
     const changeSelectValue = (id, value) => {
         if (id === "first") {
-            digitalDataMeasures.forEach((elem) => {
+            measures.forEach((elem) => {
                 if (value === elem.shortName) setFirstSelect(elem);
             });
         }
         if (id === "second") {
-            digitalDataMeasures.forEach((elem) => {
+            measures.forEach((elem) => {
                 if (value === elem.shortName) setSecondSelect(elem);
             });
         }
@@ -54,22 +64,36 @@ export const SimpleConverter = () => {
 
     // Очистка полей от значений
     const clearResultValues = () => {
-        setFirstResult(0);
-        setSecondResult(0);
+        setFirstResult("0");
+        setSecondResult("0");
     };
 
     // Удаление последнего символа в активном поле
     const deleteLastResultSymbol = () => {
-        if (firstResult.length !== 0 && firstResult !== "0") {
-            const slicedValue = String(firstResult).slice(0, -1);
-            slicedValue.length === 0
-                ? setFirstResult(0)
-                : setFirstResult(Number(slicedValue));
+        if (activeField === 1) {
+            if (firstResult.length !== 0 && firstResult !== "0") {
+                const slicedValue = String(firstResult).slice(0, -1);
+                slicedValue.length === 0
+                    ? setFirstResult("0")
+                    : setFirstResult(slicedValue);
+            }
+        } else {
+            if (secondResult.length !== 0 && secondResult !== "0") {
+                const slicedValue = String(secondResult).slice(0, -1);
+                slicedValue.length === 0
+                    ? setSecondResult("0")
+                    : setSecondResult(slicedValue);
+            }
         }
     };
 
-    return (
-        digitalDataMeasures,
+    // Переключение активного поля
+    const changeActiveField = (elem) => {
+        elem.target.className.indexOf("cr-1") !== -1
+            ? setActiveField(1)
+            : setActiveField(2);
+    };
+    return {
         changeSelectValue,
         firstSelect,
         secondSelect,
@@ -77,10 +101,12 @@ export const SimpleConverter = () => {
         secondResult,
         changeValue,
         clearResultValues,
-        deleteLastResultSymbol
-    );
+        deleteLastResultSymbol,
+        changeActiveField,
+        activeField
+    };
 };
-SimpleConverter.propTypes = {
+useSimpleConverter.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
