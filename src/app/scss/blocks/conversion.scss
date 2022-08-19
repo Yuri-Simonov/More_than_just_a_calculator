@@ -7,6 +7,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 10px;
+        @media (max-width: 576px) and (min-height: 440px) {
+            flex-direction: column;
+        }
     }
     &__item + &__item {
         margin-top: 15px;
@@ -26,6 +30,9 @@
 
     &__value {
         text-align: right;
+        @media (max-width: 576px) {
+            text-align: center;
+        }
     }
 
     &__result {

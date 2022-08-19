@@ -23,6 +23,9 @@
         justify-content: flex-end;
         align-items: center;
         gap: 0 5px;
+        @media (max-height: 440px) {
+            margin-left: -1.5vw;
+        }
     }
     &__col {
         flex: 0 0 32%;
