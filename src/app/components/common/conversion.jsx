@@ -91,7 +91,7 @@ const Conversion = ({
 
 Conversion.propTypes = {
     measures: PropTypes.array.isRequired,
-    toggleSelect: PropTypes.func.isRequired,
+    toggleSelect: PropTypes.func,
     toggleActiveField: PropTypes.func,
     firstSelectValue: PropTypes.object,
     secondSelectValue: PropTypes.object,
