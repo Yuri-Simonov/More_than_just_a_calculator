@@ -4,7 +4,7 @@ export const lengthMeasures = [
     { shortName: "дм", fullName: "Дециметры", size: 10 ** -1 },
     { shortName: "см", fullName: "Сантиметры", size: 10 ** -2 },
     { shortName: "мм", fullName: "Миллиметры", size: 10 ** -3 },
-    { shortName: "&#956;m", fullName: "Микрометры", size: 10 ** -6 },
+    { shortName: `μm`, fullName: "Микрометры", size: 10 ** -6 },
     { shortName: "нм", fullName: "Нанометры", size: 10 ** -9 },
     { shortName: "пм", fullName: "Пикометры", size: 10 ** -12 },
     { shortName: "nmi", fullName: "Морские мили", size: 1852 },
