@@ -179,18 +179,72 @@ export const useSimpleConverter = (
             }
             setSecondResult(String(calculationResult));
         } else {
-            let calculationResult = evaluate(
-                String(
-                    (secondResult / firstMeasure.toCsize) *
-                        secondMeasure.fromCsize
-                )
-            );
+            let calculationResult;
+
+            let intermediateResult;
+            switch (secondMeasure.shortName) {
+                case "C":
+                    intermediateResult = Number(secondResult);
+                    break;
+                case "F":
+                    intermediateResult = evaluate(
+                        String((Number(secondResult) - 32) / 1.8)
+                    );
+                    break;
+                case "K":
+                    intermediateResult = evaluate(
+                        String(Number(secondResult) - 273.15)
+                    );
+                    break;
+                case "R":
+                    intermediateResult = evaluate(
+                        String((Number(secondResult) - 491.67) / 1.8)
+                    );
+                    break;
+                case "Re":
+                    intermediateResult = evaluate(
+                        String(Number(secondResult) / 0.8)
+                    );
+                    break;
+                default:
+                    break;
+            }
+
+            switch (firstMeasure.shortName) {
+                case "C":
+                    calculationResult = Number(intermediateResult);
+                    break;
+                case "F":
+                    calculationResult = evaluate(
+                        String(Number(intermediateResult) * 1.8 + 32)
+                    );
+                    break;
+                case "K":
+                    calculationResult = evaluate(
+                        String(Number(intermediateResult) + 273.15)
+                    );
+                    break;
+                case "R":
+                    calculationResult = evaluate(
+                        String(Number(intermediateResult) * 1.8 + 491.67)
+                    );
+                    break;
+                case "Re":
+                    calculationResult = evaluate(
+                        String(Number(intermediateResult) * 0.8)
+                    );
+                    break;
+                default:
+                    break;
+            }
             if (String(calculationResult).match(/\.[9]+/g)) {
                 calculationResult = round(calculationResult, 6);
             }
             setFirstResult(String(calculationResult));
         }
     }
+
+    //
 
     return {
         changeSelectValue,
