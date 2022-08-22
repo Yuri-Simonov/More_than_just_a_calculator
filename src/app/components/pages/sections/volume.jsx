@@ -7,6 +7,8 @@ import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Volume = () => {
     const initialState = ["1", "10000"];
+    const methodOfCalculation = "simple";
+
     const {
         changeSelectValue,
         firstSelect,
@@ -18,7 +20,7 @@ const Volume = () => {
         deleteLastResultSymbol,
         changeActiveField,
         activeField
-    } = useSimpleConverter(volumeMeasures, initialState);
+    } = useSimpleConverter(volumeMeasures, initialState, methodOfCalculation);
 
     return (
         <div className="container-inner">

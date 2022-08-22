@@ -7,6 +7,7 @@ import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const DigitalData = () => {
     const initialState = ["1", "1024"];
+    const methodOfCalculation = "simple";
 
     const {
         changeSelectValue,
@@ -19,7 +20,11 @@ const DigitalData = () => {
         deleteLastResultSymbol,
         changeActiveField,
         activeField
-    } = useSimpleConverter(digitalDataMeasures, initialState);
+    } = useSimpleConverter(
+        digitalDataMeasures,
+        initialState,
+        methodOfCalculation
+    );
 
     return (
         <div className="container-inner">

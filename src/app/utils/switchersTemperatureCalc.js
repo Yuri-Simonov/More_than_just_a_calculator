@@ -1,4 +1,5 @@
 import { evaluate } from "mathjs";
+
 export const firstSelectFunc = (firstMeasure, secondMeasure, startResult) => {
     let calculationResult;
     let intermediateResult;
