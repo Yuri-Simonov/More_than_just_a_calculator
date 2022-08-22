@@ -1,26 +1,27 @@
-const firstSelect = (firstMeasure, secondMeasure) => {
+import { evaluate } from "mathjs";
+export const firstSelectFunc = (firstMeasure, secondMeasure, startResult) => {
     let calculationResult;
     let intermediateResult;
 
     switch (firstMeasure.shortName) {
         case "C":
-            intermediateResult = Number(firstResult);
+            intermediateResult = Number(startResult);
             break;
         case "F":
             intermediateResult = evaluate(
-                String((Number(firstResult) - 32) / 1.8)
+                String((Number(startResult) - 32) / 1.8)
             );
             break;
         case "K":
-            intermediateResult = evaluate(String(Number(firstResult) - 273.15));
+            intermediateResult = evaluate(String(Number(startResult) - 273.15));
             break;
         case "R":
             intermediateResult = evaluate(
-                String((Number(firstResult) - 491.67) / 1.8)
+                String((Number(startResult) - 491.67) / 1.8)
             );
             break;
         case "Re":
-            intermediateResult = evaluate(String(Number(firstResult) / 0.8));
+            intermediateResult = evaluate(String(Number(startResult) / 0.8));
             break;
         default:
             break;
@@ -53,4 +54,6 @@ const firstSelect = (firstMeasure, secondMeasure) => {
         default:
             break;
     }
+
+    return calculationResult;
 };

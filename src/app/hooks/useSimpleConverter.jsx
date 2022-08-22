@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { evaluate, round } from "mathjs";
+import { firstSelectFunc } from "../utils/switchersTemperatureCalc";
 
 export const useSimpleConverter = (
     measures,
@@ -16,6 +17,7 @@ export const useSimpleConverter = (
     const [secondResult, setSecondResult] = useState(initialState[1]);
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
+
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
         if (activeField === 1) {
@@ -32,6 +34,7 @@ export const useSimpleConverter = (
             }
         }
     };
+
     // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
         // Если вычисление простая пропорция
@@ -41,6 +44,7 @@ export const useSimpleConverter = (
         methodOfCalculation === "temperature" &&
             temperatureCalculation(firstMeaseure, secondMeasure);
     };
+
     // Фикс задержки обновления стейта
     useEffect(() => {
         calculation(firstSelect, secondSelect);
@@ -95,20 +99,16 @@ export const useSimpleConverter = (
     // Вычисление по простой пропорции
     function simpleCalculation(firstMeaseure, secondMeasure) {
         if (activeField === 1) {
-            let calculationResult = evaluate(
+            const calculationResult = evaluate(
                 String((firstResult * firstMeaseure.size) / secondMeasure.size)
             );
-            if (String(calculationResult).match(/\.[9]+/g)) {
-                calculationResult = round(calculationResult, 6);
-            }
+            roundResult(calculationResult);
             setSecondResult(String(calculationResult));
         } else {
-            let calculationResult = evaluate(
+            const calculationResult = evaluate(
                 String((secondResult / firstMeaseure.size) * secondMeasure.size)
             );
-            if (String(calculationResult).match(/\.[9]+/g)) {
-                calculationResult = round(calculationResult, 6);
-            }
+            roundResult(calculationResult);
             setFirstResult(String(calculationResult));
         }
     }
@@ -116,135 +116,32 @@ export const useSimpleConverter = (
     // Вычисление температуры по формулам
     function temperatureCalculation(firstMeasure, secondMeasure) {
         if (activeField === 1) {
-            let calculationResult;
+            const calculationResult = firstSelectFunc(
+                firstMeasure,
+                secondMeasure,
+                firstResult
+            );
 
-            let intermediateResult;
-            switch (firstMeasure.shortName) {
-                case "C":
-                    intermediateResult = Number(firstResult);
-                    break;
-                case "F":
-                    intermediateResult = evaluate(
-                        String((Number(firstResult) - 32) / 1.8)
-                    );
-                    break;
-                case "K":
-                    intermediateResult = evaluate(
-                        String(Number(firstResult) - 273.15)
-                    );
-                    break;
-                case "R":
-                    intermediateResult = evaluate(
-                        String((Number(firstResult) - 491.67) / 1.8)
-                    );
-                    break;
-                case "Re":
-                    intermediateResult = evaluate(
-                        String(Number(firstResult) / 0.8)
-                    );
-                    break;
-                default:
-                    break;
-            }
-
-            switch (secondMeasure.shortName) {
-                case "C":
-                    calculationResult = Number(intermediateResult);
-                    break;
-                case "F":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 1.8 + 32)
-                    );
-                    break;
-                case "K":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) + 273.15)
-                    );
-                    break;
-                case "R":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 1.8 + 491.67)
-                    );
-                    break;
-                case "Re":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 0.8)
-                    );
-                    break;
-                default:
-                    break;
-            }
-            if (String(calculationResult).match(/\.[9]+/g)) {
-                calculationResult = round(calculationResult, 6);
-            }
+            roundResult(calculationResult);
             setSecondResult(String(calculationResult));
         } else {
-            let calculationResult;
-
-            let intermediateResult;
-            switch (secondMeasure.shortName) {
-                case "C":
-                    intermediateResult = Number(secondResult);
-                    break;
-                case "F":
-                    intermediateResult = evaluate(
-                        String((Number(secondResult) - 32) / 1.8)
-                    );
-                    break;
-                case "K":
-                    intermediateResult = evaluate(
-                        String(Number(secondResult) - 273.15)
-                    );
-                    break;
-                case "R":
-                    intermediateResult = evaluate(
-                        String((Number(secondResult) - 491.67) / 1.8)
-                    );
-                    break;
-                case "Re":
-                    intermediateResult = evaluate(
-                        String(Number(secondResult) / 0.8)
-                    );
-                    break;
-                default:
-                    break;
-            }
-
-            switch (firstMeasure.shortName) {
-                case "C":
-                    calculationResult = Number(intermediateResult);
-                    break;
-                case "F":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 1.8 + 32)
-                    );
-                    break;
-                case "K":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) + 273.15)
-                    );
-                    break;
-                case "R":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 1.8 + 491.67)
-                    );
-                    break;
-                case "Re":
-                    calculationResult = evaluate(
-                        String(Number(intermediateResult) * 0.8)
-                    );
-                    break;
-                default:
-                    break;
-            }
-            if (String(calculationResult).match(/\.[9]+/g)) {
-                calculationResult = round(calculationResult, 6);
-            }
+            const calculationResult = firstSelectFunc(
+                secondMeasure,
+                firstMeasure,
+                secondResult
+            );
+            roundResult(calculationResult);
             setFirstResult(String(calculationResult));
         }
     }
 
-    //
+    // Округление значения
+    function roundResult(res) {
+        if (String(res).match(/\.[9]+/g)) {
+            res = round(res, 6);
+        }
+        return res;
+    }
 
     return {
         changeSelectValue,
