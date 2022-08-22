@@ -7,6 +7,7 @@ import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Length = () => {
     const initialState = ["1", "0.1"];
+    const methodOfCalculation = "simple";
     const {
         changeSelectValue,
         firstSelect,
@@ -18,7 +19,7 @@ const Length = () => {
         deleteLastResultSymbol,
         changeActiveField,
         activeField
-    } = useSimpleConverter(lengthMeasures, initialState);
+    } = useSimpleConverter(lengthMeasures, initialState, methodOfCalculation);
 
     return (
         <div className="container-inner">

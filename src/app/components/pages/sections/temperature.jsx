@@ -7,6 +7,7 @@ import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Temperature = () => {
     const initialState = ["1", "33.8"];
+    const methodOfCalculation = "temperature";
     const {
         changeSelectValue,
         firstSelect,
@@ -18,7 +19,11 @@ const Temperature = () => {
         deleteLastResultSymbol,
         changeActiveField,
         activeField
-    } = useSimpleConverter(temperatureMeasures, initialState);
+    } = useSimpleConverter(
+        temperatureMeasures,
+        initialState,
+        methodOfCalculation
+    );
 
     return (
         <div className="container-inner">
