@@ -40,9 +40,12 @@ export const useSimpleConverter = (measures, initialState) => {
             }
             setSecondResult(String(calculationResult));
         } else {
-            const calculationResult = evaluate(
+            let calculationResult = evaluate(
                 String((secondResult / firstMeaseure.size) * secondMeasure.size)
             );
+            if (String(calculationResult).match(/\.[9]+/g)) {
+                calculationResult = round(calculationResult, 6);
+            }
             setFirstResult(String(calculationResult));
         }
     };
@@ -109,6 +112,13 @@ export const useSimpleConverter = (measures, initialState) => {
         activeField
     };
 };
+
+useSimpleConverter.defaultProps = {
+    simpleCalculation: false,
+    temperatureCalculation: false,
+    multiDecimalSystemCalculation: false
+};
+
 useSimpleConverter.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
