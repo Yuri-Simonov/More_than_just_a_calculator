@@ -102,14 +102,14 @@ export const useSimpleConverter = (
             const calculationResult = evaluate(
                 String((firstResult * firstMeaseure.size) / secondMeasure.size)
             );
-            roundResult(calculationResult);
-            setSecondResult(String(calculationResult));
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
         } else {
             const calculationResult = evaluate(
                 String((secondResult / firstMeaseure.size) * secondMeasure.size)
             );
-            roundResult(calculationResult);
-            setFirstResult(String(calculationResult));
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
         }
     }
 
@@ -122,22 +122,22 @@ export const useSimpleConverter = (
                 firstResult
             );
 
-            roundResult(calculationResult);
-            setSecondResult(String(calculationResult));
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
         } else {
             const calculationResult = firstSelectFunc(
                 secondMeasure,
                 firstMeasure,
                 secondResult
             );
-            roundResult(calculationResult);
-            setFirstResult(String(calculationResult));
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
         }
     }
 
     // Округление значения
     function roundResult(res) {
-        if (String(res).match(/\.[9]+/g)) {
+        if (String(res).match(/\.\d{6,}/g)) {
             res = round(res, 6);
         }
         return res;
