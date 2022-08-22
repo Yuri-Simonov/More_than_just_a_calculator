@@ -18,7 +18,8 @@ const Temperature = () => {
         clearResultValues,
         deleteLastResultSymbol,
         changeActiveField,
-        activeField
+        activeField,
+        togglePlusOrMinus
     } = useSimpleConverter(
         temperatureMeasures,
         initialState,
@@ -42,6 +43,8 @@ const Temperature = () => {
                 changeValue={changeValue}
                 deleteAllSymbols={clearResultValues}
                 deleteLastSymbol={deleteLastResultSymbol}
+                plusOrMinus={true}
+                togglePlusOrMinus={togglePlusOrMinus}
             />
         </div>
     );
