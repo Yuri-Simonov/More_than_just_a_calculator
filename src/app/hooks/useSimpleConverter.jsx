@@ -17,6 +17,7 @@ export const useSimpleConverter = (
     const [secondResult, setSecondResult] = useState(initialState[1]);
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
+    // Состояние для оператора +/-
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
@@ -143,6 +144,25 @@ export const useSimpleConverter = (
         return res;
     }
 
+    // Переключение оператора +/- на панели
+    const togglePlusOrMinus = () => {
+        if (activeField === 1) {
+            if (firstResult[0] === "-") {
+                const newResult = firstResult.slice(1);
+                setFirstResult(newResult);
+            } else {
+                setFirstResult((prevState) => "-" + prevState);
+            }
+        } else {
+            if (secondResult[0] === "-") {
+                const newResult = secondResult.slice(1);
+                setSecondResult(newResult);
+            } else {
+                setSecondResult((prevState) => "-" + prevState);
+            }
+        }
+    };
+
     return {
         changeSelectValue,
         firstSelect,
@@ -153,6 +173,7 @@ export const useSimpleConverter = (
         clearResultValues,
         deleteLastResultSymbol,
         changeActiveField,
-        activeField
+        activeField,
+        togglePlusOrMinus
     };
 };
