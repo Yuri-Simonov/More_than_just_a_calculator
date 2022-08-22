@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { evaluate } from "mathjs";
+import { evaluate, round } from "mathjs";
 
 export const useSimpleConverter = (measures, initialState) => {
     // Состояние первого селекта
@@ -32,9 +32,12 @@ export const useSimpleConverter = (measures, initialState) => {
     // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
         if (activeField === 1) {
-            const calculationResult = evaluate(
+            let calculationResult = evaluate(
                 String((firstResult * firstMeaseure.size) / secondMeasure.size)
             );
+            if (String(calculationResult).match(/\.[9]+/g)) {
+                calculationResult = round(calculationResult, 6);
+            }
             setSecondResult(String(calculationResult));
         } else {
             const calculationResult = evaluate(
