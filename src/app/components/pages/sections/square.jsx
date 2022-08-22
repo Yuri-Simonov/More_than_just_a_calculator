@@ -2,7 +2,7 @@ import React from "react";
 import Conversion from "../../common/conversion";
 import SimplePanel from "../../common/simple_panel";
 import Title from "../../common/title";
-import { squareMeasures } from "../../../consts/square_measures";
+import { squareMeasures } from "../../../consts/measures/square_measures";
 import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Square = () => {

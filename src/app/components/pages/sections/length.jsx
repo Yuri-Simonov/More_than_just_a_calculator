@@ -2,7 +2,7 @@ import React from "react";
 import Conversion from "../../common/conversion";
 import SimplePanel from "../../common/simple_panel";
 import Title from "../../common/title";
-import { lengthMeasures } from "../../../consts/length_measures";
+import { lengthMeasures } from "../../../consts/measures/length_measures";
 import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Length = () => {
