@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { evaluate } from "mathjs";
+import { evaluate, round } from "mathjs";
+import { firstSelectFunc } from "../utils/switchersTemperatureCalc";
 
-export const useSimpleConverter = (measures, initialState) => {
+export const useSimpleConverter = (
+    measures,
+    initialState,
+    methodOfCalculation
+) => {
     // Состояние первого селекта
     const [firstSelect, setFirstSelect] = useState(measures[0]);
     // Состояние второго селекта
@@ -13,6 +17,7 @@ export const useSimpleConverter = (measures, initialState) => {
     const [secondResult, setSecondResult] = useState(initialState[1]);
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
+
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
         if (activeField === 1) {
@@ -29,20 +34,17 @@ export const useSimpleConverter = (measures, initialState) => {
             }
         }
     };
+
     // Вычисление значения для конвертации
     const calculation = (firstMeaseure, secondMeasure) => {
-        if (activeField === 1) {
-            const calculationResult = evaluate(
-                String((firstResult * firstMeaseure.size) / secondMeasure.size)
-            );
-            setSecondResult(String(calculationResult));
-        } else {
-            const calculationResult = evaluate(
-                String((secondResult / firstMeaseure.size) * secondMeasure.size)
-            );
-            setFirstResult(String(calculationResult));
-        }
+        // Если вычисление простая пропорция
+        methodOfCalculation === "simple" &&
+            simpleCalculation(firstMeaseure, secondMeasure);
+        // Если вычисление температуры по формулам
+        methodOfCalculation === "temperature" &&
+            temperatureCalculation(firstMeaseure, secondMeasure);
     };
+
     // Фикс задержки обновления стейта
     useEffect(() => {
         calculation(firstSelect, secondSelect);
@@ -93,6 +95,54 @@ export const useSimpleConverter = (measures, initialState) => {
             ? setActiveField(1)
             : setActiveField(2);
     };
+
+    // Вычисление по простой пропорции
+    function simpleCalculation(firstMeaseure, secondMeasure) {
+        if (activeField === 1) {
+            const calculationResult = evaluate(
+                String((firstResult * firstMeaseure.size) / secondMeasure.size)
+            );
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
+        } else {
+            const calculationResult = evaluate(
+                String((secondResult / firstMeaseure.size) * secondMeasure.size)
+            );
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
+        }
+    }
+
+    // Вычисление температуры по формулам
+    function temperatureCalculation(firstMeasure, secondMeasure) {
+        if (activeField === 1) {
+            const calculationResult = firstSelectFunc(
+                firstMeasure,
+                secondMeasure,
+                firstResult
+            );
+
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
+        } else {
+            const calculationResult = firstSelectFunc(
+                secondMeasure,
+                firstMeasure,
+                secondResult
+            );
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
+        }
+    }
+
+    // Округление значения
+    function roundResult(res) {
+        if (String(res).match(/\.\d{6,}/g)) {
+            res = round(res, 6);
+        }
+        return res;
+    }
+
     return {
         changeSelectValue,
         firstSelect,
@@ -105,10 +155,4 @@ export const useSimpleConverter = (measures, initialState) => {
         changeActiveField,
         activeField
     };
-};
-useSimpleConverter.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ])
 };
