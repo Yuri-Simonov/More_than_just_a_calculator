@@ -138,7 +138,7 @@ export const useSimpleConverter = (
 
     // Округление значения
     function roundResult(res) {
-        if (String(res).match(/\.\d{6,}/g)) {
+        if (String(res).match(/\.\d{6,}[0-9]+$/g)) {
             res = round(res, 6);
         }
         return res;

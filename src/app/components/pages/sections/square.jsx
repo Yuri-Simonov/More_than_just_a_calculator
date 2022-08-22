@@ -7,6 +7,8 @@ import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const Square = () => {
     const initialState = ["1", "10000"];
+    const methodOfCalculation = "simple";
+
     const {
         changeSelectValue,
         firstSelect,
@@ -18,7 +20,7 @@ const Square = () => {
         deleteLastResultSymbol,
         changeActiveField,
         activeField
-    } = useSimpleConverter(squareMeasures, initialState);
+    } = useSimpleConverter(squareMeasures, initialState, methodOfCalculation);
 
     return (
         <div className="container-inner">
