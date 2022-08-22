@@ -2,7 +2,7 @@ import React from "react";
 import Conversion from "../../common/conversion";
 import SimplePanel from "../../common/simple_panel";
 import Title from "../../common/title";
-import { digitalDataMeasures } from "../../../consts/digital_data_measures";
+import { digitalDataMeasures } from "../../../consts/measures/digital_data_measures";
 import { useSimpleConverter } from "../../../hooks/useSimpleConverter";
 
 const DigitalData = () => {
