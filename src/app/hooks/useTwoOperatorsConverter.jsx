@@ -20,6 +20,8 @@ export const useTwoOperatorsConverter = (
     const [activeField, setActiveField] = useState(1);
     // Состояние для проверки первый ли это ввод после захода на страницу или нет
     const [firstVisit, setFirstVisit] = useState(true);
+    // Состояние для открытия/закрытия модалки результата
+    const [openOrCloseModal, setOpenOrCloseModal] = useState(false);
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
@@ -140,6 +142,12 @@ export const useTwoOperatorsConverter = (
         return res;
     }
 
+    // Закрытие модального окна при клике вне его области
+    const toggleOpenOrCloseModal = () => {
+        console.log(1);
+        setOpenOrCloseModal((prevState) => !prevState);
+    };
+
     return {
         changeSelectValue,
         firstSelect,
@@ -151,6 +159,8 @@ export const useTwoOperatorsConverter = (
         deleteLastResultSymbol,
         changeActiveField,
         activeField,
-        finalResult
+        finalResult,
+        openOrCloseModal,
+        toggleOpenOrCloseModal
     };
 };

@@ -1,9 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { bool, func } from "prop-types";
 
-const BWMResult = ({ finalResult }) => {
+const BWMResult = ({
+    finalResult,
+    openOrCloseModal,
+    toggleOpenOrCloseModal
+}) => {
+    const classOfModal =
+        "bwm-result" + (openOrCloseModal ? "bwm-result_active" : "");
+
     return (
-        <section className="bwm-result">
+        <section className={classOfModal}>
             <div className="bwm-result__body">
                 <article className="bwm-result__total">
                     <div className="bwm-result__result orange">
@@ -30,13 +37,18 @@ const BWMResult = ({ finalResult }) => {
                     </div>
                 </article>
             </div>
-            <div className="bwm-result__overlay"></div>
+            <div
+                className="bwm-result__overlay"
+                onClick={toggleOpenOrCloseModal}
+            ></div>
         </section>
     );
 };
 
 BWMResult.propTypes = {
-    finalResult: PropTypes.number
+    finalResult: PropTypes.number,
+    openOrCloseModal: bool,
+    toggleOpenOrCloseModal: func
 };
 
 export default BWMResult;
