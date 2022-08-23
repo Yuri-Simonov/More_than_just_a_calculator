@@ -23,7 +23,7 @@ const Time = () => {
 
     return (
         <div className="container-inner">
-            <Title title={"Скорость"} />
+            <Title title={"Время"} />
             <Conversion
                 measures={timeMeasures}
                 toggleSelect={changeSelectValue}
