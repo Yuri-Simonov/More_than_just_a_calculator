@@ -1,0 +1,110 @@
+.bwm-result {
+    display: none;
+    &__active {
+        display: block;
+    }
+    &__body {
+        position: fixed;
+        z-index: 2;
+        width: 400px;
+        max-height: 100vh;
+        overflow: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $gray-2;
+        border: 1px solid $orange;
+        border-radius: 20px;
+        padding: 20px 20px 30px;
+        box-shadow: 0px 0px 15px $orange;
+        @media (max-width: 576px), (max-height: 440px) {
+            width: calc(100vw - 30px);
+        }
+    }
+
+    &__total {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 20px;
+        border-bottom: 4px solid $gray;
+    }
+
+    &__result {
+        font-size: 44px;
+        line-height: 1.1;
+    }
+    &__about {
+    }
+
+    &__title {
+        font-size: 26px;
+        line-height: 1.1;
+    }
+
+    &__status {
+    }
+
+    &__info {
+        position: relative;
+        margin: 20px 0;
+    }
+
+    &__subtitle {
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.1;
+        margin-bottom: 15px;
+    }
+
+    &__names {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__name {
+        flex: 0 0 33%;
+        text-align: center;
+    }
+
+    &__scale {
+        height: 3px;
+        width: 100%;
+        background: $scale;
+        margin: 10px 0;
+    }
+
+    &__numbers {
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__number {
+        white-space: nowrap;
+        &:nth-child(1) {
+            flex: 0 0 26%;
+        }
+        &:nth-child(2) {
+            flex: 0 0 30%;
+        }
+        &:nth-child(3) {
+            flex: 0 0 26%;
+        }
+        &:nth-child(4) {
+            flex: 0 0 8%;
+        }
+    }
+    &__overlay {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        background-color: $orange-4;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}

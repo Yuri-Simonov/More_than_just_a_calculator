@@ -4,6 +4,7 @@ import Title from "../../common/title";
 import { bodyWeightMeterMeasures } from "../../../consts/measures/body_weight_meter_measures";
 import { useTwoOperatorsConverter } from "../../../hooks/useTwoOperatorsConverter";
 import ConversionTwoOperators from "../../common/conversionTwoOperators";
+import BWMResult from "../../common/modal_windows/BWMResult";
 
 const BodyWeightMeter = () => {
     const initialState = ["60", "170"];
@@ -39,7 +40,7 @@ const BodyWeightMeter = () => {
                 toggleActiveField={changeActiveField}
                 activeField={activeField}
             />
-            <p className="conversion__result">{finalResult}</p>
+            <BWMResult finalResult={finalResult} />
             <SimplePanel
                 changeValue={changeValue}
                 deleteAllSymbols={clearResultValues}

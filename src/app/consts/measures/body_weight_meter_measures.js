@@ -4,8 +4,8 @@ const weightMeasures = [
 ];
 
 const lengthMeasures = [
-    { shortName: "м", fullName: "Метры", size: 1 },
     { shortName: "см", fullName: "Сантиметры", size: 1e-2 },
+    { shortName: "м", fullName: "Метры", size: 1 },
     { shortName: "ft", fullName: "Футы", size: 0.3048 },
     { shortName: "in", fullName: "Дюймы", size: 0.0254 }
 ];
