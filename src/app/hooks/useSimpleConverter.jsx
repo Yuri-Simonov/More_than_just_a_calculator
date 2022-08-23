@@ -17,7 +17,8 @@ export const useSimpleConverter = (
     const [secondResult, setSecondResult] = useState(initialState[1]);
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
-    // Состояние для оператора +/-
+    // Состояние для проверки первый ли это ввод после захода на страницу или нет
+    const [firstVisit, setFirstVisit] = useState(true);
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
@@ -25,13 +26,37 @@ export const useSimpleConverter = (
             if (firstResult === "0" && btnValue !== ".") {
                 setFirstResult(btnValue);
             } else {
-                setFirstResult((prevState) => prevState + btnValue);
+                if (firstVisit && btnValue !== ".") {
+                    setFirstResult(btnValue);
+                } else {
+                    if (btnValue === ".") {
+                        if (firstResult.indexOf(".") === -1) {
+                            setFirstResult((prevState) => prevState + btnValue);
+                        }
+                    } else {
+                        setFirstResult((prevState) => prevState + btnValue);
+                    }
+                }
+                setFirstVisit(false);
             }
         } else {
             if (secondResult === "0" && btnValue !== ".") {
                 setSecondResult(btnValue);
             } else {
-                setSecondResult((prevState) => prevState + btnValue);
+                if (firstVisit && btnValue !== ".") {
+                    setSecondResult(btnValue);
+                } else {
+                    if (btnValue === ".") {
+                        if (secondResult.indexOf(".") === -1) {
+                            setSecondResult(
+                                (prevState) => prevState + btnValue
+                            );
+                        }
+                    } else {
+                        setSecondResult((prevState) => prevState + btnValue);
+                    }
+                }
+                setFirstVisit(false);
             }
         }
     };
