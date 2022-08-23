@@ -3,11 +3,26 @@
 $orange: orange;
 $orange-2: #ffa60080;
 $orange-3: #8b5b0360;
+$orange-4: #331f0673;
 
 $white: #fff;
 
+$black: #000;
+
 $gray: gray;
 $gray-2: #242323;
-$gray-3: linear-gradient(180deg, $orange-3 0%, black 66%);
+$gray-3: linear-gradient(180deg, $orange-3 0%, $black 66%);
 
-$black: #000;
+$blue: #2b4ce0;
+$green: #14d114;
+$red: #fa1f1f;
+
+$scale: linear-gradient(
+    90deg,
+    $blue 0%,
+    $blue 33.3%,
+    $green 33.4%,
+    $green 66.6%,
+    $red 66.7%,
+    $red 100%
+);

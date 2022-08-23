@@ -13,7 +13,8 @@ const SimplePanel = ({
     deleteAllSymbols,
     deleteLastSymbol,
     openResultWindow,
-    togglePlusOrMinus
+    togglePlusOrMinus,
+    toggleOpenOrCloseModal
 }) => {
     return (
         <section className="simple-panel">
@@ -53,7 +54,7 @@ const SimplePanel = ({
                     {goOperator && (
                         <div className="operators__item">
                             <OpenResultWindow
-                                openResultWindow={openResultWindow}
+                                openResultWindow={toggleOpenOrCloseModal}
                             />
                         </div>
                     )}
@@ -81,7 +82,8 @@ SimplePanel.propTypes = {
     deleteAllSymbols: PropTypes.func,
     deleteLastSymbol: PropTypes.func,
     openResultWindow: PropTypes.func,
-    togglePlusOrMinus: PropTypes.func
+    togglePlusOrMinus: PropTypes.func,
+    toggleOpenOrCloseModal: PropTypes.func
 };
 
 export default SimplePanel;
