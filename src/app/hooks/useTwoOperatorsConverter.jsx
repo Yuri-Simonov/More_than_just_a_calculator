@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { evaluate, round } from "mathjs";
+import { errorPrompt } from "../utils/error_prompt";
+import { errorMessages } from "../consts/error_messages";
 
 export const useTwoOperatorsConverter = (
     measures,
@@ -19,7 +21,10 @@ export const useTwoOperatorsConverter = (
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
     // Состояние для проверки первый ли это ввод после захода на страницу или нет
-    const [firstVisit, setFirstVisit] = useState(true);
+    const [firstVisit, setFirstVisit] = useState({
+        firstValue: true,
+        secondValue: true
+    });
     // Состояние для открытия/закрытия модалки результата
     const [openOrCloseModal, setOpenOrCloseModal] = useState(false);
 
@@ -29,7 +34,7 @@ export const useTwoOperatorsConverter = (
             if (firstResult === "0" && btnValue !== ".") {
                 setFirstResult(btnValue);
             } else {
-                if (firstVisit && btnValue !== ".") {
+                if (firstVisit.firstValue && btnValue !== ".") {
                     setFirstResult(btnValue);
                 } else {
                     if (btnValue === ".") {
@@ -40,13 +45,13 @@ export const useTwoOperatorsConverter = (
                         setFirstResult((prevState) => prevState + btnValue);
                     }
                 }
-                setFirstVisit(false);
+                setFirstVisit({ ...firstVisit, firstValue: false });
             }
         } else {
             if (secondResult === "0" && btnValue !== ".") {
                 setSecondResult(btnValue);
             } else {
-                if (firstVisit && btnValue !== ".") {
+                if (firstVisit.secondValue && btnValue !== ".") {
                     setSecondResult(btnValue);
                 } else {
                     if (btnValue === ".") {
@@ -59,7 +64,7 @@ export const useTwoOperatorsConverter = (
                         setSecondResult((prevState) => prevState + btnValue);
                     }
                 }
-                setFirstVisit(false);
+                setFirstVisit({ ...firstVisit, secondValue: false });
             }
         }
     };
@@ -94,6 +99,15 @@ export const useTwoOperatorsConverter = (
     const clearResultValues = () => {
         setFirstResult("0");
         setSecondResult("0");
+    };
+
+    // Очистка только активного поля
+    const clearActiveResultValues = () => {
+        if (activeField === 1) {
+            setFirstResult("0");
+        } else {
+            setSecondResult("0");
+        }
     };
 
     // Удаление последнего символа в активном поле
@@ -144,8 +158,14 @@ export const useTwoOperatorsConverter = (
 
     // Закрытие модального окна при клике вне его области
     const toggleOpenOrCloseModal = () => {
-        console.log(1);
-        setOpenOrCloseModal((prevState) => !prevState);
+        if (
+            (finalResult < 16 || finalResult > 40) &&
+            openOrCloseModal === false
+        ) {
+            errorPrompt(errorMessages.BWM);
+        } else {
+            setOpenOrCloseModal((prevState) => !prevState);
+        }
     };
 
     return {
@@ -161,6 +181,7 @@ export const useTwoOperatorsConverter = (
         activeField,
         finalResult,
         openOrCloseModal,
-        toggleOpenOrCloseModal
+        toggleOpenOrCloseModal,
+        clearActiveResultValues
     };
 };

@@ -9,6 +9,19 @@ const BWMResult = ({
     const classOfModal =
         "bwm-result" + (openOrCloseModal ? "bwm-result_active" : "");
 
+    let statusOfName;
+    let classOfName;
+    if (finalResult >= 16 && finalResult < 18.5) {
+        statusOfName = "Недостаток веса";
+        classOfName = "bwm-result__status blue";
+    } else if (finalResult >= 18.5 && finalResult <= 25) {
+        statusOfName = "Норма";
+        classOfName = "bwm-result__status green";
+    } else if (finalResult > 25 && finalResult <= 40) {
+        statusOfName = "Избыточный вес";
+        classOfName = "bwm-result__status red";
+    }
+
     return (
         <section className={classOfModal}>
             <div className="bwm-result__body">
@@ -18,7 +31,7 @@ const BWMResult = ({
                     </div>
                     <div className="bwm-result__about">
                         <h1 className="bwm-result__title">ИМТ</h1>
-                        <p className="bwm-result__status blue">Норма</p>
+                        <p className={classOfName}>{statusOfName}</p>
                     </div>
                 </article>
                 <article className="bwm-result__info">

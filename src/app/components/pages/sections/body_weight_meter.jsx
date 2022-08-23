@@ -16,13 +16,13 @@ const BodyWeightMeter = () => {
         firstResult,
         secondResult,
         changeValue,
-        clearResultValues,
         deleteLastResultSymbol,
         changeActiveField,
         activeField,
         finalResult,
         openOrCloseModal,
-        toggleOpenOrCloseModal
+        toggleOpenOrCloseModal,
+        clearActiveResultValues
     } = useTwoOperatorsConverter(
         bodyWeightMeterMeasures,
         initialState,
@@ -49,7 +49,7 @@ const BodyWeightMeter = () => {
             />
             <SimplePanel
                 changeValue={changeValue}
-                deleteAllSymbols={clearResultValues}
+                deleteAllSymbols={clearActiveResultValues}
                 deleteLastSymbol={deleteLastResultSymbol}
                 goOperator={true}
                 toggleOpenOrCloseModal={toggleOpenOrCloseModal}
