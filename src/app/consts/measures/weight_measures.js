@@ -1,0 +1,20 @@
+export const weightMeasures = [
+    { shortName: "т", fullName: "Тонна", size: 1 },
+    { shortName: "кг", fullName: "Килограмм", size: 1e-3 },
+    { shortName: "г", fullName: "Грамм", size: 1e-6 },
+    { shortName: "мг", fullName: "Миллиграмм", size: 1e-9 },
+    { shortName: "μg", fullName: "Микрограмм", size: 1e-12 },
+    { shortName: "q", fullName: "Центнер", size: 0.1 },
+    { shortName: "lb", fullName: "Фунт", size: 0.000453592 },
+    { shortName: "oz", fullName: "Унция", size: 2.835e-5 },
+    { shortName: "ct", fullName: "Карат", size: 2e-7 },
+    { shortName: "gr", fullName: "Гран", size: 6.47989e-8 },
+    { shortName: "l.t", fullName: "Длинная тонна", size: 1.01605 },
+    { shortName: "sh.t", fullName: "Короткая тонна", size: 0.907185 },
+    { shortName: "st", fullName: "Стоун", size: 0.00635029 },
+    { shortName: "dr", fullName: "Драхма", size: 1.77185e-6 },
+    { shortName: "dan", fullName: "Дань", size: 5e-2 },
+    { shortName: "jin", fullName: "Цзинь", size: 5e-4 },
+    { shortName: "liang", fullName: "Лян", size: 5e-5 },
+    { shortName: "qian", fullName: "Цянь", size: 5e-6 }
+];
