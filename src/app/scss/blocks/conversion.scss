@@ -28,6 +28,20 @@
         }
     }
 
+    &__single-measures {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.1;
+    }
+
+    &__prompt {
+        font-size: 12px;
+        line-height: 1.1;
+        color: $gray;
+        padding: 10px;
+        text-align: center;
+    }
+
     &__value {
         text-align: right;
         @media (max-width: 576px) {
