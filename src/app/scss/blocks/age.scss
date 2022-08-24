@@ -1,0 +1,166 @@
+.age {
+    margin-bottom: 10vh;
+    &__values {
+        margin-bottom: 5vh;
+    }
+
+    &__value {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 5px 0;
+        @media (max-width: 576px) and (min-height: 440px) {
+            flex-direction: column;
+        }
+    }
+
+    &__value-name {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.1;
+    }
+
+    &__value-date {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 1.1;
+        @media (max-width: 320px) {
+            font-size: 16px;
+        }
+
+        &_active {
+            color: $orange;
+        }
+    }
+
+    &__info {
+        background-color: $gray-2;
+        border: 1px solid $orange;
+        border-radius: 20px;
+        padding: 0 30px;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @media (max-width: 500px) {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+
+    &__col {
+        flex: 0 0 50%;
+        padding: 15px;
+        text-align: center;
+        @media (max-width: 500px) {
+            flex: 1 1 100%;
+        }
+    }
+    &__col + &__col {
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 90%;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0px;
+            display: block;
+            background-color: $orange;
+            @media (max-width: 500px) {
+                width: 90%;
+                height: 1px;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    &__title {
+        font-size: 44px;
+        line-height: 1.1;
+        font-weight: 500;
+        @media (max-width: 576px), (max-height: 440px) {
+            font-size: 36px;
+        }
+    }
+
+    &__years {
+        font-size: 20px;
+        line-height: 1.1;
+        font-weight: 500;
+        margin-bottom: 5px;
+        span {
+            font-size: 44px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+    }
+
+    &__text {
+        font-size: 16px;
+        line-height: 1.1;
+        margin-bottom: 10px;
+    }
+
+    &__subtitle {
+        font-size: 26px;
+        line-height: 1.1;
+        font-weight: 600;
+        text-align: center;
+        padding: 10px 0;
+        @media (max-width: 576px), (max-height: 440px) {
+            font-size: 20px;
+        }
+    }
+
+    &__birthday {
+        max-width: 60px;
+        max-height: 100px;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+        padding: 10px 0;
+    }
+
+    &__about {
+        border-top: 1px solid $orange;
+        width: 100%;
+        padding: 10px 0 20px;
+    }
+    &__about-items {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px 10px;
+    }
+    &__about-item {
+        flex: 1 1 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 16px;
+        line-height: 1.1;
+    }
+
+    &__about-name {
+    }
+
+    &__about-number {
+        font-weight: 700;
+    }
+}

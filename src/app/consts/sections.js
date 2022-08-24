@@ -27,8 +27,8 @@ export const allSections = [
     },
     {
         logo: ageLogo,
-        link: "body_weight_meter",
-        alt: "body_weight_meter",
+        link: "age",
+        alt: "age",
         title: "Возраст"
     },
     {
