@@ -41,6 +41,7 @@ const BodyWeightMeter = () => {
                 secondResultValue={secondResult}
                 toggleActiveField={changeActiveField}
                 activeField={activeField}
+                methodOfCalculation={methodOfCalculation}
             />
             <BWMResult
                 finalResult={finalResult}

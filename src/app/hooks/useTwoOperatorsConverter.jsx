@@ -60,6 +60,14 @@ export const useTwoOperatorsConverter = (
                                 (prevState) => prevState + btnValue
                             );
                         }
+                    } else if (
+                        methodOfCalculation === "discount" &&
+                        secondResult.length === 2 &&
+                        btnValue !== "." &&
+                        secondResult.indexOf(".") === -1
+                    ) {
+                        sliceDiscount();
+                        errorPrompt(errorMessages.discount);
                     } else {
                         setSecondResult((prevState) => prevState + btnValue);
                     }
@@ -74,6 +82,8 @@ export const useTwoOperatorsConverter = (
         // Если вычисление простая пропорция
         methodOfCalculation === "bodyWeightMeter" &&
             BWMCalculation(firstMeaseure, secondMeasure);
+        methodOfCalculation === "discount" &&
+            discountCalculation(firstMeaseure, secondMeasure);
     };
 
     // Фикс задержки обновления стейта
@@ -136,7 +146,7 @@ export const useTwoOperatorsConverter = (
             : setActiveField(2);
     };
 
-    // Вычисление по простой пропорции
+    // Вычисление индекса массы тела
     function BWMCalculation(firstMeaseure, secondMeasure) {
         const calculationResult = evaluate(
             String(
@@ -148,10 +158,27 @@ export const useTwoOperatorsConverter = (
         setFinalResult(roundedResult);
     }
 
+    // Вычисление скидки
+    function discountCalculation() {
+        const calculationResult = evaluate(
+            String(firstResult * (1 - secondResult / 100))
+        );
+        const roundedResult = roundResult(calculationResult);
+        setFinalResult(roundedResult);
+    }
+
+    // Округление скидки при попытке ввода больше 100
+    function sliceDiscount() {
+        if (secondResult > 100) {
+            const newValueSecondResult = secondResult.slice(0, 2);
+            setSecondResult(newValueSecondResult);
+        }
+    }
+
     // Округление значения
     function roundResult(res) {
         if (String(res).match(/\.\d{1,}[0-9]+$/g)) {
-            res = round(res, 1);
+            res = round(res, 2);
         }
         return res;
     }
