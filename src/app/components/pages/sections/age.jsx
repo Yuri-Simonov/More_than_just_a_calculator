@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../common/title";
 import arrowDown from "../../../images/svg/arrow_down.svg";
 import birthday from "../../../images/svg/birthday.svg";
+import OwnSwiper from "../../common/swiper";
+import { useTime } from "../../../hooks/useTime";
 
 const Age = () => {
+    const today = new Date();
+    const someDay = new Date(2010, 7, 17);
+    const initialAgeState = [someDay, today];
+
+    const { age, datesSimple, changeAge } = useTime(initialAgeState);
+    useEffect(() => {
+        changeAge();
+    }, []);
+
     return (
         <div className="container-inner">
             <Title title={"Возраст"} />
@@ -12,14 +23,14 @@ const Age = () => {
                     <div className="age__value">
                         <p className="age__value-name">Дата рождения</p>
                         <p className="age__value-date age__value-date_active">
-                            <span>16 авг. 2010</span>
+                            <span>{datesSimple[0]}</span>
                             <img src={arrowDown} alt="arrow down" />
                         </p>
                     </div>
                     <div className="age__value">
                         <p className="age__value-name">Сегодня</p>
                         <p className="age__value-date">
-                            <span>24 авг. 2022</span>
+                            <span>{datesSimple[1]}</span>
                             <img src={arrowDown} alt="arrow down" />
                         </p>
                     </div>
@@ -29,10 +40,10 @@ const Age = () => {
                         <div className="age__col">
                             <h1 className="age__title">Возраст</h1>
                             <p className="age__years">
-                                <span className="orange">12</span>лет
+                                <span className="orange">{age.years}</span>лет
                             </p>
-                            <p className="age__text">0 месяц</p>
-                            <p className="age__text">8 дней</p>
+                            <p className="age__text">{age.months} месяц</p>
+                            <p className="age__text">{age.days} дней</p>
                         </div>
                         <div className="age__col">
                             <h2 className="age__subtitle orange">
@@ -44,6 +55,7 @@ const Age = () => {
                                 alt="23333333333"
                             />
                             <p className="age__text">среда</p>
+                            <p className="age__text orange">Осталось</p>
                             <p className="age__text">11 месяцев</p>
                             <p className="age__text">23 дня</p>
                         </div>
@@ -81,6 +93,7 @@ const Age = () => {
                     </div>
                 </div>
             </section>
+            <OwnSwiper />
         </div>
     );
 };
