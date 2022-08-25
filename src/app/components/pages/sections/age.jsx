@@ -44,6 +44,7 @@ const Age = () => {
                                 alt="23333333333"
                             />
                             <p className="age__text">среда</p>
+                            <p className="age__text orange">Осталось</p>
                             <p className="age__text">11 месяцев</p>
                             <p className="age__text">23 дня</p>
                         </div>
