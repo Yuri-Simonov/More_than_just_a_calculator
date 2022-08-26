@@ -18,9 +18,14 @@ export const useTime = (initialState) => {
         months: 0,
         weeks: 0,
         days: 0,
-        minutes: 0,
-        seconds: 0
+        hours: 0,
+        minutes: 0
     });
+
+    // Вычисление статистики при загрузке страницы
+    useEffect(() => {
+        changeAgeStatistics();
+    }, []);
 
     // Функция для изменения текущих дат
     const changeDates = (date) => {
@@ -43,9 +48,23 @@ export const useTime = (initialState) => {
     };
 
     // Функция для изменения текущей статистики
-    const changeAgeStatistics = (diff) => {
-        setAgeStatistics(diff);
-    };
+    function changeAgeStatistics() {
+        const diff = dates[1].getTime() - dates[0].getTime();
+        const years = Math.floor(diff / 3.154e10);
+        const months = Math.floor(diff / 2.628e9);
+        const weeks = Math.floor(diff / 6.048e8);
+        const days = Math.floor(diff / 8.64e7);
+        const hours = Math.floor(diff / 3.6e6);
+        const minutes = Math.floor(diff / 6e4);
+        setAgeStatistics({
+            years,
+            months,
+            weeks,
+            days,
+            hours,
+            minutes
+        });
+    }
 
     // Преобразование даты в привычный для чтения/восприятия формат
     useEffect(() => {

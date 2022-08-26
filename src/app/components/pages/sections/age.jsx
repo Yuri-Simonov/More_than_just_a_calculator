@@ -10,7 +10,8 @@ const Age = () => {
     const someDay = new Date(2010, 7, 17);
     const initialAgeState = [someDay, today];
 
-    const { age, datesSimple, changeAge } = useTime(initialAgeState);
+    const { age, ageStatistics, datesSimple, changeAge } =
+        useTime(initialAgeState);
     useEffect(() => {
         changeAge();
     }, []);
@@ -66,27 +67,39 @@ const Age = () => {
                             <div className="age__about-items">
                                 <div className="age__about-item">
                                     <p className="age__about-name">Лет</p>
-                                    <p className="age__about-number">12</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.years}
+                                    </p>
                                 </div>
                                 <div className="age__about-item">
                                     <p className="age__about-name">Месяцев</p>
-                                    <p className="age__about-number">144</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.months}
+                                    </p>
                                 </div>
                                 <div className="age__about-item">
                                     <p className="age__about-name">Недели</p>
-                                    <p className="age__about-number">627</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.weeks}
+                                    </p>
                                 </div>
                                 <div className="age__about-item">
                                     <p className="age__about-name">Дней</p>
-                                    <p className="age__about-number">4391</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.days}
+                                    </p>
                                 </div>
                                 <div className="age__about-item">
                                     <p className="age__about-name">Часы</p>
-                                    <p className="age__about-number">105384</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.hours}
+                                    </p>
                                 </div>
                                 <div className="age__about-item">
                                     <p className="age__about-name">Минуты</p>
-                                    <p className="age__about-number">6323040</p>
+                                    <p className="age__about-number">
+                                        {ageStatistics.minutes}
+                                    </p>
                                 </div>
                             </div>
                         </div>
