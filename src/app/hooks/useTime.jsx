@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { days } from "../consts/dayOfWeeks";
 import { timeOptions } from "../consts/time_options";
 
 export const useTime = (initialState) => {
@@ -22,9 +23,18 @@ export const useTime = (initialState) => {
         minutes: 0
     });
 
-    // Вычисление статистики при загрузке страницы
+    // Состояние для следующего дня рождения
+    const [nextBirthday, setNextBirthday] = useState({
+        dayOfWeek: "",
+        leftMonths: 0,
+        leftDays: 0
+    });
+
+    // Вычисление данных при загрузке страницы
     useEffect(() => {
         changeAgeStatistics();
+        caclNextBirthday();
+        caclNextBirthday();
     }, []);
 
     // Функция для изменения текущих дат
@@ -77,6 +87,34 @@ export const useTime = (initialState) => {
         setDatesSimple([firstDate, secondDate]);
     }, [dates]);
 
+    // Вычисление следующего дня рождения
+    function caclNextBirthday() {
+        const diffYearsOfDates = Math.floor(
+            (dates[1].getTime() - dates[0].getTime()) / 3.154e10
+        );
+        const getDateDay = dates[0].getDate();
+        const getDateMonth = dates[0].getMonth();
+        const getDateYear = dates[0].getFullYear();
+        const someNewDate = new Date(
+            getDateYear + Number(diffYearsOfDates) + 1,
+            getDateMonth,
+            getDateDay,
+            11,
+            59
+        );
+        const nextBirthday = someNewDate.getTime() - dates[1].getTime();
+        const nextBirthdayDayOfWeek = days[someNewDate.getDay()];
+        const leftMonths = Math.floor(nextBirthday / 2.628e9);
+        const leftDays = Math.floor(
+            (nextBirthday - leftMonths * 2.628e9) / 8.64e7
+        );
+        setNextBirthday({
+            dayOfWeek: nextBirthdayDayOfWeek,
+            leftMonths,
+            leftDays
+        });
+    }
+
     return {
         dates,
         changeDates,
@@ -84,6 +122,7 @@ export const useTime = (initialState) => {
         changeAge,
         ageStatistics,
         changeAgeStatistics,
-        datesSimple
+        datesSimple,
+        nextBirthday
     };
 };

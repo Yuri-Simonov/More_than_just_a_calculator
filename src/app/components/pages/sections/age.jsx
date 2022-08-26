@@ -7,10 +7,10 @@ import { useTime } from "../../../hooks/useTime";
 
 const Age = () => {
     const today = new Date();
-    const someDay = new Date(2010, 7, 17);
+    const someDay = new Date(2010, 7, 17, 11, 59);
     const initialAgeState = [someDay, today];
 
-    const { age, ageStatistics, datesSimple, changeAge } =
+    const { age, ageStatistics, datesSimple, changeAge, nextBirthday } =
         useTime(initialAgeState);
     useEffect(() => {
         changeAge();
@@ -46,20 +46,28 @@ const Age = () => {
                             <p className="age__text">{age.months} месяц</p>
                             <p className="age__text">{age.days} дней</p>
                         </div>
-                        <div className="age__col">
-                            <h2 className="age__subtitle orange">
-                                Следующий день рождения
-                            </h2>
-                            <img
-                                className="age__birthday"
-                                src={birthday}
-                                alt="23333333333"
-                            />
-                            <p className="age__text">среда</p>
-                            <p className="age__text orange">Осталось</p>
-                            <p className="age__text">11 месяцев</p>
-                            <p className="age__text">23 дня</p>
-                        </div>
+                        {nextBirthday && (
+                            <div className="age__col">
+                                <h2 className="age__subtitle orange">
+                                    Следующий день рождения
+                                </h2>
+                                <img
+                                    className="age__birthday"
+                                    src={birthday}
+                                    alt="23333333333"
+                                />
+                                <p className="age__text">
+                                    {nextBirthday.dayOfWeek}
+                                </p>
+                                <p className="age__text orange">Осталось</p>
+                                <p className="age__text">
+                                    {nextBirthday.leftMonths} месяцев
+                                </p>
+                                <p className="age__text">
+                                    {nextBirthday.leftDays} дня
+                                </p>
+                            </div>
+                        )}
                     </div>
                     <div className="age__row">
                         <div className="age__about">
