@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import Title from "../../common/title";
 import arrowDown from "../../../images/svg/arrow_down.svg";
 import birthday from "../../../images/svg/birthday.svg";
-import OwnSwiper from "../../common/swiper";
 import { useTime } from "../../../hooks/useTime";
+import ChoiceOfTime from "../../common/modal_windows/choice_of_time";
 
 const Age = () => {
     const today = new Date();
@@ -114,7 +114,7 @@ const Age = () => {
                     </div>
                 </div>
             </section>
-            <OwnSwiper />
+            <ChoiceOfTime />
         </div>
     );
 };
