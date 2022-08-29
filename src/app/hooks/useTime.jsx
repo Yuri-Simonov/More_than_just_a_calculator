@@ -7,7 +7,12 @@ export const useTime = (initialState) => {
     const [dates, setDates] = useState(initialState);
     // Состояние с текущими датами в формате "24 авг. 2020"
     const [datesSimple, setDatesSimple] = useState([]);
-    console.log(datesSimple);
+    // Состояние для передачи активного слайда при открытии модалки
+    const [activeSlide, setActiveSlide] = useState([
+        [dates[0].getDate(), dates[0].getMonth() + 1, dates[0].getFullYear()],
+        [dates[1].getDate(), dates[1].getMonth() + 1, dates[1].getFullYear()]
+    ]);
+    console.log("activeSlide", activeSlide);
     // Состояние с текущим возвраcтом в привычном его представлении
     const [age, setAge] = useState({
         years: 0,
@@ -42,20 +47,34 @@ export const useTime = (initialState) => {
 
     // Изменение даты у активного поля при нажатии на "Ок"
     const changeOneOfDates = (day, month, year) => {
-        const selectedDate = day + month + year;
         if (activeField === 1) {
-            setDates([selectedDate, dates[1]]);
+            setActiveSlide([
+                [day, month, year],
+                [
+                    dates[1].getDate(),
+                    dates[1].getMonth() + 1,
+                    dates[1].getFullYear()
+                ]
+            ]);
         } else {
-            setDates([dates[0], selectedDate]);
+            setActiveSlide([
+                [
+                    dates[0].getDate(),
+                    dates[0].getMonth() + 1,
+                    dates[0].getFullYear()
+                ],
+                [day, month, year]
+            ]);
         }
+        toggleCloseOrOpenModalWindow();
     };
 
     // Переключение активного поля
     const changeActiveField = (elem) => {
-        toggleCloseOrOpenModalWindow();
         elem.target.parentNode.className.indexOf("cr-1") !== -1
             ? setActiveField(1)
             : setActiveField(2);
+        toggleCloseOrOpenModalWindow();
     };
 
     // Вычисление данных при загрузке страницы
@@ -156,6 +175,7 @@ export const useTime = (initialState) => {
         activeField,
         changeActiveField,
         toggleCloseOrOpenModalWindow,
-        changeOneOfDates
+        changeOneOfDates,
+        activeSlide
     };
 };

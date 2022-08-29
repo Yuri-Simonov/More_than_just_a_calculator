@@ -9,7 +9,11 @@ import { days, months, years } from "../../../consts/calendar";
 const ChoiceOfTime = ({
     openOrCloseModalWindow,
     toggleCloseOrOpenModalWindow,
-    changeOneOfDates
+    changeOneOfDates,
+    datesSimple,
+    activeField,
+    activeSlide,
+    changeActiveSlide
 }) => {
     const classOfModal =
         "choice-time " + (openOrCloseModalWindow ? "choice-time_active" : "");
@@ -38,10 +42,17 @@ const ChoiceOfTime = ({
         );
     });
 
+    const activeDay =
+        activeField === 1 ? activeSlide[0][0] - 1 : activeSlide[1][0] - 1;
+    // let activeMonth;
+    // let activeYear;
+
     return (
         <div className={classOfModal}>
             <div className="choice-time__body">
-                <h2 className="choice-time__title">День рождения</h2>
+                <h2 className="choice-time__title">
+                    {activeField === 1 ? "День рождения" : "Сегодня"}
+                </h2>
                 <div className="choice-time__items">
                     <div className="own-swiper own-swiper_days">
                         <Swiper
@@ -52,8 +63,7 @@ const ChoiceOfTime = ({
                             grabCursor={true}
                             mousewheel={true}
                             modules={[Mousewheel]}
-                            initialSlide={4}
-                            onChange={console.log(activeSlide)}
+                            initialSlide={activeDay}
                         >
                             {daysOfCalendar}
                         </Swiper>
@@ -67,7 +77,11 @@ const ChoiceOfTime = ({
                             grabCursor={true}
                             mousewheel={true}
                             modules={[Mousewheel]}
-                            initialSlide={9}
+                            initialSlide={
+                                activeField === 1
+                                    ? activeSlide[0][1] - 1
+                                    : activeSlide[1][1] - 1
+                            }
                         >
                             {monthsOfCalendar}
                         </Swiper>
@@ -81,14 +95,20 @@ const ChoiceOfTime = ({
                             grabCursor={true}
                             mousewheel={true}
                             modules={[Mousewheel]}
-                            initialSlide={20}
+                            initialSlide={
+                                activeField === 1
+                                    ? activeSlide[0][2] - 1900
+                                    : activeSlide[1][2] - 1900
+                            }
                         >
                             {yearsOfCalendar}
                         </Swiper>
                     </div>
                 </div>
                 <div className="choice-time__btns">
-                    <button onClick={changeOneOfDates}>ОK</button>
+                    <button onClick={() => changeOneOfDates(27, 5, 2000)}>
+                        ОK
+                    </button>
                     <button onClick={toggleCloseOrOpenModalWindow}>
                         Отмена
                     </button>
@@ -105,7 +125,11 @@ const ChoiceOfTime = ({
 ChoiceOfTime.propTypes = {
     openOrCloseModalWindow: PropTypes.bool,
     toggleCloseOrOpenModalWindow: PropTypes.func,
-    changeOneOfDates: PropTypes.func
+    changeOneOfDates: PropTypes.func,
+    datesSimple: PropTypes.array,
+    activeField: PropTypes.number,
+    activeSlide: PropTypes.array,
+    changeActiveSlide: PropTypes.func
 };
 
 export default ChoiceOfTime;
