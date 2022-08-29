@@ -7,6 +7,7 @@ export const useTime = (initialState) => {
     const [dates, setDates] = useState(initialState);
     // Состояние с текущими датами в формате "24 авг. 2020"
     const [datesSimple, setDatesSimple] = useState([]);
+    console.log(datesSimple);
     // Состояние с текущим возвраcтом в привычном его представлении
     const [age, setAge] = useState({
         years: 0,
@@ -37,6 +38,16 @@ export const useTime = (initialState) => {
     // Открытие и закрытие модалки с выбором даты
     const toggleCloseOrOpenModalWindow = () => {
         setOpenOrCloseModalWindow((prevState) => !prevState);
+    };
+
+    // Изменение даты у активного поля при нажатии на "Ок"
+    const changeOneOfDates = (day, month, year) => {
+        const selectedDate = day + month + year;
+        if (activeField === 1) {
+            setDates([selectedDate, dates[1]]);
+        } else {
+            setDates([dates[0], selectedDate]);
+        }
     };
 
     // Переключение активного поля
@@ -144,6 +155,7 @@ export const useTime = (initialState) => {
         openOrCloseModalWindow,
         activeField,
         changeActiveField,
-        toggleCloseOrOpenModalWindow
+        toggleCloseOrOpenModalWindow,
+        changeOneOfDates
     };
 };

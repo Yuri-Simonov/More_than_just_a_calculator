@@ -19,7 +19,8 @@ const Age = () => {
         openOrCloseModalWindow,
         activeField,
         changeActiveField,
-        toggleCloseOrOpenModalWindow
+        toggleCloseOrOpenModalWindow,
+        changeOneOfDates
     } = useTime(initialAgeState);
     useEffect(() => {
         changeAge();
@@ -140,6 +141,7 @@ const Age = () => {
             <ChoiceOfTime
                 openOrCloseModalWindow={openOrCloseModalWindow}
                 toggleCloseOrOpenModalWindow={toggleCloseOrOpenModalWindow}
+                changeOneOfDates={changeOneOfDates}
             />
         </div>
     );
