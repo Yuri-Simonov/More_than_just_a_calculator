@@ -22,6 +22,8 @@ export const useTime = (initialState) => {
         hours: 0,
         minutes: 0
     });
+    // Состояние для переключения активного результата
+    const [activeField, setActiveField] = useState(1);
 
     // Состояние для следующего дня рождения
     const [nextBirthday, setNextBirthday] = useState({
@@ -29,6 +31,26 @@ export const useTime = (initialState) => {
         leftMonths: 0,
         leftDays: 0
     });
+    // Состояние для определения открыто или закрыто модальное окно с датой
+    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState([
+        false,
+        false
+    ]);
+
+    // Открытие и закрытие модалки с выбором даты
+    const toggleCloseOrOpenModalWindow = () => {
+        setOpenOrCloseModalWindow((prevState) => !prevState);
+    };
+
+    // Переключение активного поля
+    const changeActiveField = (elem) => {
+        if (elem.target.parentNode.className.indexOf("cr-1") !== -1) {
+            toggleCloseOrOpenModalWindow();
+        }
+        elem.target.parentNode.className.indexOf("cr-1") !== -1
+            ? setActiveField(1)
+            : setActiveField(2);
+    };
 
     // Вычисление данных при загрузке страницы
     useEffect(() => {
@@ -123,6 +145,9 @@ export const useTime = (initialState) => {
         ageStatistics,
         changeAgeStatistics,
         datesSimple,
-        nextBirthday
+        nextBirthday,
+        openOrCloseModalWindow,
+        activeField,
+        changeActiveField
     };
 };

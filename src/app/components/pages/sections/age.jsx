@@ -10,8 +10,16 @@ const Age = () => {
     const someDay = new Date(2010, 7, 17, 11, 59);
     const initialAgeState = [someDay, today];
 
-    const { age, ageStatistics, datesSimple, changeAge, nextBirthday } =
-        useTime(initialAgeState);
+    const {
+        age,
+        ageStatistics,
+        datesSimple,
+        changeAge,
+        nextBirthday,
+        openOrCloseModalWindow,
+        activeField,
+        changeActiveField
+    } = useTime(initialAgeState);
     useEffect(() => {
         changeAge();
     }, []);
@@ -23,14 +31,28 @@ const Age = () => {
                 <div className="age__values">
                     <div className="age__value">
                         <p className="age__value-name">Дата рождения</p>
-                        <p className="age__value-date age__value-date_active">
+                        <p
+                            className={
+                                activeField === 1
+                                    ? "age__value-date cr-1 age__value-date_active"
+                                    : "age__value-date cr-1"
+                            }
+                            onClick={(e) => changeActiveField(e)}
+                        >
                             <span>{datesSimple[0]}</span>
                             <img src={arrowDown} alt="arrow down" />
                         </p>
                     </div>
                     <div className="age__value">
                         <p className="age__value-name">Сегодня</p>
-                        <p className="age__value-date">
+                        <p
+                            className={
+                                activeField === 2
+                                    ? "age__value-date cr-2 age__value-date_active"
+                                    : "age__value-date cr-2"
+                            }
+                            onClick={(e) => changeActiveField(e)}
+                        >
                             <span>{datesSimple[1]}</span>
                             <img src={arrowDown} alt="arrow down" />
                         </p>
@@ -114,7 +136,7 @@ const Age = () => {
                     </div>
                 </div>
             </section>
-            <ChoiceOfTime />
+            <ChoiceOfTime openOrCloseModalWindow={openOrCloseModalWindow} />
         </div>
     );
 };
