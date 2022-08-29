@@ -32,10 +32,7 @@ export const useTime = (initialState) => {
         leftDays: 0
     });
     // Состояние для определения открыто или закрыто модальное окно с датой
-    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState([
-        false,
-        false
-    ]);
+    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState(false);
 
     // Открытие и закрытие модалки с выбором даты
     const toggleCloseOrOpenModalWindow = () => {
@@ -44,9 +41,7 @@ export const useTime = (initialState) => {
 
     // Переключение активного поля
     const changeActiveField = (elem) => {
-        if (elem.target.parentNode.className.indexOf("cr-1") !== -1) {
-            toggleCloseOrOpenModalWindow();
-        }
+        toggleCloseOrOpenModalWindow();
         elem.target.parentNode.className.indexOf("cr-1") !== -1
             ? setActiveField(1)
             : setActiveField(2);
@@ -148,6 +143,7 @@ export const useTime = (initialState) => {
         nextBirthday,
         openOrCloseModalWindow,
         activeField,
-        changeActiveField
+        changeActiveField,
+        toggleCloseOrOpenModalWindow
     };
 };

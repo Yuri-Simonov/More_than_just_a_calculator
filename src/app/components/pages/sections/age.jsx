@@ -18,7 +18,8 @@ const Age = () => {
         nextBirthday,
         openOrCloseModalWindow,
         activeField,
-        changeActiveField
+        changeActiveField,
+        toggleCloseOrOpenModalWindow
     } = useTime(initialAgeState);
     useEffect(() => {
         changeAge();
@@ -136,7 +137,10 @@ const Age = () => {
                     </div>
                 </div>
             </section>
-            <ChoiceOfTime openOrCloseModalWindow={openOrCloseModalWindow} />
+            <ChoiceOfTime
+                openOrCloseModalWindow={openOrCloseModalWindow}
+                toggleCloseOrOpenModalWindow={toggleCloseOrOpenModalWindow}
+            />
         </div>
     );
 };

@@ -5,9 +5,12 @@ import "swiper/swiper-bundle.css";
 import PropTypes from "prop-types";
 import { days, months, years } from "../../../consts/calendar";
 
-const ChoiceOfTime = ({ openOrCloseModalWindow }) => {
+const ChoiceOfTime = ({
+    openOrCloseModalWindow,
+    toggleCloseOrOpenModalWindow
+}) => {
     const classOfModal =
-        "choice-time" + (openOrCloseModalWindow ? "choice-time_active" : "");
+        "choice-time " + (openOrCloseModalWindow ? "choice-time_active" : "");
 
     const daysOfCalendar = days.map((num) => {
         return (
@@ -69,12 +72,17 @@ const ChoiceOfTime = ({ openOrCloseModalWindow }) => {
                     </div>
                 </div>
             </div>
+            <div
+                className="choice-time__overlay"
+                onClick={toggleCloseOrOpenModalWindow}
+            ></div>
         </div>
     );
 };
 
 ChoiceOfTime.propTypes = {
-    openOrCloseModalWindow: PropTypes.bool
+    openOrCloseModalWindow: PropTypes.bool,
+    toggleCloseOrOpenModalWindow: PropTypes.func
 };
 
 export default ChoiceOfTime;
