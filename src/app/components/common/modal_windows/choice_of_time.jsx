@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Mousewheel } from "swiper";
@@ -12,6 +12,9 @@ const ChoiceOfTime = ({
     activeField,
     activeSlide
 }) => {
+    const [currentSlides, setCurrentSlides] = useState(activeSlide);
+    console.log("currentSlides", currentSlides);
+
     const classOfModalFirst =
         "choice-time " +
         (openOrCloseModalWindow[0] ? "choice-time_active" : "");
@@ -53,7 +56,21 @@ const ChoiceOfTime = ({
                     <div className="choice-time__items">
                         <div className="own-swiper own-swiper_days">
                             <Swiper
-                                id="days"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            e.activeIndex + 1,
+                                            currentSlides[0][1],
+                                            currentSlides[0][2]
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            currentSlides[1][2]
+                                        ]
+                                    ])
+                                }
+                                id="days-1"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -67,7 +84,21 @@ const ChoiceOfTime = ({
                         </div>
                         <div className="own-swiper own-swiper_months">
                             <Swiper
-                                id="months"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            currentSlides[0][0],
+                                            e.activeIndex + 1,
+                                            currentSlides[0][2]
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            currentSlides[1][2]
+                                        ]
+                                    ])
+                                }
+                                id="months-1"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -81,7 +112,21 @@ const ChoiceOfTime = ({
                         </div>
                         <div className="own-swiper own-swiper_years">
                             <Swiper
-                                id="years"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            currentSlides[0][0],
+                                            currentSlides[0][1],
+                                            e.activeIndex + 1900
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            currentSlides[1][2]
+                                        ]
+                                    ])
+                                }
+                                id="years-1"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -95,7 +140,9 @@ const ChoiceOfTime = ({
                         </div>
                     </div>
                     <div className="choice-time__btns">
-                        <button onClick={() => changeOneOfDates(27, 5, 2000)}>
+                        <button
+                            onClick={() => changeOneOfDates(currentSlides[0])}
+                        >
                             ОK
                         </button>
                         <button
@@ -120,7 +167,21 @@ const ChoiceOfTime = ({
                     <div className="choice-time__items">
                         <div className="own-swiper own-swiper_days">
                             <Swiper
-                                id="days"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            e.activeIndex + 1,
+                                            currentSlides[0][1],
+                                            currentSlides[0][2]
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            currentSlides[1][2]
+                                        ]
+                                    ])
+                                }
+                                id="days-2"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -134,7 +195,21 @@ const ChoiceOfTime = ({
                         </div>
                         <div className="own-swiper own-swiper_months">
                             <Swiper
-                                id="months"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            currentSlides[0][0],
+                                            e.activeIndex + 1,
+                                            currentSlides[0][2]
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            currentSlides[1][2]
+                                        ]
+                                    ])
+                                }
+                                id="months-2"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -148,7 +223,21 @@ const ChoiceOfTime = ({
                         </div>
                         <div className="own-swiper own-swiper_years">
                             <Swiper
-                                id="years"
+                                onSlideChange={(e) =>
+                                    setCurrentSlides([
+                                        [
+                                            currentSlides[0][0],
+                                            currentSlides[0][1],
+                                            currentSlides[0][2]
+                                        ],
+                                        [
+                                            currentSlides[1][0],
+                                            currentSlides[1][1],
+                                            e.activeIndex + 1900
+                                        ]
+                                    ])
+                                }
+                                id="years-2"
                                 slidesPerView={3}
                                 spaceBetween={30}
                                 centeredSlides={true}
@@ -162,7 +251,9 @@ const ChoiceOfTime = ({
                         </div>
                     </div>
                     <div className="choice-time__btns">
-                        <button onClick={() => changeOneOfDates(27, 5, 2000)}>
+                        <button
+                            onClick={() => changeOneOfDates(currentSlides[1])}
+                        >
                             ОK
                         </button>
                         <button

@@ -54,17 +54,23 @@ export const useTime = (initialState) => {
     };
 
     // Изменение даты у активного поля при нажатии на "Ок"
-    const changeOneOfDates = (day, month, year) => {
+    const changeOneOfDates = (arrayWithdates) => {
         if (activeField === 1) {
             setActiveSlide([
-                [day, month, year],
+                arrayWithdates,
                 [
                     dates[1].getDate(),
                     dates[1].getMonth() + 1,
                     dates[1].getFullYear()
                 ]
             ]);
-            const newDateSome = new Date(year, month, day, 11, 59);
+            const newDateSome = new Date(
+                arrayWithdates[2],
+                arrayWithdates[1],
+                arrayWithdates[0],
+                11,
+                59
+            );
             setDates([newDateSome, dates[1]]);
         } else {
             setActiveSlide([
@@ -73,9 +79,15 @@ export const useTime = (initialState) => {
                     dates[0].getMonth() + 1,
                     dates[0].getFullYear()
                 ],
-                [day, month, year]
+                arrayWithdates
             ]);
-            const newDateSome = new Date(year, month, day, 11, 59);
+            const newDateSome = new Date(
+                arrayWithdates[2],
+                arrayWithdates[1],
+                arrayWithdates[0],
+                11,
+                59
+            );
             setDates([dates[0], newDateSome]);
         }
         toggleCloseOrOpenModalWindow("close");
@@ -95,7 +107,6 @@ export const useTime = (initialState) => {
     // Вычисление данных при загрузке страницы
     useEffect(() => {
         changeAgeStatistics();
-        caclNextBirthday();
         caclNextBirthday();
     }, []);
 
@@ -118,6 +129,7 @@ export const useTime = (initialState) => {
     useEffect(() => {
         changeAge();
         changeAgeStatistics();
+        caclNextBirthday();
     }, [dates]);
 
     // Функция для изменения текущей статистики
