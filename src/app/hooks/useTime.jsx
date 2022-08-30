@@ -107,6 +107,12 @@ export const useTime = (initialState) => {
         });
     };
 
+    // Вызов функций-счетчиков при зименении одной из дат
+    useEffect(() => {
+        changeAge();
+        changeAgeStatistics();
+    }, [dates]);
+
     // Функция для изменения текущей статистики
     function changeAgeStatistics() {
         const diff = dates[1].getTime() - dates[0].getTime();
