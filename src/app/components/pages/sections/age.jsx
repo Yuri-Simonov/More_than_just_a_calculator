@@ -20,8 +20,7 @@ const Age = () => {
         changeActiveField,
         toggleCloseOrOpenModalWindow,
         changeOneOfDates,
-        activeSlide,
-        changeActiveSlide
+        activeSlide
     } = useTime(initialAgeState);
 
     return (
@@ -140,10 +139,8 @@ const Age = () => {
                 openOrCloseModalWindow={openOrCloseModalWindow}
                 toggleCloseOrOpenModalWindow={toggleCloseOrOpenModalWindow}
                 changeOneOfDates={changeOneOfDates}
-                datesSimple={datesSimple}
                 activeField={activeField}
                 activeSlide={activeSlide}
-                changeActiveSlide={changeActiveSlide}
             />
         </div>
     );

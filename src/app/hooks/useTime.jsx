@@ -37,11 +37,20 @@ export const useTime = (initialState) => {
         leftDays: 0
     });
     // Состояние для определения открыто или закрыто модальное окно с датой
-    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState(false);
+    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState([
+        false,
+        false
+    ]);
 
     // Открытие и закрытие модалки с выбором даты
-    const toggleCloseOrOpenModalWindow = () => {
-        setOpenOrCloseModalWindow((prevState) => !prevState);
+    const toggleCloseOrOpenModalWindow = (str) => {
+        if (str === "close") {
+            setOpenOrCloseModalWindow([false, false]);
+        } else if (str === 1) {
+            setOpenOrCloseModalWindow([true, false]);
+        } else if (str === 2) {
+            setOpenOrCloseModalWindow([false, true]);
+        }
     };
 
     // Изменение даты у активного поля при нажатии на "Ок"
@@ -69,15 +78,18 @@ export const useTime = (initialState) => {
             const newDateSome = new Date(year, month, day, 11, 59);
             setDates([dates[0], newDateSome]);
         }
-        toggleCloseOrOpenModalWindow();
+        toggleCloseOrOpenModalWindow("close");
     };
 
     // Переключение активного поля
     const changeActiveField = (elem) => {
-        elem.target.parentNode.className.indexOf("cr-1") !== -1
-            ? setActiveField(1)
-            : setActiveField(2);
-        toggleCloseOrOpenModalWindow();
+        if (elem.target.parentNode.className.indexOf("cr-1") !== -1) {
+            setActiveField(1);
+            toggleCloseOrOpenModalWindow(1);
+        } else {
+            setActiveField(2);
+            toggleCloseOrOpenModalWindow(2);
+        }
     };
 
     // Вычисление данных при загрузке страницы
@@ -86,11 +98,6 @@ export const useTime = (initialState) => {
         caclNextBirthday();
         caclNextBirthday();
     }, []);
-
-    // Функция для изменения текущих дат
-    const changeDates = (date) => {
-        setDates(date);
-    };
 
     // Функция для изменения текущего возраста
     const changeAge = () => {
@@ -173,7 +180,6 @@ export const useTime = (initialState) => {
 
     return {
         dates,
-        changeDates,
         age,
         changeAge,
         ageStatistics,
