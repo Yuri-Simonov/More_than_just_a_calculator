@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Title from "../../common/title";
 import arrowDown from "../../../images/svg/arrow_down.svg";
 import birthday from "../../../images/svg/birthday.svg";
@@ -14,19 +14,14 @@ const Age = () => {
         age,
         ageStatistics,
         datesSimple,
-        changeAge,
         nextBirthday,
         openOrCloseModalWindow,
         activeField,
         changeActiveField,
         toggleCloseOrOpenModalWindow,
         changeOneOfDates,
-        activeSlide,
-        changeActiveSlide
+        activeSlide
     } = useTime(initialAgeState);
-    useEffect(() => {
-        changeAge();
-    }, []);
 
     return (
         <div className="container-inner">
@@ -144,10 +139,8 @@ const Age = () => {
                 openOrCloseModalWindow={openOrCloseModalWindow}
                 toggleCloseOrOpenModalWindow={toggleCloseOrOpenModalWindow}
                 changeOneOfDates={changeOneOfDates}
-                datesSimple={datesSimple}
                 activeField={activeField}
                 activeSlide={activeSlide}
-                changeActiveSlide={changeActiveSlide}
             />
         </div>
     );

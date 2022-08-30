@@ -12,7 +12,6 @@ export const useTime = (initialState) => {
         [dates[0].getDate(), dates[0].getMonth() + 1, dates[0].getFullYear()],
         [dates[1].getDate(), dates[1].getMonth() + 1, dates[1].getFullYear()]
     ]);
-    console.log("activeSlide", activeSlide);
     // Состояние с текущим возвраcтом в привычном его представлении
     const [age, setAge] = useState({
         years: 0,
@@ -38,24 +37,41 @@ export const useTime = (initialState) => {
         leftDays: 0
     });
     // Состояние для определения открыто или закрыто модальное окно с датой
-    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState(false);
+    const [openOrCloseModalWindow, setOpenOrCloseModalWindow] = useState([
+        false,
+        false
+    ]);
 
     // Открытие и закрытие модалки с выбором даты
-    const toggleCloseOrOpenModalWindow = () => {
-        setOpenOrCloseModalWindow((prevState) => !prevState);
+    const toggleCloseOrOpenModalWindow = (str) => {
+        if (str === "close") {
+            setOpenOrCloseModalWindow([false, false]);
+        } else if (str === 1) {
+            setOpenOrCloseModalWindow([true, false]);
+        } else if (str === 2) {
+            setOpenOrCloseModalWindow([false, true]);
+        }
     };
 
     // Изменение даты у активного поля при нажатии на "Ок"
-    const changeOneOfDates = (day, month, year) => {
+    const changeOneOfDates = (arrayWithdates) => {
         if (activeField === 1) {
             setActiveSlide([
-                [day, month, year],
+                arrayWithdates,
                 [
                     dates[1].getDate(),
                     dates[1].getMonth() + 1,
                     dates[1].getFullYear()
                 ]
             ]);
+            const newDateSome = new Date(
+                arrayWithdates[2],
+                arrayWithdates[1],
+                arrayWithdates[0],
+                11,
+                59
+            );
+            setDates([newDateSome, dates[1]]);
         } else {
             setActiveSlide([
                 [
@@ -63,31 +79,36 @@ export const useTime = (initialState) => {
                     dates[0].getMonth() + 1,
                     dates[0].getFullYear()
                 ],
-                [day, month, year]
+                arrayWithdates
             ]);
+            const newDateSome = new Date(
+                arrayWithdates[2],
+                arrayWithdates[1],
+                arrayWithdates[0],
+                11,
+                59
+            );
+            setDates([dates[0], newDateSome]);
         }
-        toggleCloseOrOpenModalWindow();
+        toggleCloseOrOpenModalWindow("close");
     };
 
     // Переключение активного поля
     const changeActiveField = (elem) => {
-        elem.target.parentNode.className.indexOf("cr-1") !== -1
-            ? setActiveField(1)
-            : setActiveField(2);
-        toggleCloseOrOpenModalWindow();
+        if (elem.target.parentNode.className.indexOf("cr-1") !== -1) {
+            setActiveField(1);
+            toggleCloseOrOpenModalWindow(1);
+        } else {
+            setActiveField(2);
+            toggleCloseOrOpenModalWindow(2);
+        }
     };
 
     // Вычисление данных при загрузке страницы
     useEffect(() => {
         changeAgeStatistics();
         caclNextBirthday();
-        caclNextBirthday();
     }, []);
-
-    // Функция для изменения текущих дат
-    const changeDates = (date) => {
-        setDates(date);
-    };
 
     // Функция для изменения текущего возраста
     const changeAge = () => {
@@ -103,6 +124,13 @@ export const useTime = (initialState) => {
             days
         });
     };
+
+    // Вызов функций-счетчиков при зименении одной из дат
+    useEffect(() => {
+        changeAge();
+        changeAgeStatistics();
+        caclNextBirthday();
+    }, [dates]);
 
     // Функция для изменения текущей статистики
     function changeAgeStatistics() {
@@ -164,7 +192,6 @@ export const useTime = (initialState) => {
 
     return {
         dates,
-        changeDates,
         age,
         changeAge,
         ageStatistics,
