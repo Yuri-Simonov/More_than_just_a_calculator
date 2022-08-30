@@ -12,7 +12,6 @@ export const useTime = (initialState) => {
         [dates[0].getDate(), dates[0].getMonth() + 1, dates[0].getFullYear()],
         [dates[1].getDate(), dates[1].getMonth() + 1, dates[1].getFullYear()]
     ]);
-    console.log("activeSlide", activeSlide);
     // Состояние с текущим возвраcтом в привычном его представлении
     const [age, setAge] = useState({
         years: 0,
@@ -56,6 +55,8 @@ export const useTime = (initialState) => {
                     dates[1].getFullYear()
                 ]
             ]);
+            const newDateSome = new Date(year, month, day, 11, 59);
+            setDates([newDateSome, dates[1]]);
         } else {
             setActiveSlide([
                 [
@@ -65,6 +66,8 @@ export const useTime = (initialState) => {
                 ],
                 [day, month, year]
             ]);
+            const newDateSome = new Date(year, month, day, 11, 59);
+            setDates([dates[0], newDateSome]);
         }
         toggleCloseOrOpenModalWindow();
     };
