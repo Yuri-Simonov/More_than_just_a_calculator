@@ -155,10 +155,10 @@ export const useTime = (initialState) => {
     useEffect(() => {
         const firstDate = dates[0]
             ?.toLocaleString("ru-RU", timeOptions)
-            .slice(0, 12);
+            .slice(0, 13);
         const secondDate = dates[1]
             ?.toLocaleString("ru-RU", timeOptions)
-            .slice(0, 12);
+            .slice(0, 13);
         setDatesSimple([firstDate, secondDate]);
     }, [dates]);
 
