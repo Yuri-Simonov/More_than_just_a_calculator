@@ -60,13 +60,13 @@ export const useTime = (initialState) => {
                 arrayWithdates,
                 [
                     dates[1].getDate(),
-                    dates[1].getMonth() + 1,
+                    dates[1].getMonth(),
                     dates[1].getFullYear()
                 ]
             ]);
             const newDateSome = new Date(
                 arrayWithdates[2],
-                arrayWithdates[1],
+                arrayWithdates[1] - 1,
                 arrayWithdates[0],
                 11,
                 59
@@ -76,14 +76,14 @@ export const useTime = (initialState) => {
             setActiveSlide([
                 [
                     dates[0].getDate(),
-                    dates[0].getMonth() + 1,
+                    dates[0].getMonth(),
                     dates[0].getFullYear()
                 ],
                 arrayWithdates
             ]);
             const newDateSome = new Date(
                 arrayWithdates[2],
-                arrayWithdates[1],
+                arrayWithdates[1] - 1,
                 arrayWithdates[0],
                 11,
                 59
