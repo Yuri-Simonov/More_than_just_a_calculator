@@ -60,13 +60,13 @@ export const useTime = (initialState) => {
                 arrayWithdates,
                 [
                     dates[1].getDate(),
-                    dates[1].getMonth() + 1,
+                    dates[1].getMonth(),
                     dates[1].getFullYear()
                 ]
             ]);
             const newDateSome = new Date(
                 arrayWithdates[2],
-                arrayWithdates[1],
+                arrayWithdates[1] - 1,
                 arrayWithdates[0],
                 11,
                 59
@@ -76,14 +76,14 @@ export const useTime = (initialState) => {
             setActiveSlide([
                 [
                     dates[0].getDate(),
-                    dates[0].getMonth() + 1,
+                    dates[0].getMonth(),
                     dates[0].getFullYear()
                 ],
                 arrayWithdates
             ]);
             const newDateSome = new Date(
                 arrayWithdates[2],
-                arrayWithdates[1],
+                arrayWithdates[1] - 1,
                 arrayWithdates[0],
                 11,
                 59
@@ -155,10 +155,10 @@ export const useTime = (initialState) => {
     useEffect(() => {
         const firstDate = dates[0]
             ?.toLocaleString("ru-RU", timeOptions)
-            .slice(0, 12);
+            .slice(0, 13);
         const secondDate = dates[1]
             ?.toLocaleString("ru-RU", timeOptions)
-            .slice(0, 12);
+            .slice(0, 13);
         setDatesSimple([firstDate, secondDate]);
     }, [dates]);
 

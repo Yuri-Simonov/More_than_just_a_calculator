@@ -170,12 +170,12 @@ const ChoiceOfTime = ({
                                 onSlideChange={(e) =>
                                     setCurrentSlides([
                                         [
-                                            e.activeIndex + 1,
+                                            currentSlides[0][0],
                                             currentSlides[0][1],
                                             currentSlides[0][2]
                                         ],
                                         [
-                                            currentSlides[1][0],
+                                            e.activeIndex + 1,
                                             currentSlides[1][1],
                                             currentSlides[1][2]
                                         ]
@@ -199,12 +199,12 @@ const ChoiceOfTime = ({
                                     setCurrentSlides([
                                         [
                                             currentSlides[0][0],
-                                            e.activeIndex + 1,
+                                            currentSlides[0][1],
                                             currentSlides[0][2]
                                         ],
                                         [
                                             currentSlides[1][0],
-                                            currentSlides[1][1],
+                                            e.activeIndex + 1,
                                             currentSlides[1][2]
                                         ]
                                     ])
