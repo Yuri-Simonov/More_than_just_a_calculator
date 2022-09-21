@@ -1,6 +1,10 @@
 import { evaluate } from "mathjs";
 
-export const firstSelectFunc = (firstMeasure, secondMeasure, startResult) => {
+export const switcherOfTemperature = (
+    firstMeasure,
+    secondMeasure,
+    startResult
+) => {
     let calculationResult;
     let intermediateResult;
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { evaluate, round } from "mathjs";
-import { firstSelectFunc } from "../utils/switchersTemperatureCalc";
+import { switcherOfTemperature } from "../utils/switchersTemperatureCalc";
+import { switcherOfScaleOfnotation } from "../utils/switchersOfScaleOfnotation";
 
 export const useSimpleConverter = (
     measures,
@@ -69,6 +70,9 @@ export const useSimpleConverter = (
         // Если вычисление температуры по формулам
         methodOfCalculation === "temperature" &&
             temperatureCalculation(firstMeaseure, secondMeasure);
+        // Если вычисление системы счисления по формалум
+        methodOfCalculation === "scaleOfnotation" &&
+            scaleOfnotationCalculation(firstMeaseure, secondMeasure);
     };
 
     // Фикс задержки обновления стейта
@@ -142,7 +146,7 @@ export const useSimpleConverter = (
     // Вычисление температуры по формулам
     function temperatureCalculation(firstMeasure, secondMeasure) {
         if (activeField === 1) {
-            const calculationResult = firstSelectFunc(
+            const calculationResult = switcherOfTemperature(
                 firstMeasure,
                 secondMeasure,
                 firstResult
@@ -151,7 +155,29 @@ export const useSimpleConverter = (
             const roundedResult = roundResult(calculationResult);
             setSecondResult(String(roundedResult));
         } else {
-            const calculationResult = firstSelectFunc(
+            const calculationResult = switcherOfTemperature(
+                secondMeasure,
+                firstMeasure,
+                secondResult
+            );
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
+        }
+    }
+
+    // Вычисление системы счисления по формулам
+    function scaleOfnotationCalculation(firstMeasure, secondMeasure) {
+        if (activeField === 1) {
+            const calculationResult = switcherOfScaleOfnotation(
+                firstMeasure,
+                secondMeasure,
+                firstResult
+            );
+
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
+        } else {
+            const calculationResult = switcherOfScaleOfnotation(
                 secondMeasure,
                 firstMeasure,
                 secondResult
