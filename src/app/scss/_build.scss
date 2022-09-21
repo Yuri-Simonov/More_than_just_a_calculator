@@ -65,3 +65,9 @@ main {
         border-radius: 5px;
     }
 }
+
+.opacity {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: initial;
+}

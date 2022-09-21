@@ -18,7 +18,8 @@ const ScaleOfnotation = () => {
         activeField,
         changeValue,
         clearResultValues,
-        deleteLastResultSymbol
+        deleteLastResultSymbol,
+        activeScaleOfNomination
     } = useSimpleConverter(scaleOfnotation, initialState, methodOfCalculation);
 
     return (
@@ -38,6 +39,7 @@ const ScaleOfnotation = () => {
                 changeValue={changeValue}
                 deleteAllSymbols={clearResultValues}
                 deleteLastSymbol={deleteLastResultSymbol}
+                activeScaleOfNomination={activeScaleOfNomination}
             />
         </div>
     );

@@ -20,6 +20,9 @@ export const useSimpleConverter = (
     const [activeField, setActiveField] = useState(1);
     // Состояние для проверки первый ли это ввод после захода на страницу или нет
     const [firstVisit, setFirstVisit] = useState(true);
+    // Состояние для проверки какая система исчисления сейчас активна
+    const [activeScaleOfNomination, setActiveScaleOfNomination] =
+        useState("BIN");
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
@@ -79,17 +82,34 @@ export const useSimpleConverter = (
     useEffect(() => {
         calculation(firstSelect, secondSelect);
     }, [firstSelect, secondSelect, firstResult, secondResult]);
+
+    // Проверка активного поля для систем счисления
+    const checkScale = (value) => {
+        if (
+            value === "BIN" ||
+            value === "OCT" ||
+            value === "DEC" ||
+            value === "HEX"
+        ) {
+            setActiveScaleOfNomination(value);
+        }
+    };
+
     // Определение какое из полей активно
     const changeSelectValue = (id, value) => {
         if (id === "first") {
             measures.forEach((elem) => {
                 if (value === elem.shortName) setFirstSelect(elem);
             });
+
+            checkScale(value);
         }
         if (id === "second") {
             measures.forEach((elem) => {
                 if (value === elem.shortName) setSecondSelect(elem);
             });
+
+            checkScale(value);
         }
         calculation(firstSelect, secondSelect);
     };
@@ -225,6 +245,7 @@ export const useSimpleConverter = (
         deleteLastResultSymbol,
         changeActiveField,
         activeField,
-        togglePlusOrMinus
+        togglePlusOrMinus,
+        activeScaleOfNomination
     };
 };
