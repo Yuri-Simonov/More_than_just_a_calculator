@@ -45,24 +45,26 @@ const SimplePanel = ({
                     })}
                 </article>
                 <article className="simple-panel__operators operators">
-                    <div className="operators__item">
-                        <DeleteAllSymbols deleteAllSymbols={deleteAllSymbols} />
+                    <div className="operators__item" onClick={deleteAllSymbols}>
+                        <DeleteAllSymbols />
                     </div>
-                    <div className="operators__item">
-                        <DeleteLastSymbol deleteLastSymbol={deleteLastSymbol} />
+                    <div className="operators__item" onClick={deleteLastSymbol}>
+                        <DeleteLastSymbol />
                     </div>
                     {goOperator && (
-                        <div className="operators__item">
-                            <OpenResultWindow
-                                openResultWindow={toggleOpenOrCloseModal}
-                            />
+                        <div
+                            className="operators__item"
+                            onClick={openResultWindow}
+                        >
+                            <OpenResultWindow />
                         </div>
                     )}
                     {plusOrMinus && (
-                        <div className="operators__item">
-                            <TogglePlusOrMinus
-                                togglePlusOrMinus={togglePlusOrMinus}
-                            />
+                        <div
+                            className="operators__item"
+                            onClick={togglePlusOrMinus}
+                        >
+                            <TogglePlusOrMinus />
                         </div>
                     )}
                 </article>

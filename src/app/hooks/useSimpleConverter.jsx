@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { evaluate, round } from "mathjs";
-import { firstSelectFunc } from "../utils/switchersTemperatureCalc";
+import { switcherOfTemperature } from "../utils/switchersTemperatureCalc";
+import { switcherOfScaleOfnotation } from "../utils/switchersOfScaleOfnotation";
 
 export const useSimpleConverter = (
     measures,
@@ -19,6 +20,9 @@ export const useSimpleConverter = (
     const [activeField, setActiveField] = useState(1);
     // Состояние для проверки первый ли это ввод после захода на страницу или нет
     const [firstVisit, setFirstVisit] = useState(true);
+    // Состояние для проверки какая система исчисления сейчас активна
+    const [activeScaleOfNomination, setActiveScaleOfNomination] =
+        useState("BIN");
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
@@ -69,23 +73,43 @@ export const useSimpleConverter = (
         // Если вычисление температуры по формулам
         methodOfCalculation === "temperature" &&
             temperatureCalculation(firstMeaseure, secondMeasure);
+        // Если вычисление системы счисления по формалум
+        methodOfCalculation === "scaleOfnotation" &&
+            scaleOfnotationCalculation(firstMeaseure, secondMeasure);
     };
 
     // Фикс задержки обновления стейта
     useEffect(() => {
         calculation(firstSelect, secondSelect);
     }, [firstSelect, secondSelect, firstResult, secondResult]);
+
+    // Проверка активного поля для систем счисления
+    const checkScale = (value) => {
+        if (
+            value === "BIN" ||
+            value === "OCT" ||
+            value === "DEC" ||
+            value === "HEX"
+        ) {
+            setActiveScaleOfNomination(value);
+        }
+    };
+
     // Определение какое из полей активно
     const changeSelectValue = (id, value) => {
         if (id === "first") {
             measures.forEach((elem) => {
                 if (value === elem.shortName) setFirstSelect(elem);
             });
+
+            checkScale(value);
         }
         if (id === "second") {
             measures.forEach((elem) => {
                 if (value === elem.shortName) setSecondSelect(elem);
             });
+
+            checkScale(value);
         }
         calculation(firstSelect, secondSelect);
     };
@@ -142,7 +166,7 @@ export const useSimpleConverter = (
     // Вычисление температуры по формулам
     function temperatureCalculation(firstMeasure, secondMeasure) {
         if (activeField === 1) {
-            const calculationResult = firstSelectFunc(
+            const calculationResult = switcherOfTemperature(
                 firstMeasure,
                 secondMeasure,
                 firstResult
@@ -151,7 +175,29 @@ export const useSimpleConverter = (
             const roundedResult = roundResult(calculationResult);
             setSecondResult(String(roundedResult));
         } else {
-            const calculationResult = firstSelectFunc(
+            const calculationResult = switcherOfTemperature(
+                secondMeasure,
+                firstMeasure,
+                secondResult
+            );
+            const roundedResult = roundResult(calculationResult);
+            setFirstResult(String(roundedResult));
+        }
+    }
+
+    // Вычисление системы счисления по формулам
+    function scaleOfnotationCalculation(firstMeasure, secondMeasure) {
+        if (activeField === 1) {
+            const calculationResult = switcherOfScaleOfnotation(
+                firstMeasure,
+                secondMeasure,
+                firstResult
+            );
+
+            const roundedResult = roundResult(calculationResult);
+            setSecondResult(String(roundedResult));
+        } else {
+            const calculationResult = switcherOfScaleOfnotation(
                 secondMeasure,
                 firstMeasure,
                 secondResult
@@ -199,6 +245,7 @@ export const useSimpleConverter = (
         deleteLastResultSymbol,
         changeActiveField,
         activeField,
-        togglePlusOrMinus
+        togglePlusOrMinus,
+        activeScaleOfNomination
     };
 };
