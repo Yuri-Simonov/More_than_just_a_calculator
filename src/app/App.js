@@ -19,6 +19,9 @@ import Volume from "./components/pages/sections/volume";
 import Weight from "./components/pages/sections/weight";
 import Sections from "./components/pages/sections/sections";
 import CalculatorProvider from "./hooks/useCalculator";
+import Investments from "./components/pages/finance/investments";
+import Credit from "./components/pages/finance/credit";
+import Currency from "./components/pages/finance/сurrency";
 
 function App() {
     return (
@@ -60,7 +63,18 @@ function App() {
                     <Route path="/sections/time" exact component={Time} />
                     <Route path="/sections/volume" exact component={Volume} />
                     <Route path="/sections/weight" exact component={Weight} />
-                    <Route path="/finance" exact component={Finance} />
+                    <Route
+                        path="/finances/investments"
+                        exact
+                        component={Investments}
+                    />
+                    <Route
+                        path="/finances/сurrency"
+                        exact
+                        component={Currency}
+                    />
+                    <Route path="/finances/credit" exact component={Credit} />
+                    <Route path="/finances" exact component={Finance} />
                     <CalculatorProvider>
                         <Route path="/" exact component={Calculator} />
                     </CalculatorProvider>
