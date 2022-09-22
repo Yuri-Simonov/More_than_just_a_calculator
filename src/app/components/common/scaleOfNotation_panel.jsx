@@ -260,17 +260,6 @@ const ScaleOfNotationPanel = ({
                                 </span>
                             </p>
                         </div>
-                        <div className="prime__col">
-                            <p className="prime__cell">
-                                <span
-                                    onClick={(e) =>
-                                        changeValue(e.target.textContent)
-                                    }
-                                >
-                                    .
-                                </span>
-                            </p>
-                        </div>
                     </div>
                 </article>
                 <article className="simple-panel__operators operators">

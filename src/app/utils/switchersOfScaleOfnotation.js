@@ -1,5 +1,3 @@
-// import { evaluate } from "mathjs";
-
 export const switcherOfScaleOfnotation = (
     firstMeasure,
     secondMeasure,
@@ -30,13 +28,13 @@ export const switcherOfScaleOfnotation = (
             calculationResult = numberFrom10(startResult, 2);
             break;
         case "OCT":
-            calculationResult = Number(intermediateResult);
+            calculationResult = numberFrom10(startResult, 8);
             break;
         case "DEC":
             calculationResult = Number(intermediateResult);
             break;
         case "HEX":
-            calculationResult = Number(intermediateResult);
+            calculationResult = numberFrom10(startResult, 16);
             break;
         default:
             break;
@@ -74,7 +72,22 @@ function numberTo10(value, num) {
 }
 
 function numberFrom10(value, num) {
-    console.log("value, num", value, num);
-    // const timeArray = [];
-    // let finalNumber = 0;
+    let timeNumber = value;
+    let timeString = "";
+    let currentRest = 0;
+
+    /* eslint no-unreachable-loop: ["error", { ignore: ["WhileStatement"] }] */
+    while (timeNumber >= 1) {
+        timeString += timeNumber % num;
+        currentRest = timeNumber % num;
+        if (timeNumber % num === 0) {
+            timeNumber /= num;
+        } else {
+            timeNumber = (timeNumber - currentRest) / num;
+        }
+    }
+
+    const finalString = timeString.split("").reverse().join("");
+
+    return finalString;
 }

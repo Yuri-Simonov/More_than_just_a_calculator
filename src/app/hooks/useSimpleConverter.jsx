@@ -16,7 +16,6 @@ export const useSimpleConverter = (
     const [firstResult, setFirstResult] = useState(initialState[0]);
     // Состояние второго результата
     const [secondResult, setSecondResult] = useState(initialState[1]);
-    console.log("secondSelect", secondSelect);
     // Состояние для переключения активного результата
     const [activeField, setActiveField] = useState(1);
     // Состояние для проверки первый ли это ввод после захода на страницу или нет
@@ -24,7 +23,6 @@ export const useSimpleConverter = (
     // Состояние для проверки какая система исчисления сейчас активна
     const [activeScaleOfNomination, setActiveScaleOfNomination] =
         useState("BIN");
-    console.log("activeScaleOfNomination", activeScaleOfNomination);
 
     // Изменение значения в активном поле (которое имеет желтый цвет)
     const changeValue = (btnValue) => {
