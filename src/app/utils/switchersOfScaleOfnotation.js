@@ -25,28 +25,26 @@ export const switcherOfScaleOfnotation = (
 
     switch (secondMeasure.shortName) {
         case "BIN":
-            calculationResult = numberFrom10(startResult, 2);
+            calculationResult = numberFrom10(intermediateResult, 2);
             break;
         case "OCT":
-            calculationResult = numberFrom10(startResult, 8);
+            calculationResult = numberFrom10(intermediateResult, 8);
             break;
         case "DEC":
             calculationResult = Number(intermediateResult);
             break;
         case "HEX":
-            calculationResult = numberFrom10(startResult, 16);
+            calculationResult = numberFrom10(intermediateResult, 16);
             break;
         default:
             break;
     }
-
     return calculationResult;
 };
 
 function numberTo10(value, num) {
     const timeArray = [];
     let finalNumber = 0;
-
     value
         .split("")
         .reverse()
@@ -60,14 +58,11 @@ function numberTo10(value, num) {
                     .replaceAll("E", 14)
                     .replaceAll("F", 15);
             }
-
             timeArray.push(elem);
         });
-
     for (let i = 0; i < timeArray.length; i++) {
         finalNumber += timeArray[i] * num ** i;
     }
-
     return finalNumber;
 }
 
@@ -76,18 +71,46 @@ function numberFrom10(value, num) {
     let timeString = "";
     let currentRest = 0;
 
-    /* eslint no-unreachable-loop: ["error", { ignore: ["WhileStatement"] }] */
-    while (timeNumber >= 1) {
-        timeString += timeNumber % num;
-        currentRest = timeNumber % num;
-        if (timeNumber % num === 0) {
-            timeNumber /= num;
-        } else {
-            timeNumber = (timeNumber - currentRest) / num;
+    if (value > 0) {
+        /* eslint no-unreachable-loop: ["error", { ignore: ["WhileStatement"] }] */
+        while (timeNumber >= 1) {
+            currentRest = timeNumber % num;
+            if (timeNumber % num === 0) {
+                timeNumber /= num;
+            } else {
+                timeNumber = (timeNumber - currentRest) / num;
+            }
+            if (num === 16) {
+                switch (currentRest) {
+                    case 10:
+                        timeString += "A";
+                        break;
+                    case 11:
+                        timeString += "B";
+                        break;
+                    case 12:
+                        timeString += "C";
+                        break;
+                    case 13:
+                        timeString += "D";
+                        break;
+                    case 14:
+                        timeString += "E";
+                        break;
+                    case 15:
+                        timeString += "F";
+                        break;
+                    default:
+                        timeString += currentRest;
+                        break;
+                }
+            } else {
+                timeString += currentRest;
+            }
         }
+    } else {
+        timeString = "0";
     }
-
     const finalString = timeString.split("").reverse().join("");
-
     return finalString;
 }

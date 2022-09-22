@@ -264,7 +264,7 @@ const ScaleOfNotationPanel = ({
                 </article>
                 <article className="simple-panel__operators operators">
                     <div className="operators__item" onClick={deleteAllSymbols}>
-                        <DeleteAllSymbols />
+                        <DeleteAllSymbols text={"AC"} />
                     </div>
                     <div className="operators__item" onClick={deleteLastSymbol}>
                         <DeleteLastSymbol />
