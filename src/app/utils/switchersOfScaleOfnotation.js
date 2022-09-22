@@ -1,5 +1,3 @@
-// import { evaluate } from "mathjs";
-
 export const switcherOfScaleOfnotation = (
     firstMeasure,
     secondMeasure,
@@ -16,7 +14,7 @@ export const switcherOfScaleOfnotation = (
             intermediateResult = numberTo10(startResult, 8);
             break;
         case "DEC":
-            intermediateResult = numberTo10(startResult, 10);
+            intermediateResult = Number(startResult);
             break;
         case "HEX":
             intermediateResult = numberTo10(startResult, 16);
@@ -27,28 +25,26 @@ export const switcherOfScaleOfnotation = (
 
     switch (secondMeasure.shortName) {
         case "BIN":
-            calculationResult = numberTo10(startResult);
+            calculationResult = numberFrom10(intermediateResult, 2);
             break;
         case "OCT":
-            calculationResult = Number(intermediateResult);
+            calculationResult = numberFrom10(intermediateResult, 8);
             break;
         case "DEC":
             calculationResult = Number(intermediateResult);
             break;
         case "HEX":
-            calculationResult = Number(intermediateResult);
+            calculationResult = numberFrom10(intermediateResult, 16);
             break;
         default:
             break;
     }
-
     return calculationResult;
 };
 
 function numberTo10(value, num) {
     const timeArray = [];
     let finalNumber = 0;
-
     value
         .split("")
         .reverse()
@@ -62,13 +58,59 @@ function numberTo10(value, num) {
                     .replaceAll("E", 14)
                     .replaceAll("F", 15);
             }
-
             timeArray.push(elem);
         });
-
     for (let i = 0; i < timeArray.length; i++) {
         finalNumber += timeArray[i] * num ** i;
     }
-
     return finalNumber;
+}
+
+function numberFrom10(value, num) {
+    let timeNumber = value;
+    let timeString = "";
+    let currentRest = 0;
+
+    if (value > 0) {
+        /* eslint no-unreachable-loop: ["error", { ignore: ["WhileStatement"] }] */
+        while (timeNumber >= 1) {
+            currentRest = timeNumber % num;
+            if (timeNumber % num === 0) {
+                timeNumber /= num;
+            } else {
+                timeNumber = (timeNumber - currentRest) / num;
+            }
+            if (num === 16) {
+                switch (currentRest) {
+                    case 10:
+                        timeString += "A";
+                        break;
+                    case 11:
+                        timeString += "B";
+                        break;
+                    case 12:
+                        timeString += "C";
+                        break;
+                    case 13:
+                        timeString += "D";
+                        break;
+                    case 14:
+                        timeString += "E";
+                        break;
+                    case 15:
+                        timeString += "F";
+                        break;
+                    default:
+                        timeString += currentRest;
+                        break;
+                }
+            } else {
+                timeString += currentRest;
+            }
+        }
+    } else {
+        timeString = "0";
+    }
+    const finalString = timeString.split("").reverse().join("");
+    return finalString;
 }

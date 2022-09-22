@@ -83,6 +83,13 @@ export const useSimpleConverter = (
         calculation(firstSelect, secondSelect);
     }, [firstSelect, secondSelect, firstResult, secondResult]);
 
+    // Фикс задержки обновления стейта
+    useEffect(() => {
+        activeField === 1
+            ? checkCurrentValueToValidation(firstResult)
+            : checkCurrentValueToValidation(secondResult);
+    }, [firstSelect, secondSelect]);
+
     // Проверка активного поля для систем счисления
     const checkScale = (value) => {
         if (
@@ -101,15 +108,13 @@ export const useSimpleConverter = (
             measures.forEach((elem) => {
                 if (value === elem.shortName) setFirstSelect(elem);
             });
-
-            checkScale(value);
+            if (activeField === 1) checkScale(value);
         }
         if (id === "second") {
             measures.forEach((elem) => {
                 if (value === elem.shortName) setSecondSelect(elem);
             });
-
-            checkScale(value);
+            if (activeField === 2) checkScale(value);
         }
         calculation(firstSelect, secondSelect);
     };
@@ -141,9 +146,13 @@ export const useSimpleConverter = (
 
     // Переключение активного поля
     const changeActiveField = (elem) => {
-        elem.target.className.indexOf("cr-1") !== -1
-            ? setActiveField(1)
-            : setActiveField(2);
+        if (elem.target.className.indexOf("cr-1") !== -1) {
+            setActiveField(1);
+            setActiveScaleOfNomination(firstSelect.shortName);
+        } else {
+            setActiveField(2);
+            setActiveScaleOfNomination(secondSelect.shortName);
+        }
     };
 
     // Вычисление по простой пропорции
@@ -204,6 +213,27 @@ export const useSimpleConverter = (
             );
             const roundedResult = roundResult(calculationResult);
             setFirstResult(String(roundedResult));
+        }
+    }
+
+    // Проверка текущего значения в поле ввода, после переключения селекта
+    function checkCurrentValueToValidation(value) {
+        let flag = false;
+        const reg2 = /[2-9A-F]/gi;
+        const reg8 = /[8-9A-F]/gi;
+        const reg10 = /[A-F]/gi;
+
+        if (activeScaleOfNomination === "BIN") {
+            flag = reg2.test(value);
+        } else if (activeScaleOfNomination === "OCT") {
+            flag = reg8.test(value);
+        } else if (activeScaleOfNomination === "DEC") {
+            flag = reg10.test(value);
+        }
+
+        if (flag) {
+            setFirstResult("0");
+            setSecondResult("0");
         }
     }
 
