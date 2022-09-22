@@ -24,7 +24,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/finance" className="header__link">
+                            <Link to="/finances" className="header__link">
                                 <img src={svgFinance} alt="finance icon" />
                             </Link>
                         </li>
