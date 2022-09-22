@@ -16,7 +16,7 @@ export const switcherOfScaleOfnotation = (
             intermediateResult = numberTo10(startResult, 8);
             break;
         case "DEC":
-            intermediateResult = numberTo10(startResult, 10);
+            intermediateResult = Number(startResult);
             break;
         case "HEX":
             intermediateResult = numberTo10(startResult, 16);
@@ -27,7 +27,7 @@ export const switcherOfScaleOfnotation = (
 
     switch (secondMeasure.shortName) {
         case "BIN":
-            calculationResult = numberTo10(startResult);
+            calculationResult = numberFrom10(startResult, 2);
             break;
         case "OCT":
             calculationResult = Number(intermediateResult);
@@ -71,4 +71,10 @@ function numberTo10(value, num) {
     }
 
     return finalNumber;
+}
+
+function numberFrom10(value, num) {
+    console.log("value, num", value, num);
+    // const timeArray = [];
+    // let finalNumber = 0;
 }
