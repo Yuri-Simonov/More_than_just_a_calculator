@@ -54,7 +54,7 @@ const SimplePanel = ({
                     {goOperator && (
                         <div
                             className="operators__item"
-                            onClick={openResultWindow}
+                            onClick={toggleOpenOrCloseModal}
                         >
                             <OpenResultWindow />
                         </div>

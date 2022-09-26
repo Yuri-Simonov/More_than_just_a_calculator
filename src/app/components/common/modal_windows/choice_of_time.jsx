@@ -13,7 +13,6 @@ const ChoiceOfTime = ({
     activeSlide
 }) => {
     const [currentSlides, setCurrentSlides] = useState(activeSlide);
-    console.log("currentSlides", currentSlides);
 
     const classOfModalFirst =
         "choice-time " +
