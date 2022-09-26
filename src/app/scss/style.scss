@@ -38,6 +38,14 @@
 @import "blocks/age";
 // Свайпер (слайдер)
 @import "blocks/swiper";
+// Радио-кнопки
+@import "blocks/radio_buttons";
+// Радио-кнопки
+@import "blocks/number_input";
+// Блок с выбором продолжительности времени инвестиций/кредита
+@import "blocks/duration";
+// Блок с кнопкой "расчета"
+@import "blocks/calculate_button";
 
 // Модалки =========================================================
 //
@@ -45,3 +53,5 @@
 @import "modals/bwm_result";
 // Модалка, где выбирается дата
 @import "modals/choise_of_time";
+// Модалка с результатом инвестиций/кредита
+@import "modals/result";
