@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Result = ({ title, rangeTotal }) => {
+const Result = ({ title, rangeTotal, toggleModalWindow }) => {
     return (
         <div className="result result_active">
             <div className="result__body">
@@ -37,7 +37,7 @@ const Result = ({ title, rangeTotal }) => {
                     </div>
                 </div>
             </div>
-            <div className="result__overlay"></div>
+            <div className="result__overlay" onClick={toggleModalWindow}></div>
         </div>
     );
 };
@@ -48,7 +48,8 @@ Result.defaultProps = {
 
 Result.propTypes = {
     title: PropTypes.string,
-    rangeTotal: PropTypes.bool
+    rangeTotal: PropTypes.bool,
+    toggleModalWindow: PropTypes.func
 };
 
 export default Result;
