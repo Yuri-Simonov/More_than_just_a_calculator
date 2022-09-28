@@ -19,7 +19,8 @@ const Investments = () => {
         changeCapitalValue,
         changePercentValue,
         availabilityErrors,
-        totalValue
+        totalValue,
+        capitalValueTotal
     } = useFinance();
 
     return (
@@ -50,10 +51,9 @@ const Investments = () => {
                 <Result
                     title="Общий объем"
                     toggleModalWindow={toggleModalWindow}
-                    capital={capitalValue}
-                    percent={percentValue}
                     totalValue={totalValue}
                     duration={duration}
+                    capitalTotal={capitalValueTotal}
                 />
             )}
         </div>

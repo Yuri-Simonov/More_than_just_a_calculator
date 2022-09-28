@@ -5,11 +5,14 @@ const Result = ({
     title,
     rangeTotal,
     toggleModalWindow,
-    capital,
-    percent,
     duration,
-    totalValue
+    totalValue,
+    capitalTotal
 }) => {
+    const capitalWidthLine = (capitalTotal / totalValue) * 100;
+    const percentWidthLine = ((totalValue - capitalTotal) / totalValue) * 100;
+    const totalPercent = (totalValue - capitalTotal).toFixed(2);
+
     return (
         <div className="result result_active">
             <div className="result__body">
@@ -28,21 +31,23 @@ const Result = ({
                     <div className="result__range-line">
                         <span
                             className="result__range-green"
-                            style={{ width: 40 + "%" }}
+                            style={{
+                                width: capitalWidthLine + "%"
+                            }}
                         ></span>
                         <span
                             className="result__range-orange"
-                            style={{ width: 60 + "%" }}
+                            style={{ width: percentWidthLine + "%" }}
                         ></span>
                     </div>
                     <div className="result__range-items">
                         <article className="result__range-item">
                             <p>Общий капитал</p>
-                            <span>{capital}</span>
+                            <span>{capitalTotal}</span>
                         </article>
                         <article className="result__range-item">
                             <p>Общий процент</p>
-                            <span>{percent}</span>
+                            <span>{totalPercent}</span>
                         </article>
                     </div>
                 </div>
@@ -63,7 +68,9 @@ Result.propTypes = {
     capital: PropTypes.string,
     percent: PropTypes.string,
     duration: PropTypes.object,
-    totalValue: PropTypes.number
+    totalValue: PropTypes.string,
+    percentWidth: PropTypes.string,
+    capitalTotal: PropTypes.number
 };
 
 export default Result;
