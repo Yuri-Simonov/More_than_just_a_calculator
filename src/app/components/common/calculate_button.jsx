@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CalculateButton = ({ toggleModalWindow }) => {
+const CalculateButton = ({ toggleModalWindow, visibility }) => {
+    const visibilityClass = visibility
+        ? "calculate-button calculate-button_hidden"
+        : "calculate-button";
+
     return (
         <button
-            className="calculate-button"
+            className={visibilityClass}
             type="button"
             onClick={toggleModalWindow}
         >
@@ -14,7 +18,8 @@ const CalculateButton = ({ toggleModalWindow }) => {
 };
 
 CalculateButton.propTypes = {
-    toggleModalWindow: PropTypes.func
+    toggleModalWindow: PropTypes.func,
+    visibility: PropTypes.bool
 };
 
 export default CalculateButton;

@@ -2,6 +2,7 @@ import React from "react";
 import { useFinance } from "../../../hooks/useFinance";
 import CalculateButton from "../../common/calculate_button";
 import Duration from "../../common/duration";
+import ChoiceOfDuration from "../../common/modal_windows/choice_of_duration";
 import Result from "../../common/modal_windows/result";
 import NumberInput from "../../common/number_input";
 import RadioButtons from "../../common/radio_buttons";
@@ -17,7 +18,14 @@ const Investments = () => {
         toggleRadioButtons,
         toggleModalWindow,
         changeCapitalValue,
-        changePercentValue
+        changePercentValue,
+        availabilityErrors,
+        totalValue,
+        capitalValueTotal,
+        durationModal,
+        toggleDurationModal,
+        activeSlide,
+        changeActiveSlide
     } = useFinance();
 
     return (
@@ -39,12 +47,28 @@ const Investments = () => {
                 value={percentValue}
                 changeValue={changePercentValue}
             />
-            <Duration duration={duration} />
-            <CalculateButton toggleModalWindow={toggleModalWindow} />
+            <Duration
+                duration={duration}
+                toggleDurationModal={toggleDurationModal}
+            />
+            <CalculateButton
+                toggleModalWindow={toggleModalWindow}
+                visibility={availabilityErrors}
+            />
             {togglerModal && (
                 <Result
                     title="Общий объем"
                     toggleModalWindow={toggleModalWindow}
+                    totalValue={totalValue}
+                    duration={duration}
+                    capitalTotal={capitalValueTotal}
+                />
+            )}
+            {durationModal && (
+                <ChoiceOfDuration
+                    toggleDurationModal={toggleDurationModal}
+                    activeSlide={activeSlide}
+                    changeActiveSlide={changeActiveSlide}
                 />
             )}
         </div>
