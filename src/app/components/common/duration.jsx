@@ -1,11 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Duration = () => {
+const Duration = ({ duration, toggleDurationModal }) => {
     return (
         <article className="duration">
             <h2 className="duration__title">Длительность</h2>
-            <p className="duration__time">
-                <span>3 года 0 месяц</span>
+            <p className="duration__time" onClick={toggleDurationModal}>
+                <span>
+                    {duration.years} года {duration.months} месяц
+                </span>
                 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                     <title />
                     <g data-name="Layer 2" id="Layer_2">
@@ -15,6 +18,11 @@ const Duration = () => {
             </p>
         </article>
     );
+};
+
+Duration.propTypes = {
+    duration: PropTypes.object,
+    toggleDurationModal: PropTypes.func
 };
 
 export default Duration;

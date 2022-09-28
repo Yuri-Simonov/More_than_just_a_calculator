@@ -12,11 +12,15 @@ export const useFinance = () => {
     // Состояние с результатом вычислений
     const [totalValue, setTotalValue] = useState(0);
     // Состояние для выбора периода
-    const [duration] = useState({ years: 3, months: 0 }); // setDuration
+    const [duration, setDuration] = useState({ years: 3, months: 0 });
     // Состояние для открытия/закрытия модалки
     const [togglerModal, setTogglerModal] = useState(false);
     // Состояние проверки на валидность введенных в инпуты данных
     const [availabilityErrors, setAvailabilityErrors] = useState(true);
+    // Состояние для модалки выбора диапазона
+    const [durationModal, setDurationModal] = useState(false);
+    // Состояние с активными слайдами
+    const [activeSlide, setActiveSlide] = useState({ years: 3, months: 0 });
 
     // Обновление состояний при изменении значений в инпутах
     useEffect(() => {
@@ -93,6 +97,18 @@ export const useFinance = () => {
         }
     };
 
+    // Открытие и закрытие модалки с выбором даты
+    const toggleDurationModal = () => {
+        setDurationModal(!durationModal);
+    };
+
+    // Изменение активного слайда
+    const changeActiveSlide = (duration) => {
+        setDuration(duration);
+        setActiveSlide(duration);
+        toggleDurationModal();
+    };
+
     return {
         activeRadioButton,
         capitalValue,
@@ -105,6 +121,10 @@ export const useFinance = () => {
         changePercentValue,
         availabilityErrors,
         totalValue,
-        capitalValueTotal
+        capitalValueTotal,
+        durationModal,
+        toggleDurationModal,
+        activeSlide,
+        changeActiveSlide
     };
 };
