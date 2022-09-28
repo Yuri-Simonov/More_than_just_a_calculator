@@ -17,7 +17,9 @@ const Investments = () => {
         toggleRadioButtons,
         toggleModalWindow,
         changeCapitalValue,
-        changePercentValue
+        changePercentValue,
+        availabilityErrors,
+        totalValue
     } = useFinance();
 
     return (
@@ -40,11 +42,18 @@ const Investments = () => {
                 changeValue={changePercentValue}
             />
             <Duration duration={duration} />
-            <CalculateButton toggleModalWindow={toggleModalWindow} />
+            <CalculateButton
+                toggleModalWindow={toggleModalWindow}
+                visibility={availabilityErrors}
+            />
             {togglerModal && (
                 <Result
                     title="Общий объем"
                     toggleModalWindow={toggleModalWindow}
+                    capital={capitalValue}
+                    percent={percentValue}
+                    totalValue={totalValue}
+                    duration={duration}
                 />
             )}
         </div>
