@@ -77,7 +77,7 @@ export const useFinance = () => {
         let totalCapital = Number(capitalValue);
         for (let i = 0; i < totalMonths; i++) {
             totalSum +=
-                Number((percentValue / 12 / 100) * totalCapital) +
+                Number((percentValue / 12 / 100) * totalSum) +
                 Number(repeatCapitalValue);
             if (i > 0) {
                 totalCapital += Number(repeatCapitalValue);
