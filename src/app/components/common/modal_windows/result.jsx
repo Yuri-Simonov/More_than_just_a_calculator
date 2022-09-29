@@ -12,6 +12,12 @@ const Result = ({
     const capitalWidthLine = (capitalTotal / totalValue) * 100;
     const percentWidthLine = ((totalValue - capitalTotal) / totalValue) * 100;
     const totalPercent = (totalValue - capitalTotal).toFixed(2);
+    const totalCreditSum =
+        (duration.years * 12 + duration.months - 1) * totalValue;
+    const totalCreditPercent = (totalCreditSum - capitalTotal).toFixed(2);
+    const creditWidthLine =
+        ((totalCreditSum - capitalTotal) / capitalTotal) * 100;
+    console.log("creditWidthLine", creditWidthLine);
 
     return (
         <div className="result result_active">
@@ -20,34 +26,53 @@ const Result = ({
                 <p className="result__time">
                     {duration.years} года {duration.months} месяц
                 </p>
-                <p className="result__total orange">&#8381; {totalValue}</p>
+                <p className="result__total orange">{totalValue} &#8381;</p>
                 <div className="result__range">
                     {rangeTotal && (
                         <article className="result__range-total">
                             <h2>Итого к оплате</h2>
-                            <p>1111111111111</p>
+                            <p>{totalCreditSum} &#8381;</p>
                         </article>
                     )}
-                    <div className="result__range-line">
-                        <span
-                            className="result__range-green"
-                            style={{
-                                width: capitalWidthLine + "%"
-                            }}
-                        ></span>
-                        <span
-                            className="result__range-orange"
-                            style={{ width: percentWidthLine + "%" }}
-                        ></span>
-                    </div>
+                    {percentWidthLine > 0 ? (
+                        <div className="result__range-line">
+                            <span
+                                className="result__range-green"
+                                style={{
+                                    width: capitalWidthLine + "%"
+                                }}
+                            ></span>
+                            <span
+                                className="result__range-orange"
+                                style={{ width: percentWidthLine + "%" }}
+                            ></span>
+                        </div>
+                    ) : (
+                        <div className="result__range-line">
+                            <span
+                                className="result__range-green"
+                                style={{
+                                    width: 100 - creditWidthLine + "%"
+                                }}
+                            ></span>
+                            <span
+                                className="result__range-orange"
+                                style={{ width: creditWidthLine + "%" }}
+                            ></span>
+                        </div>
+                    )}
                     <div className="result__range-items">
                         <article className="result__range-item">
                             <p>Общий капитал</p>
-                            <span>{capitalTotal}</span>
+                            <span>{capitalTotal} &#8381;</span>
                         </article>
                         <article className="result__range-item">
                             <p>Общий процент</p>
-                            <span>{totalPercent}</span>
+                            <span>
+                                {totalPercent >= 0
+                                    ? totalPercent
+                                    : totalCreditPercent}
+                            </span>
                         </article>
                     </div>
                 </div>
@@ -58,7 +83,7 @@ const Result = ({
 };
 
 Result.defaultProps = {
-    rangeTotal: true
+    rangeTotal: false
 };
 
 Result.propTypes = {

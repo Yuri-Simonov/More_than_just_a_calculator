@@ -48,6 +48,7 @@ const Investments = () => {
                 changeValue={changePercentValue}
             />
             <Duration
+                text="Длительность"
                 duration={duration}
                 toggleDurationModal={toggleDurationModal}
             />
