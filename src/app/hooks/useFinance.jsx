@@ -70,6 +70,12 @@ export const useFinance = () => {
         setTogglerModal(!togglerModal);
     };
 
+    // Открытие и закрытие модалки с результатом
+    const toggleModalWindowCredit = () => {
+        !togglerModal && calcCredit();
+        setTogglerModal(!togglerModal);
+    };
+
     // Вычисление значения инвестиций
     const calcInvestments = (repeatCapitalValue = 0) => {
         const totalMonths = duration.years * 12 + duration.months;
@@ -97,6 +103,20 @@ export const useFinance = () => {
         }
     };
 
+    // Вычисление кредита СЗ*(П+(П/(1+П)*СК-1))
+    const calcCredit = () => {
+        const innerPercent = percentValue / 12 / 100;
+        const totalMonths = duration.years * 12 + duration.months - 1;
+        const dailyPay = (
+            (capitalValue *
+                (innerPercent +
+                    (innerPercent / (1 + innerPercent)) * totalMonths)) /
+            100
+        ).toFixed(2);
+        setTotalValue(dailyPay);
+        setCapitalValueTotal(Number(capitalValue));
+    };
+
     // Открытие и закрытие модалки с выбором даты
     const toggleDurationModal = () => {
         setDurationModal(!durationModal);
@@ -117,6 +137,7 @@ export const useFinance = () => {
         togglerModal,
         toggleRadioButtons,
         toggleModalWindow,
+        toggleModalWindowCredit,
         changeCapitalValue,
         changePercentValue,
         availabilityErrors,

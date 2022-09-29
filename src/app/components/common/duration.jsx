@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Duration = ({ duration, toggleDurationModal }) => {
+const Duration = ({ duration, toggleDurationModal, text }) => {
     return (
         <article className="duration">
-            <h2 className="duration__title">Длительность</h2>
+            <h2 className="duration__title">{text}</h2>
             <p className="duration__time" onClick={toggleDurationModal}>
                 <span>
                     {duration.years} года {duration.months} месяц
@@ -22,7 +22,8 @@ const Duration = ({ duration, toggleDurationModal }) => {
 
 Duration.propTypes = {
     duration: PropTypes.object,
-    toggleDurationModal: PropTypes.func
+    toggleDurationModal: PropTypes.func,
+    text: PropTypes.string
 };
 
 export default Duration;
