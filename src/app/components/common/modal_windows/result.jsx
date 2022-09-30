@@ -17,7 +17,6 @@ const Result = ({
     const totalCreditPercent = (totalCreditSum - capitalTotal).toFixed(2);
     const creditWidthLine =
         ((totalCreditSum - capitalTotal) / capitalTotal) * 100;
-    console.log("creditWidthLine", creditWidthLine);
 
     return (
         <div className="result result_active">
