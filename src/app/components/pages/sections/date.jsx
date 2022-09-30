@@ -3,6 +3,7 @@ import Title from "../../common/title";
 import arrowDown from "../../../images/svg/arrow_down.svg";
 import { useTime } from "../../../hooks/useTime";
 import ChoiceOfTime from "../../common/modal_windows/choice_of_time";
+import changeWords from "../../../utils/changeWords";
 
 const DateDifference = () => {
     const today = new Date();
@@ -22,7 +23,7 @@ const DateDifference = () => {
 
     return (
         <div className="container-inner">
-            <Title title={"Возраст"} />
+            <Title title={"Дата"} />
             <section className="age">
                 <div className="age__values">
                     <div className="age__value">
@@ -60,14 +61,15 @@ const DateDifference = () => {
                             <h1 className="age__title">Разница дат</h1>
                             <div className="age__wrapper">
                                 <p className="age__years age__years_middle">
-                                    <span className="orange">{age.years}</span>
-                                    лет
+                                    <span className="orange">{age.years} </span>
+                                    {changeWords(age.years, "year")}
                                 </p>
                                 <p className="age__text age__text_middle">
-                                    {age.months} месяц
+                                    {age.months}{" "}
+                                    {changeWords(age.months, "month")}
                                 </p>
                                 <p className="age__text age__text_middle">
-                                    {age.days} дней
+                                    {age.days} {changeWords(age.days, "day")}
                                 </p>
                             </div>
                         </div>
@@ -86,9 +88,9 @@ const DateDifference = () => {
                                 <h3 className="age__different-title orange">
                                     До
                                 </h3>
-                                <p className="age__different-text">
+                                <div className="age__different-text">
                                     <p>{datesSimple[1]}</p>
-                                </p>
+                                </div>
                             </article>
                         </div>
                     </div>

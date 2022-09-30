@@ -45,7 +45,7 @@ const Conversion = ({
                             {firstResultValue}
                         </p>
                         <p className="conversion__measure">
-                            {firstSelectValue.fullName}
+                            {firstSelectValue.shortName}
                         </p>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ const Conversion = ({
                             {secondResultValue}
                         </p>
                         <p className="conversion__measure">
-                            {secondSelectValue.fullName}
+                            {secondSelectValue.shortName}
                         </p>
                     </div>
                 </div>

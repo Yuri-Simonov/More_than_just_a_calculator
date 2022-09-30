@@ -56,7 +56,7 @@ const ConversionTwoOperators = ({
                         </p>
                         {methodOfCalculation === "bodyWeightMeter" && (
                             <p className="conversion__measure">
-                                {firstSelectValue.fullName}
+                                {firstSelectValue.shortName}
                             </p>
                         )}
                     </div>
@@ -100,7 +100,7 @@ const ConversionTwoOperators = ({
                         </p>
                         {methodOfCalculation === "bodyWeightMeter" && (
                             <p className="conversion__measure">
-                                {secondSelectValue.fullName}
+                                {secondSelectValue.shortName}
                             </p>
                         )}
                     </div>

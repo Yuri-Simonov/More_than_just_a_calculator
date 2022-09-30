@@ -106,13 +106,15 @@ export const useFinance = () => {
     // Вычисление кредита СЗ*(П+(П/(1+П)*СК-1))
     const calcCredit = () => {
         const innerPercent = percentValue / 12 / 100;
-        const totalMonths = duration.years * 12 + duration.months - 1;
+        const totalMonths = duration.years * 12 + duration.months;
         const dailyPay = (
             (capitalValue *
                 (innerPercent +
-                    (innerPercent / (1 + innerPercent)) * totalMonths)) /
+                    (innerPercent / (1 + innerPercent)) * totalMonths) -
+                1) /
             100
         ).toFixed(2);
+        console.log("dailyPay", dailyPay);
         setTotalValue(dailyPay);
         setCapitalValueTotal(Number(capitalValue));
     };
