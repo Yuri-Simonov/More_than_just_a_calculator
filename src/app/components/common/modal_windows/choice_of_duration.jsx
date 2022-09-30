@@ -59,7 +59,7 @@ const ChoiceOfDuration = ({
                             </Swiper>
                         </div>
                         <div className="own-swiper own-swiper_months">
-                            <h2 className="choice-duration__title">Месяцы</h2>
+                            <h2 className="choice-duration__title">Месяца</h2>
                             <Swiper
                                 onSlideChange={(e) =>
                                     setCurrentSlides({

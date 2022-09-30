@@ -2,7 +2,6 @@ import { e, pi, log, round, evaluate } from "mathjs";
 
 // Замена содержимого внутри скобок логарифма на понятные значения для библиотеки mathjs
 const changeLogarifmValue = (str, i, kind, base) => {
-    console.log("str", str);
     let openBracketAmount = 0;
     let closeBracketAmount = 0;
     for (let i = 0; i < str.length; i++) {
@@ -18,7 +17,6 @@ const changeLogarifmValue = (str, i, kind, base) => {
             );
             const strAfterOtherConverting =
                 otherOperatorConverting(findedLogarifmValue);
-            console.log("strAfterOtherConverting", strAfterOtherConverting);
             // Проверка есть ли еще логарифмы внутри логарифма
             const checkOtherLogarifms = findLogarifm(strAfterOtherConverting);
 
@@ -30,7 +28,6 @@ const changeLogarifmValue = (str, i, kind, base) => {
                     `${log(round(evaluate(checkOtherLogarifms), 5), base)}`
                 )
                 .replace("()", "");
-            console.log("strAfterReplace", strAfterReplace);
             return strAfterReplace;
         }
     }

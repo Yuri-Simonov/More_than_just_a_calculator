@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import changeWords from "../../utils/changeWords";
 
 const Duration = ({ duration, toggleDurationModal, text }) => {
     return (
@@ -7,7 +8,8 @@ const Duration = ({ duration, toggleDurationModal, text }) => {
             <h2 className="duration__title">{text}</h2>
             <p className="duration__time" onClick={toggleDurationModal}>
                 <span>
-                    {duration.years} года {duration.months} месяц
+                    {duration.years} {changeWords(duration.years, "year")}{" "}
+                    {duration.months} {changeWords(duration.months, "month")}
                 </span>
                 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                     <title />

@@ -226,6 +226,9 @@
     }
 
     &__about-name {
+        &::first-letter {
+            text-transform: uppercase;
+        }
     }
 
     &__about-number {

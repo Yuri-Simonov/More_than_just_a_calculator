@@ -4,6 +4,7 @@ import arrowDown from "../../../images/svg/arrow_down.svg";
 import birthday from "../../../images/svg/birthday.svg";
 import { useTime } from "../../../hooks/useTime";
 import ChoiceOfTime from "../../common/modal_windows/choice_of_time";
+import changeWords from "../../../utils/changeWords";
 
 const Age = () => {
     const today = new Date();
@@ -62,10 +63,15 @@ const Age = () => {
                         <div className="age__col">
                             <h1 className="age__title">Возраст</h1>
                             <p className="age__years">
-                                <span className="orange">{age.years}</span>лет
+                                <span className="orange">{age.years}</span>
+                                {changeWords(age.years, "year")}
                             </p>
-                            <p className="age__text">{age.months} месяц</p>
-                            <p className="age__text">{age.days} дней</p>
+                            <p className="age__text">
+                                {age.months} {changeWords(age.months, "month")}
+                            </p>
+                            <p className="age__text">
+                                {age.days} {changeWords(age.days, "day")}
+                            </p>
                         </div>
                         {nextBirthday && (
                             <div className="age__col">
@@ -82,10 +88,15 @@ const Age = () => {
                                 </p>
                                 <p className="age__text orange">Осталось</p>
                                 <p className="age__text">
-                                    {nextBirthday.leftMonths} месяцев
+                                    {nextBirthday.leftMonths}{" "}
+                                    {changeWords(
+                                        nextBirthday.leftMonths,
+                                        "month"
+                                    )}
                                 </p>
                                 <p className="age__text">
-                                    {nextBirthday.leftDays} дня
+                                    {nextBirthday.leftDays}{" "}
+                                    {changeWords(nextBirthday.leftDays, "day")}
                                 </p>
                             </div>
                         )}
@@ -95,37 +106,64 @@ const Age = () => {
                             <h2 className="age__subtitle orange">Описание</h2>
                             <div className="age__about-items">
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Лет</p>
+                                    <p className="age__about-name">
+                                        {changeWords(
+                                            ageStatistics.years,
+                                            "year"
+                                        )}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.years}
                                     </p>
                                 </div>
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Месяцев</p>
+                                    <p className="age__about-name">
+                                        {changeWords(
+                                            ageStatistics.months,
+                                            "month"
+                                        )}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.months}
                                     </p>
                                 </div>
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Недели</p>
+                                    <p className="age__about-name">
+                                        {changeWords(
+                                            ageStatistics.weeks,
+                                            "week"
+                                        )}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.weeks}
                                     </p>
                                 </div>
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Дней</p>
+                                    <p className="age__about-name">
+                                        {changeWords(ageStatistics.days, "day")}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.days}
                                     </p>
                                 </div>
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Часы</p>
+                                    <p className="age__about-name">
+                                        {changeWords(
+                                            ageStatistics.hours,
+                                            "hour"
+                                        )}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.hours}
                                     </p>
                                 </div>
                                 <div className="age__about-item">
-                                    <p className="age__about-name">Минуты</p>
+                                    <p className="age__about-name">
+                                        {changeWords(
+                                            ageStatistics.minutes,
+                                            "minute"
+                                        )}
+                                    </p>
                                     <p className="age__about-number">
                                         {ageStatistics.minutes}
                                     </p>
