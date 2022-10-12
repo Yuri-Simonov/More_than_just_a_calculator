@@ -5,8 +5,7 @@ export const switcherOfScaleOfnotation = (
 ) => {
     const from = switcher(firstMeasure);
     const to = switcher(secondMeasure);
-
-    return parseInt(startResult, from).toString(to).toLocaleUpperCase();
+    return parseInt(startResult, from).toString(to).toUpperCase();
 };
 
 function switcher(data) {
