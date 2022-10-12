@@ -113,7 +113,6 @@ export const useFinance = () => {
                     (innerPercent / (1 + innerPercent)) * totalMonths)) /
             10
         ).toFixed(2);
-        console.log("dailyPay", dailyPay);
         setTotalValue(dailyPay);
         setCapitalValueTotal(Number(capitalValue));
     };
